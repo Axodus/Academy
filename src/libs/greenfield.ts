@@ -5,7 +5,7 @@ import { env } from "../config/env";
  * Replace internals with official Greenfield JS SDK or S3 client for GNFD gateway.
  */
 export const gnfd = {
-  bucket: env.gnfd.bucket,
+  bucket: ((env as any).gnfd?.bucket ?? (env as any).gnfdBucket ?? "gnfd"),
 
   async putObject(_key: string, _body: Buffer | Uint8Array, _contentType?: string) {
     throw new Error("putObject not implemented");

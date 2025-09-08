@@ -3,12 +3,8 @@ pragma solidity ^0.8.18;
 
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
-/// @title PermissionRegistry
-/// @notice Minimal on-chain ACL: (who, resource, op) -> bool
 contract PermissionRegistry is Ownable {
-    // who => resource => op => allowed
     mapping(address => mapping(bytes32 => mapping(bytes4 => bool))) public acl;
-
     event AccessUpdated(address indexed who, bytes32 indexed resource, bytes4 indexed op, bool allowed);
 
     constructor(address initialOwner) Ownable(initialOwner) {}

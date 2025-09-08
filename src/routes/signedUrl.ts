@@ -20,7 +20,7 @@ export default async function signedUrlRoutes(f: FastifyInstance) {
     if (!allowed) return rep.code(403).send({ error: "forbidden" });
 
     const key = gnfd.keyFromUri(uri);
-    const { url, ttl } = await gnfd.getSignedUrl(key, op.toUpperCase()==="GET"?"GET":"PUT",  env.gnfd.signTtl);
+    const { url, ttl } = await gnfd.getSignedUrl(key, op.toUpperCase()==="GET"?"GET":"PUT",  (env as any).gnfd?.signTtl ?? 3600);
     return rep.send({ url, ttl });
   });
 }

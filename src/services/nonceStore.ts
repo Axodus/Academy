@@ -1,13 +1,27 @@
-const mem = new Map<string, { nonce: `0x${string}`; ttl: number }>();
+type NonceRecord = {
+  nonce: string;
+  network: "evm" | "solana";
+  hint?: string;
+  expiresAt: number;
+  message: string;
+};
+
+const byNonce = new Map<string, NonceRecord>();
 
 export const NonceStore = {
-  async put(wallet: string, nonce: `0x${string}`, ttl: number) {
-    mem.set(wallet.toLowerCase(), { nonce, ttl });
+  put(rec: NonceRecord) {
+    byNonce.set(rec.nonce, rec);
+    return rec;
   },
-  async get(wallet: string) {
-    return mem.get(wallet.toLowerCase()) ?? null;
+  get(nonce: string) {
+    return byNonce.get(nonce) ?? null;
   },
-  async consume(wallet: string) {
-    mem.delete(wallet.toLowerCase());
+  consume(nonce: string) {
+    byNonce.delete(nonce);
+  },
+  sweep(nowSec = Math.floor(Date.now() / 1000)) {
+    for (const [k, v] of byNonce.entries()) {
+      if (v.expiresAt <= nowSec) byNonce.delete(k);
+    }
   }
 };

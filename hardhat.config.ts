@@ -15,7 +15,8 @@ const config: HardhatUserConfig = {
     harmony: {
       url: RPC,
       chainId: CHAIN_ID,
-      accounts: [PK]
+      accounts: [PK],
+      type: "http"
     }
   }
 };

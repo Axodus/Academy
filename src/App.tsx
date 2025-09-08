@@ -1,40 +1,65 @@
 import LoginButton from "./components/LoginButton";
-import { api } from "./services/api";
 import { useState } from "react";
 
 export default function App() {
-  const [putUrl, setPutUrl] = useState<string>();
-  const [uri, setUri] = useState<string>();
-  const [dl, setDl] = useState<string>();
-
-  async function createUpload() {
-    const key = `videos/demo-${Date.now()}.mp4`; // demo
-    const { data } = await api.post("/upload", { key, size: 1 });
-    setPutUrl(data.putUrl);
-    setUri(data.uri);
-  }
-
-  async function getSignedUrl() {
-    if (!uri) return;
-    const { data } = await api.post("/signed-url", { uri, op: "get" });
-    setDl(data.url);
-  }
+  const [note, setNote] = useState<string>("");
 
   return (
-    <div style={{ padding: 24, fontFamily: "Inter, system-ui, sans-serif", color: "#e5f4ff", background: "#0a132b", minHeight: "100vh" }}>
-      <h1>Axodus Academy</h1>
-      <LoginButton />
+    <div
+      style={{
+        minHeight: "100vh",
+        padding: 24,
+        fontFamily: "Inter, system-ui, sans-serif",
+        background: "#0a132b",
+        color: "#e5f4ff",
+        display: "grid",
+        gap: 24
+      }}
+    >
+      <header style={{ display: "flex", alignItems: "center", justifyContent: "space-between" }}>
+        <h1 style={{ margin: 0 }}>Axodus Academy — Multichain Login</h1>
+        <small style={{ opacity: 0.8 }}>EVM (AppKit) + Solana (Phantom)</small>
+      </header>
 
-      <hr style={{ margin: "24px 0", opacity: 0.2 }} />
+      <section
+        style={{
+          display: "grid",
+          gap: 16,
+          maxWidth: 720,
+          background: "rgba(255,255,255,0.04)",
+          borderRadius: 12,
+          padding: 16
+        }}
+      >
+        <p style={{ margin: 0, opacity: 0.9 }}>
+          Conecte sua carteira <strong>EVM</strong> (via Reown AppKit) ou <strong>Solana</strong> (via Phantom) e faça login.
+          O backend emitirá um <strong>JWT curto</strong> com claims <code>sub</code>, <code>net</code>, <code>kind</code> e, no caso EVM, <code>chainId</code>.
+        </p>
 
-      <div style={{ display: "grid", gap: 12, maxWidth: 640 }}>
-        <button onClick={createUpload}>Create Upload (signed PUT)</button>
-        {putUrl && <div><strong>PUT URL:</strong> <code style={{ fontSize: 12 }}>{putUrl}</code></div>}
-        {uri && <div><strong>URI:</strong> <code>{uri}</code></div>}
+        <LoginButton />
 
-        <button onClick={getSignedUrl} disabled={!uri}>Get Download URL (on-chain access)</button>
-        {dl && <div><strong>Download URL:</strong> <a href={dl} target="_blank">{dl.slice(0,80)}...</a></div>}
-      </div>
+        {note && (
+          <div
+            style={{
+              marginTop: 8,
+              fontSize: 12,
+              opacity: 0.85,
+              background: "rgba(255,255,255,0.05)",
+              padding: 12,
+              borderRadius: 8
+            }}
+          >
+            <strong>Note:</strong> {note}
+          </div>
+        )}
+      </section>
+
+      <section style={{ fontSize: 12, opacity: 0.8 }}>
+        <p style={{ margin: 0 }}>
+          Dica: após logar, o token é aplicado como <code>Authorization: Bearer &lt;jwt&gt;</code> no cliente API.
+          Quando adicionarmos as rotas protegidas (ex.: <code>/signed-url</code>, <code>/pointers</code>), já estará pronto.
+        </p>
+      </section>
     </div>
   );
 }

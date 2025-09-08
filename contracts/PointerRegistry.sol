@@ -4,24 +4,14 @@ pragma solidity ^0.8.18;
 import {Ownable} from "@openzeppelin/contracts/access/Ownable.sol";
 
 contract PointerRegistry is Ownable {
-    struct Pointer {
-        bytes32 contentHash;
-        string uri;
-        uint256 timestamp;
-    }
-
+    struct Pointer { bytes32 contentHash; string uri; uint256 timestamp; }
     mapping(address => Pointer) private _pointer;
-
     event PointerSet(address indexed account, bytes32 indexed contentHash, string uri, uint256 timestamp);
 
     constructor(address initialOwner) Ownable(initialOwner) {}
 
     function setPointer(bytes32 contentHash, string calldata uri) external {
-        _pointer[msg.sender] = Pointer({
-            contentHash: contentHash,
-            uri: uri,
-            timestamp: block.timestamp
-        });
+        _pointer[msg.sender] = Pointer({ contentHash: contentHash, uri: uri, timestamp: block.timestamp });
         emit PointerSet(msg.sender, contentHash, uri, block.timestamp);
     }
 
