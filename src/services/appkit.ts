@@ -16,11 +16,11 @@ const APP_URL = envOr(".env-APP_URL", "http://localhost:5173")!;
 const APP_ICON = envOr(".env-APP_ICON", "https://app.axodus.finance/icon.png")!;
 
 export const CHAIN_IDS = {
-  ethereum: 1,
-  arbitrum: 42161,
-  bnb: 56,
-  opbnb: 204,
-  harmony: 1666600000
+  ethereum: Number(envOr(".env-CHAIN_ID_ETHEREUM", envOr("VITE_CHAIN_ID_ETHEREUM", "1"))),
+  arbitrum: Number(envOr(".env-CHAIN_ID_ARBITRUM", envOr("VITE_CHAIN_ID_ARBITRUM", "42161"))),
+  bnb: Number(envOr(".env-CHAIN_ID_BNB", envOr("VITE_CHAIN_ID_BNB", "56"))),
+  opbnb: Number(envOr(".env-CHAIN_ID_OPBNB", envOr("VITE_CHAIN_ID_OPBNB", "204"))),
+  harmony: Number(envOr(".env-CHAIN_ID_HARMONY", envOr("VITE_CHAIN_ID_HARMONY", "1666600000")))
 } as const;
 
 export const chainsEvm = {
