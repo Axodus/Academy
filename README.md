@@ -1,26 +1,82 @@
-# Axodus Academy — CMS API (on-chain)
-[![Codacy Badge](https://app.codacy.com/project/badge/Grade/cd50ef59f2b34d2fada3eefc4d7d02c6)](https://app.codacy.com?utm_source=gh&utm_medium=referral&utm_content=&utm_campaign=Badge_grade)
+# Axodus Academy
+
+Axodus Academy is the sovereign cognitive infrastructure of the Axodus ecosystem.
+
+The Academy is responsible for:
+- ecosystem onboarding
+- Proof of Knowledge (PoK)
+- operational qualification
+- educational progression
+- meritocratic distribution of $NEURONS
+- contributor formation
+- governance preparation
+- ecosystem trust progression
+
+The Academy is not merely a course platform.
+
+It is the constitutional onboarding layer of the Axodus Federation.
+
 ---
-Fastify + Ethers v6 + Greenfield scaffold implementing EIP-712 auth, uploads, pointer registry and signed URLs.
 
-## Quickstart
+# Core Concepts
 
-```bash
-pnpm i   # or npm i / yarn
-cp .env.example .env
-pnpm dev
-```
+## Learn-to-Win
 
-## Endpoints
+Participants learn, evolve and contribute in exchange for ecosystem participation.
 
-- `POST /auth/nonce`
-- `POST /auth/verify`
-- `POST /upload`
-- `POST /upload/commit`
-- `POST /pointers`
-- `GET  /pointers/:wallet`
-- `POST /signed-url`
-- `GET  /healthz`
-- `GET  /metrics`
+The system rewards:
+- learning
+- operational maturity
+- contribution
+- certifications
+- verified participation
 
-See `src/` for implementation.
+---
+
+## Proof of Knowledge (PoK)
+
+Proof of Knowledge validates:
+- educational progression
+- operational capability
+- ecosystem understanding
+- trustworthiness
+- contribution quality
+
+PoK acts as:
+- anti-sybil infrastructure
+- qualification engine
+- merit validation layer
+
+---
+
+## $NEURONS Distribution
+
+The Academy is the constitutional gateway for organic token distribution.
+
+The Governance DAO:
+- controls supply
+- defines emission budgets
+- approves treasury allocations
+
+The PoKMinter:
+- validates merit
+- distributes rewards
+- applies sustainability controls
+
+---
+
+# Core Layers
+
+1. Constitutional Alignment
+2. Operational Security
+3. Economic Qualification
+4. Professional Tracks
+5. Sovereign Participation
+
+---
+
+# Long-Term Vision
+
+The Academy exists to transform knowledge into sovereign participation.
+
+Its purpose is to create capable contributors for the Axodus Federation.
