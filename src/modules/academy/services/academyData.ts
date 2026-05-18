@@ -1,0 +1,58 @@
+import { academyMock } from "../../../data/mock/academy.mock";
+import type { Certificate, Course, LearningPath, Lesson, RewardRecord, Tutor } from "../types/academy";
+
+export const academyData = academyMock as {
+  student: {
+    id: string;
+    name: string;
+    level: string;
+    levelIndex: number;
+    trustScore: number;
+    constitutionalStanding: string;
+    pokReadiness: number;
+    completedCourses: number;
+    activeCourses: number;
+    certifications: number;
+    lockedNeurons: number;
+    unlockedNeurons: number;
+    acsEligibility: string;
+    marketplaceEligibility: string;
+  };
+  futureContracts: Array<{ id: string; name: string; role: string; status: string; writesEnabled: boolean }>;
+  tutors: Tutor[];
+  courses: Course[];
+  lessons: Lesson[];
+  certificates: Certificate[];
+  rewards: RewardRecord[];
+  progressEngine: {
+    nextUnlocks: Array<{ id: string; label: string; reward: string; requirement: string }>;
+    analytics: Array<{ label: string; value: number }>;
+  };
+  governanceReviews: Array<{ id: string; area: string; status: string; reviewer: string; risk: string; notes: string }>;
+  acsWorkflows: Array<{ id: string; name: string; status: string; escalation: string }>;
+  learningPaths: LearningPath[];
+};
+
+export function getTutor(tutorId: string) {
+  return academyData.tutors.find((tutor) => tutor.id === tutorId);
+}
+
+export function getCourseBySlug(slug: string | undefined) {
+  return academyData.courses.find((course) => course.slug === slug);
+}
+
+export function getCourseLessons(courseId: string) {
+  return academyData.lessons.filter((lesson) => lesson.courseId === courseId).sort((a, b) => a.order - b.order);
+}
+
+export function getCourseRewards(courseId: string) {
+  return academyData.rewards.filter((reward) => reward.courseId === courseId);
+}
+
+export function getLearningPath(pathId: string | undefined) {
+  return academyData.learningPaths.find((path) => path.id === pathId);
+}
+
+export function getCourseTitle(courseId: string) {
+  return academyData.courses.find((course) => course.id === courseId)?.title ?? "Unknown course";
+}

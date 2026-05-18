@@ -32,7 +32,7 @@ The Work-to-Win ecosystem creates a sustainable economic model where every parti
 **Value Source:**
 - Share of course/subscription fees
 - Revenue from discounts paid in $NEURONS (partial burn, other part to treasury)
-- Treasury control (allocation in liquidity pools, yield, NRS treasury)
+- Treasury control (allocation in liquidity pools, yield, $NEURONS treasury)
 
 **Returns:**
 - Platform maintenance covered by fees
@@ -45,7 +45,7 @@ The Work-to-Win ecosystem creates a sustainable economic model where every parti
 
 **Value Source:**
 - Earn $NEURONS by studying (PoK mining)
-- Receive discounts by paying in NRS
+- Receive discounts by paying in $NEURONS
 - NFT certificates may have symbolic/collectible value
 
 **Returns:**
@@ -59,12 +59,12 @@ The Work-to-Win ecosystem creates a sustainable economic model where every parti
 
 **Value Source:**
 - Direct revenue from enrollments/subscriptions (revenue share)
-- Part in stablecoins (USDC/T), part in NRS
+- Part in stablecoins (USDC/T), part in $NEURONS
 - Premium badges/NFT for students (upsell model)
 
 **Returns:**
 - Recurring revenue flow (subscriptions)
-- Potential appreciation of received NRS
+- Potential appreciation of received $NEURONS
 - Autonomy: publish courses on demand and price them
 
 ---
@@ -72,7 +72,7 @@ The Work-to-Win ecosystem creates a sustainable economic model where every parti
 ### 🛡️ Moderators / Curators
 
 **Value Source:**
-- NRS rewards for each validated course / removed fraud
+- $NEURONS rewards for each validated course / removed fraud
 - Bounties paid by DAO or Treasury
 
 **Returns:**
@@ -84,7 +84,7 @@ The Work-to-Win ecosystem creates a sustainable economic model where every parti
 ### 🔍 PoK Auditors
 
 **Value Source:**
-- NRS remuneration for auditing epochs and confirming claims
+- $NEURONS remuneration for auditing epochs and confirming claims
 - Additional reward if they detect fraud
 
 **Returns:**
@@ -96,9 +96,9 @@ The Work-to-Win ecosystem creates a sustainable economic model where every parti
 ### 💸 Investors / Sponsors
 
 **Value Source:**
-- Can finance scholarships: buy courses in bulk and donate to students → receive extra NRS (incentive)
-- Participate in DAO revenue share: % of revenue in NRS or USDC
-- Increased demand for NRS → token appreciation
+- Can finance scholarships: buy courses in bulk and donate to students → receive extra $NEURONS (incentive)
+- Participate in DAO revenue share: % of revenue in $NEURONS or USDC
+- Increased demand for $NEURONS → token appreciation
 - NFT Sponsor Badge (premium access, community visibility)
 
 **Returns:**
@@ -128,7 +128,7 @@ The Work-to-Win ecosystem creates a sustainable economic model where every parti
 - Direct payments from Treasury to operate critical infrastructure
 
 **Returns:**
-- Predictable revenue in NRS/USDC (maintenance contract)
+- Predictable revenue in $NEURONS/USDC (maintenance contract)
 
 ## � Revenue Distribution
 
@@ -138,7 +138,7 @@ The Work-to-Win ecosystem creates a sustainable economic model where every parti
 |-------------|------------|---------|---------|
 | 📚 **Tutor** | 60% | $60 | Content creation & teaching |
 | 🏛️ **Treasury** | 20% | $20 | Infrastructure, development, buyback |
-| 💧 **Liquidity / Burn** | 10% | $10 | NRS token economics |
+| 💧 **Liquidity / Burn** | 10% | $10 | $NEURONS token economics |
 | 🛡️ **Curators/Auditors** | 5% | $5 | Quality assurance |
 | 💸 **Sponsors** | 5% | $5 | Scholarship programs (if applicable) |
 
@@ -147,9 +147,9 @@ The Work-to-Win ecosystem creates a sustainable economic model where every parti
 | Role | Activity | Reward |
 |------|----------|---------|
 | 🎓 **Students** | Learn + mine tokens | Education + $NEURONS |
-| 📚 **Tutors** | Teach + monetize | Revenue share + NRS |
-| 🛡️ **Moderators/Auditors** | Maintain quality | NRS payments |
-| 💸 **Investors** | Finance scholarships | NRS rewards + visibility |
+| 📚 **Tutors** | Teach + monetize | Revenue share + $NEURONS |
+| 🛡️ **Moderators/Auditors** | Maintain quality | $NEURONS payments |
+| 💸 **Investors** | Finance scholarships | $NEURONS rewards + visibility |
 | 👨‍💼 **Admin/DAO** | Sustain infrastructure | Platform sustainability + token appreciation |
 
 ---

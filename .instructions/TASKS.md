@@ -71,6 +71,11 @@
 - implement certification visibility
 - implement governance education flows
 - implement reward visibility
+- implement mock-first Academy MVP nucleus routes
+- implement Progress Engine at `/progress`
+- implement explicit Locked $NEURONS and Unlocked $NEURONS reward class visibility
+- implement Academy Governance Review route for constitutional, treasury, reward, certification, and ACS review visibility
+- preserve multichain login as reusable identity/auth component
 
 ---
 

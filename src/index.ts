@@ -1,4 +1,4 @@
-import { buildApp } from "./app";
+import { buildApp } from "./serverApp";
 import { env } from "./config/env";
 
 async function main() {

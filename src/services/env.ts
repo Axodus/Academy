@@ -1,5 +1,5 @@
 export function envOr(key: string, fallback?: string) {
-  // @ts-expect-error index access
-  const v = import.meta.env?.[key] ?? import.meta.env?.[key.replace(".env-", "VITE_")];
+  const viteEnv = import.meta.env as Record<string, string | undefined>;
+  const v = viteEnv[key] ?? viteEnv[key.replace(".env-", "VITE_")];
   return (v ?? fallback) as string | undefined;
 }

@@ -110,6 +110,48 @@ CONFIRMED
 
 ---
 
+## Academy MVP Nucleus
+
+Decision:
+The initial Academy implementation is frontend-first and mock-only.
+
+It must represent Academy as the Proof-of-Knowledge-based, governance-controlled `$NEURONS` distribution and qualification layer of Axodus, not as a generic LMS.
+
+Status:
+CONFIRMED
+
+---
+
+## Academy Reward Classes
+
+Decision:
+Free courses issue mock `Locked $NEURONS`.
+
+Paid courses issue mock `Unlocked $NEURONS`.
+
+`NRS` is not valid reward terminology for Academy MVP surfaces.
+
+Status:
+CONFIRMED
+
+---
+
+## Academy Future Contract Compatibility
+
+Decision:
+The MVP may expose mock read-model metadata for future contract surfaces:
+- PoKMinter
+- LockedNeuronsVault
+- RewardPolicy
+- TreasuryEmissionBudget
+
+No contract writes, minting, withdrawal, transfer, or certification issuance are enabled in the MVP.
+
+Status:
+CONFIRMED
+
+---
+
 # Pending Decisions
 
 ## Canonical Learn-to-Win Emission Model
