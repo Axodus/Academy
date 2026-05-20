@@ -2,10 +2,12 @@ import { MetricCard } from "../components/MetricCard";
 import { ProgressBar } from "../components/ProgressBar";
 import { StatusBadge } from "../components/StatusBadge";
 import { academyData } from "../services/academyData";
+import { studentAcademyService } from "../services/studentAcademyService";
 import { formatNeurons } from "../utils/format";
 
 export function ProgressEngine() {
   const { student, progressEngine } = academyData;
+  const studentCourses = studentAcademyService.getStudentCourses();
 
   return (
     <>
@@ -51,6 +53,36 @@ export function ProgressEngine() {
         <div className="academy-card grid gap-4 p-5">
           <h3 className="text-xl font-semibold text-slate-950">Progression analytics</h3>
           {progressEngine.analytics.map((item) => <ProgressBar key={item.label} label={item.label} value={item.value} />)}
+        </div>
+      </section>
+
+      <section className="academy-card grid gap-4 p-5">
+        <div>
+          <p className="academy-label">Student course progression</p>
+          <h3 className="text-xl font-semibold text-slate-950">Content, PoK validation, and reward unlock are tracked separately</h3>
+        </div>
+        <div className="grid gap-4">
+          {studentCourses.map((item) => {
+            if (!item) return null;
+            const { course, progress, validationWeight, rewardTypeLabel } = item;
+            return (
+              <article key={course.id} className="rounded-lg border border-slate-200 p-4">
+                <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
+                  <div>
+                    <p className="font-semibold text-slate-950">{course.title}</p>
+                    <p className="mt-1 text-sm text-slate-600">{rewardTypeLabel} / {validationWeight}% validation-weighted reward</p>
+                  </div>
+                  <StatusBadge label={progress?.pokStatus ?? "pending"} />
+                </div>
+                <div className="grid gap-4 md:grid-cols-4">
+                  <ProgressBar value={progress?.contentProgress ?? 0} label="Content progress" />
+                  <ProgressBar value={progress?.lessonCompletion ?? 0} label="Lesson completion" />
+                  <ProgressBar value={progress?.validationProgress ?? 0} label="Validation progress" />
+                  <ProgressBar value={progress?.rewardUnlockProgress ?? 0} label="Reward unlock" />
+                </div>
+              </article>
+            );
+          })}
         </div>
       </section>
     </>

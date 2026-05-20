@@ -1,5 +1,24 @@
 import { academyMock } from "../../../data/mock/academy.mock";
-import type { Certificate, Course, LearningPath, Lesson, RewardRecord, Tutor } from "../types/academy";
+import type {
+  Certificate,
+  CertificationRequirement,
+  Course,
+  LearningPath,
+  Lesson,
+  LessonProgress,
+  LessonResource,
+  ModuleProgress,
+  PokValidationRecord,
+  Quiz,
+  QuizAttempt,
+  QuizQuestion,
+  RewardGate,
+  RewardRecord,
+  RewardUnlockEvent,
+  StudentEnrollment,
+  Tutor,
+  UserCourseProgress
+} from "../types/academy";
 
 export const academyData = academyMock as {
   student: {
@@ -24,6 +43,20 @@ export const academyData = academyMock as {
   lessons: Lesson[];
   certificates: Certificate[];
   rewards: RewardRecord[];
+  enrolledCourses: StudentEnrollment[];
+  purchasedCourses: StudentEnrollment[];
+  freeStartedCourses: string[];
+  userCourseProgress: UserCourseProgress[];
+  lessonProgress: LessonProgress[];
+  moduleProgress: ModuleProgress[];
+  lessonResources: LessonResource[];
+  quizzes: Quiz[];
+  quizQuestions: QuizQuestion[];
+  quizAttempts: QuizAttempt[];
+  pokValidationStatus: PokValidationRecord[];
+  rewardGates: RewardGate[];
+  rewardUnlockEvents: RewardUnlockEvent[];
+  certificationRequirements: CertificationRequirement[];
   progressEngine: {
     nextUnlocks: Array<{ id: string; label: string; reward: string; requirement: string }>;
     analytics: Array<{ label: string; value: number }>;

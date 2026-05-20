@@ -1,6 +1,11 @@
 export type AcademyStanding = "compliant" | "approved" | "under-review" | "restricted" | "deprecated";
 export type AccessType = "free" | "paid";
 export type RewardType = "Locked $NEURONS" | "Unlocked $NEURONS";
+export type RewardClass = "locked" | "unlocked";
+export type LessonProgressStatus = "locked" | "available" | "completed" | "validated";
+export type QuizState = "locked" | "available" | "in-progress" | "passed" | "failed";
+export type PokStatus = "pending" | "approved" | "rejected" | "retry-required";
+export type RewardGateStatus = "locked" | "pending" | "unlocked" | "rejected";
 
 export type Tutor = {
   id: string;
@@ -107,4 +112,122 @@ export type LearningPath = {
   courseIds: string[];
   standing: string;
   progress: number;
+};
+
+export type StudentEnrollment = {
+  courseId: string;
+  enrollmentType: "free-started" | "paid-purchased";
+  enrolledAt?: string;
+  purchasedAt?: string;
+  accessState: string;
+  nextAction: string;
+};
+
+export type UserCourseProgress = {
+  courseId: string;
+  contentProgress: number;
+  lessonCompletion: number;
+  quizScore: number | null;
+  pokStatus: PokStatus;
+  validationProgress: number;
+  certificationEligibility: string;
+  rewardUnlockProgress: number;
+  completedLessons: number;
+  pendingLessons: number;
+  quizState: QuizState;
+  finalEvaluationStatus: string;
+  nextRecommendedAction: string;
+  lockedNeuronsEarned: number;
+  unlockedNeuronsEarned: number;
+  pendingRewardGates: string[];
+};
+
+export type LessonProgress = {
+  lessonId: string;
+  courseId: string;
+  status: LessonProgressStatus;
+  consumed: boolean;
+  validated: boolean;
+  progress: number;
+  rewardEarned: number;
+};
+
+export type ModuleProgress = {
+  id: string;
+  courseId: string;
+  title: string;
+  lessonIds: string[];
+  status: string;
+  progress: number;
+};
+
+export type LessonResource = {
+  lessonId: string;
+  title: string;
+  type: string;
+  availability: string;
+};
+
+export type Quiz = {
+  id: string;
+  courseId: string;
+  title: string;
+  passingThreshold: number;
+  state: QuizState;
+  retryPolicy: string;
+  mainRewardWeight: number;
+};
+
+export type QuizQuestion = {
+  id: string;
+  quizId: string;
+  prompt: string;
+  correctAnswer: string;
+};
+
+export type QuizAttempt = {
+  id: string;
+  quizId: string;
+  courseId: string;
+  score: number;
+  threshold: number;
+  result: "passed" | "failed";
+  pokStatus: PokStatus;
+  attemptedAt: string;
+};
+
+export type PokValidationRecord = {
+  courseId: string;
+  status: PokStatus;
+  reviewer: string;
+  notes: string;
+};
+
+export type RewardGate = {
+  id: string;
+  courseId: string;
+  source: "lesson" | "module" | "quiz" | "certification";
+  rewardPercentage: number;
+  rewardAmount: number;
+  rewardClass: RewardClass;
+  unlockCondition: string;
+  status: RewardGateStatus;
+};
+
+export type RewardUnlockEvent = {
+  id: string;
+  courseId: string;
+  gateId: string;
+  amount: number;
+  rewardType: RewardType;
+  reason: string;
+  occurredAt: string;
+};
+
+export type CertificationRequirement = {
+  courseId: string;
+  requiredContentProgress: number;
+  requiredPokStatus: PokStatus;
+  requiredQuizScore: number;
+  status: string;
 };

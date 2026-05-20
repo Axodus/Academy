@@ -6,10 +6,13 @@ import { CertificationViewer } from "./pages/CertificationViewer";
 import { CourseDetails } from "./pages/CourseDetails";
 import { CourseExplorer } from "./pages/CourseExplorer";
 import { LearningDashboard } from "./pages/LearningDashboard";
+import { LearningCourseStart, LearningWorkspace } from "./pages/LearningWorkspace";
 import { LearningPathViewer } from "./pages/LearningPathViewer";
 import { NotFound } from "./pages/NotFound";
 import { ProgressEngine } from "./pages/ProgressEngine";
 import { RewardsDashboard } from "./pages/RewardsDashboard";
+import { StudentCourseDetail } from "./pages/StudentCourseDetail";
+import { StudentCourses } from "./pages/StudentCourses";
 import { TutorProfile } from "./pages/TutorProfile";
 
 export function AcademyRoutes() {
@@ -19,6 +22,10 @@ export function AcademyRoutes() {
         <Route index element={<AcademyHome />} />
         <Route path="courses" element={<CourseExplorer />} />
         <Route path="courses/:slug" element={<CourseDetails />} />
+        <Route path="my-courses" element={<StudentCourses />} />
+        <Route path="my-courses/:courseId" element={<StudentCourseDetail />} />
+        <Route path="learn/:courseId" element={<LearningCourseStart />} />
+        <Route path="learn/:courseId/lessons/:lessonId" element={<LearningWorkspace />} />
         <Route path="dashboard" element={<LearningDashboard />} />
         <Route path="progress" element={<ProgressEngine />} />
         <Route path="tutors/:id" element={<TutorProfile />} />

@@ -250,7 +250,10 @@ export const academyMock = {
   lessons: [
     { id: "lesson-constitution-1", courseId: "course-constitutional-onboarding", title: "Academy as Constitutional Infrastructure", type: "Reading", order: 1, duration: "28m", completionRequired: true, quizRequired: false, media: "article", resources: ["Academy Constitution"], status: "available" },
     { id: "lesson-constitution-2", courseId: "course-constitutional-onboarding", title: "Governance Literacy and Voting Utility", type: "Governance Review", order: 2, duration: "35m", completionRequired: true, quizRequired: true, media: "workshop", resources: ["Governance primer"], status: "available" },
+    { id: "lesson-constitution-3", courseId: "course-constitutional-onboarding", title: "Locked $NEURONS Utility Boundaries", type: "Reading", order: 3, duration: "24m", completionRequired: true, quizRequired: true, media: "article", resources: ["Reward utility map"], status: "available" },
     { id: "lesson-treasury-1", courseId: "course-treasury-risk", title: "Emission Budgets and Treasury Boundaries", type: "Workshop", order: 1, duration: "44m", completionRequired: true, quizRequired: true, media: "video", resources: ["Treasury model"], status: "available" },
+    { id: "lesson-treasury-2", courseId: "course-treasury-risk", title: "Reward Abuse Prevention Controls", type: "Practical Exercise", order: 2, duration: "52m", completionRequired: true, quizRequired: true, media: "exercise", resources: ["Abuse checklist"], status: "available" },
+    { id: "lesson-treasury-3", courseId: "course-treasury-risk", title: "Unlocked $NEURONS Governance Release", type: "Governance Review", order: 3, duration: "47m", completionRequired: true, quizRequired: true, media: "workshop", resources: ["RewardPolicy read model"], status: "available" },
     { id: "lesson-marketplace-1", courseId: "course-marketplace-activation", title: "Locked $NEURONS Utility in Marketplace Flows", type: "Practical Exercise", order: 1, duration: "39m", completionRequired: true, quizRequired: true, media: "exercise", resources: ["Voucher map"], status: "completed" },
     { id: "lesson-pok-1", courseId: "course-pok-certification", title: "PoK Evidence, Proof Hashes, and Review Boundaries", type: "Quiz", order: 1, duration: "31m", completionRequired: true, quizRequired: true, media: "quiz", resources: ["PoK checklist"], status: "locked" }
   ],
@@ -326,6 +329,161 @@ export const academyMock = {
       utility: ["marketplace purchases", "educational NFTs", "licenses", "internal benefits"],
       issuedAt: "2026-05-15"
     }
+  ],
+  enrolledCourses: [
+    { courseId: "course-constitutional-onboarding", enrollmentType: "free-started", enrolledAt: "2026-05-02", accessState: "active", nextAction: "Complete Locked $NEURONS utility lesson" },
+    { courseId: "course-marketplace-activation", enrollmentType: "free-started", enrolledAt: "2026-05-04", accessState: "active", nextAction: "Review certification preview" }
+  ],
+  purchasedCourses: [
+    { courseId: "course-treasury-risk", enrollmentType: "paid-purchased", purchasedAt: "2026-05-09", accessState: "active", nextAction: "Complete reward abuse prevention exercise" },
+    { courseId: "course-pok-certification", enrollmentType: "paid-purchased", purchasedAt: "2026-05-15", accessState: "locked-by-governance-review", nextAction: "Wait for Academy Governance Review" }
+  ],
+  freeStartedCourses: ["course-constitutional-onboarding", "course-marketplace-activation"],
+  userCourseProgress: [
+    {
+      courseId: "course-constitutional-onboarding",
+      contentProgress: 67,
+      lessonCompletion: 67,
+      quizScore: null,
+      pokStatus: "pending",
+      validationProgress: 35,
+      certificationEligibility: "not-eligible",
+      rewardUnlockProgress: 22,
+      completedLessons: 2,
+      pendingLessons: 1,
+      quizState: "locked",
+      finalEvaluationStatus: "locked",
+      nextRecommendedAction: "Complete lesson 3 before PoK quiz unlocks.",
+      lockedNeuronsEarned: 42,
+      unlockedNeuronsEarned: 0,
+      pendingRewardGates: ["gate-constitution-quiz", "gate-constitution-certification"]
+    },
+    {
+      courseId: "course-treasury-risk",
+      contentProgress: 33,
+      lessonCompletion: 33,
+      quizScore: null,
+      pokStatus: "pending",
+      validationProgress: 18,
+      certificationEligibility: "not-eligible",
+      rewardUnlockProgress: 8,
+      completedLessons: 1,
+      pendingLessons: 2,
+      quizState: "locked",
+      finalEvaluationStatus: "locked",
+      nextRecommendedAction: "Complete remaining treasury lessons to unlock PoK evaluation.",
+      lockedNeuronsEarned: 0,
+      unlockedNeuronsEarned: 76,
+      pendingRewardGates: ["gate-treasury-module", "gate-treasury-quiz", "gate-treasury-certification"]
+    },
+    {
+      courseId: "course-marketplace-activation",
+      contentProgress: 100,
+      lessonCompletion: 100,
+      quizScore: 88,
+      pokStatus: "approved",
+      validationProgress: 100,
+      certificationEligibility: "eligible",
+      rewardUnlockProgress: 100,
+      completedLessons: 1,
+      pendingLessons: 0,
+      quizState: "passed",
+      finalEvaluationStatus: "approved",
+      nextRecommendedAction: "Open certification preview and marketplace voucher utility.",
+      lockedNeuronsEarned: 410,
+      unlockedNeuronsEarned: 0,
+      pendingRewardGates: []
+    },
+    {
+      courseId: "course-pok-certification",
+      contentProgress: 0,
+      lessonCompletion: 0,
+      quizScore: null,
+      pokStatus: "pending",
+      validationProgress: 0,
+      certificationEligibility: "blocked",
+      rewardUnlockProgress: 0,
+      completedLessons: 0,
+      pendingLessons: 1,
+      quizState: "locked",
+      finalEvaluationStatus: "governance-review-required",
+      nextRecommendedAction: "Wait for tutor and certification review before learning opens.",
+      lockedNeuronsEarned: 0,
+      unlockedNeuronsEarned: 0,
+      pendingRewardGates: ["gate-pok-consumption", "gate-pok-quiz", "gate-pok-certification"]
+    }
+  ],
+  lessonProgress: [
+    { lessonId: "lesson-constitution-1", courseId: "course-constitutional-onboarding", status: "completed", consumed: true, validated: true, progress: 100, rewardEarned: 16 },
+    { lessonId: "lesson-constitution-2", courseId: "course-constitutional-onboarding", status: "completed", consumed: true, validated: false, progress: 100, rewardEarned: 26 },
+    { lessonId: "lesson-constitution-3", courseId: "course-constitutional-onboarding", status: "available", consumed: false, validated: false, progress: 0, rewardEarned: 0 },
+    { lessonId: "lesson-treasury-1", courseId: "course-treasury-risk", status: "completed", consumed: true, validated: false, progress: 100, rewardEarned: 76 },
+    { lessonId: "lesson-treasury-2", courseId: "course-treasury-risk", status: "available", consumed: false, validated: false, progress: 0, rewardEarned: 0 },
+    { lessonId: "lesson-treasury-3", courseId: "course-treasury-risk", status: "locked", consumed: false, validated: false, progress: 0, rewardEarned: 0 },
+    { lessonId: "lesson-marketplace-1", courseId: "course-marketplace-activation", status: "validated", consumed: true, validated: true, progress: 100, rewardEarned: 41 },
+    { lessonId: "lesson-pok-1", courseId: "course-pok-certification", status: "locked", consumed: false, validated: false, progress: 0, rewardEarned: 0 }
+  ],
+  moduleProgress: [
+    { id: "module-constitution-core", courseId: "course-constitutional-onboarding", title: "Constitutional Core", lessonIds: ["lesson-constitution-1", "lesson-constitution-2", "lesson-constitution-3"], status: "in-progress", progress: 67 },
+    { id: "module-treasury-risk", courseId: "course-treasury-risk", title: "Treasury Risk Controls", lessonIds: ["lesson-treasury-1", "lesson-treasury-2", "lesson-treasury-3"], status: "in-progress", progress: 33 },
+    { id: "module-marketplace-utility", courseId: "course-marketplace-activation", title: "Marketplace Utility", lessonIds: ["lesson-marketplace-1"], status: "validated", progress: 100 },
+    { id: "module-pok-design", courseId: "course-pok-certification", title: "PoK Design", lessonIds: ["lesson-pok-1"], status: "locked", progress: 0 }
+  ],
+  lessonResources: [
+    { lessonId: "lesson-constitution-1", title: "Academy Constitution", type: "reading", availability: "mock-download" },
+    { lessonId: "lesson-constitution-3", title: "Locked $NEURONS Utility Map", type: "worksheet", availability: "mock-download" },
+    { lessonId: "lesson-treasury-2", title: "Abuse Prevention Checklist", type: "worksheet", availability: "mock-download" },
+    { lessonId: "lesson-marketplace-1", title: "Voucher Flow Diagram", type: "reference", availability: "mock-download" }
+  ],
+  quizzes: [
+    { id: "quiz-constitution", courseId: "course-constitutional-onboarding", title: "Constitutional PoK Evaluation", passingThreshold: 80, state: "locked", retryPolicy: "retry-available", mainRewardWeight: 50 },
+    { id: "quiz-treasury", courseId: "course-treasury-risk", title: "Treasury Reward Policy Evaluation", passingThreshold: 82, state: "locked", retryPolicy: "retry-available", mainRewardWeight: 55 },
+    { id: "quiz-marketplace", courseId: "course-marketplace-activation", title: "Marketplace Utility Evaluation", passingThreshold: 75, state: "passed", retryPolicy: "completed", mainRewardWeight: 45 },
+    { id: "quiz-pok-certification", courseId: "course-pok-certification", title: "PoK Certification Steward Evaluation", passingThreshold: 85, state: "locked", retryPolicy: "retry-blocked", mainRewardWeight: 60 }
+  ],
+  quizQuestions: [
+    { id: "question-constitution-1", quizId: "quiz-constitution", prompt: "Which reward class belongs to free courses?", correctAnswer: "Locked $NEURONS" },
+    { id: "question-constitution-2", quizId: "quiz-constitution", prompt: "What unlocks the main Academy reward?", correctAnswer: "Proof-of-Knowledge validation" },
+    { id: "question-treasury-1", quizId: "quiz-treasury", prompt: "Who controls emission budget compatibility?", correctAnswer: "Treasury and governance policy" },
+    { id: "question-marketplace-1", quizId: "quiz-marketplace", prompt: "Can Locked $NEURONS be withdrawn?", correctAnswer: "No" }
+  ],
+  quizAttempts: [
+    { id: "attempt-marketplace-1", quizId: "quiz-marketplace", courseId: "course-marketplace-activation", score: 88, threshold: 75, result: "passed", pokStatus: "approved", attemptedAt: "2026-05-15" },
+    { id: "attempt-treasury-preview-fail", quizId: "quiz-treasury", courseId: "course-treasury-risk", score: 64, threshold: 82, result: "failed", pokStatus: "retry-required", attemptedAt: "mock-preview" },
+    { id: "attempt-treasury-preview-pass", quizId: "quiz-treasury", courseId: "course-treasury-risk", score: 88, threshold: 82, result: "passed", pokStatus: "approved", attemptedAt: "mock-preview" }
+  ],
+  pokValidationStatus: [
+    { courseId: "course-constitutional-onboarding", status: "pending", reviewer: "PoKMinter mock", notes: "Awaiting quiz threshold after required lessons." },
+    { courseId: "course-treasury-risk", status: "pending", reviewer: "ACS reward audit", notes: "Validation depends on passing treasury evaluation." },
+    { courseId: "course-marketplace-activation", status: "approved", reviewer: "PoKMinter mock", notes: "Marketplace utility knowledge validated." },
+    { courseId: "course-pok-certification", status: "pending", reviewer: "ACS certification queue", notes: "Course access is governance-review gated." }
+  ],
+  rewardGates: [
+    { id: "gate-constitution-consumption", courseId: "course-constitutional-onboarding", source: "lesson", rewardPercentage: 10, rewardAmount: 32, rewardClass: "locked", unlockCondition: "consume all required constitutional lessons", status: "pending" },
+    { id: "gate-constitution-module", courseId: "course-constitutional-onboarding", source: "module", rewardPercentage: 15, rewardAmount: 48, rewardClass: "locked", unlockCondition: "complete Constitutional Core module", status: "pending" },
+    { id: "gate-constitution-quiz", courseId: "course-constitutional-onboarding", source: "quiz", rewardPercentage: 50, rewardAmount: 160, rewardClass: "locked", unlockCondition: "pass Constitutional PoK Evaluation at 80%", status: "locked" },
+    { id: "gate-constitution-certification", courseId: "course-constitutional-onboarding", source: "certification", rewardPercentage: 25, rewardAmount: 80, rewardClass: "locked", unlockCondition: "become certification eligible after PoK approval", status: "locked" },
+    { id: "gate-treasury-consumption", courseId: "course-treasury-risk", source: "lesson", rewardPercentage: 8, rewardAmount: 76, rewardClass: "unlocked", unlockCondition: "consume first treasury lesson", status: "unlocked" },
+    { id: "gate-treasury-module", courseId: "course-treasury-risk", source: "module", rewardPercentage: 17, rewardAmount: 162, rewardClass: "unlocked", unlockCondition: "complete Treasury Risk Controls module", status: "pending" },
+    { id: "gate-treasury-quiz", courseId: "course-treasury-risk", source: "quiz", rewardPercentage: 55, rewardAmount: 523, rewardClass: "unlocked", unlockCondition: "pass Treasury Reward Policy Evaluation at 82%", status: "locked" },
+    { id: "gate-treasury-certification", courseId: "course-treasury-risk", source: "certification", rewardPercentage: 20, rewardAmount: 190, rewardClass: "unlocked", unlockCondition: "final certification review approved", status: "locked" },
+    { id: "gate-marketplace-consumption", courseId: "course-marketplace-activation", source: "lesson", rewardPercentage: 10, rewardAmount: 41, rewardClass: "locked", unlockCondition: "consume marketplace activation lesson", status: "unlocked" },
+    { id: "gate-marketplace-module", courseId: "course-marketplace-activation", source: "module", rewardPercentage: 15, rewardAmount: 62, rewardClass: "locked", unlockCondition: "complete marketplace module", status: "unlocked" },
+    { id: "gate-marketplace-quiz", courseId: "course-marketplace-activation", source: "quiz", rewardPercentage: 45, rewardAmount: 184, rewardClass: "locked", unlockCondition: "pass Marketplace Utility Evaluation at 75%", status: "unlocked" },
+    { id: "gate-marketplace-certification", courseId: "course-marketplace-activation", source: "certification", rewardPercentage: 30, rewardAmount: 123, rewardClass: "locked", unlockCondition: "certificate preview eligible", status: "unlocked" },
+    { id: "gate-pok-consumption", courseId: "course-pok-certification", source: "lesson", rewardPercentage: 5, rewardAmount: 60, rewardClass: "unlocked", unlockCondition: "course opens after governance review", status: "locked" },
+    { id: "gate-pok-quiz", courseId: "course-pok-certification", source: "quiz", rewardPercentage: 60, rewardAmount: 720, rewardClass: "unlocked", unlockCondition: "pass PoK steward evaluation at 85%", status: "locked" },
+    { id: "gate-pok-certification", courseId: "course-pok-certification", source: "certification", rewardPercentage: 35, rewardAmount: 420, rewardClass: "unlocked", unlockCondition: "ACS certification integrity approval", status: "locked" }
+  ],
+  rewardUnlockEvents: [
+    { id: "event-marketplace-quiz", courseId: "course-marketplace-activation", gateId: "gate-marketplace-quiz", amount: 184, rewardType: "Locked $NEURONS", reason: "PoK passed", occurredAt: "2026-05-15" },
+    { id: "event-treasury-consumption", courseId: "course-treasury-risk", gateId: "gate-treasury-consumption", amount: 76, rewardType: "Unlocked $NEURONS", reason: "Lesson consumption", occurredAt: "2026-05-10" }
+  ],
+  certificationRequirements: [
+    { courseId: "course-constitutional-onboarding", requiredContentProgress: 100, requiredPokStatus: "approved", requiredQuizScore: 80, status: "not-eligible" },
+    { courseId: "course-treasury-risk", requiredContentProgress: 100, requiredPokStatus: "approved", requiredQuizScore: 82, status: "not-eligible" },
+    { courseId: "course-marketplace-activation", requiredContentProgress: 100, requiredPokStatus: "approved", requiredQuizScore: 75, status: "eligible" },
+    { courseId: "course-pok-certification", requiredContentProgress: 100, requiredPokStatus: "approved", requiredQuizScore: 85, status: "blocked" }
   ],
   progressEngine: {
     nextUnlocks: [

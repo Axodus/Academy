@@ -1,10 +1,11 @@
-import { Award, BookOpen, ChartNoAxesCombined, ClipboardCheck, Coins, Gauge, GraduationCap, Home, Route } from "lucide-react";
+import { Award, BookOpen, ChartNoAxesCombined, ClipboardCheck, Coins, Gauge, GraduationCap, Home, LibraryBig, Route } from "lucide-react";
 import { NavLink, Outlet } from "react-router-dom";
 import LoginButton from "../../../components/LoginButton";
 
 const navItems = [
   { to: "/", label: "Home", icon: Home },
   { to: "/courses", label: "Courses", icon: BookOpen },
+  { to: "/my-courses", label: "My Courses", icon: LibraryBig },
   { to: "/dashboard", label: "Dashboard", icon: ChartNoAxesCombined },
   { to: "/progress", label: "Progress", icon: Gauge },
   { to: "/certifications", label: "Certifications", icon: Award },
