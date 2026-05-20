@@ -1,6 +1,6 @@
 # Academy On-chain Boundaries
 
-Status: Contract hardening boundary
+Status: Contract hardening boundary with runtime tests
 
 ---
 
@@ -73,7 +73,7 @@ Explicitly absent:
 # Production Gates
 
 Before production execution:
-- Solidity unit tests must cover replay, double validation, permissions and reward caps.
+- Solidity runtime tests must continue covering replay, double validation, unauthorized callers, reward caps and LockedNeuronsVault accounting.
 - Governance must approve validators.
 - Treasury must approve emission envelopes.
 - Contract addresses must be configured through environment variables only.

@@ -1,0 +1,48 @@
+name: Academy Validation
+
+on:
+  pull_request:
+  push:
+    branches:
+      - main
+      - develop
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: yarn
+
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile --non-interactive
+
+      - name: Typecheck
+        run: yarn typecheck
+
+      - name: Lint
+        run: yarn lint
+
+      - name: Unit tests
+        run: yarn test --run
+
+      - name: Compile contracts
+        run: yarn compile
+
+      - name: Contract runtime tests
+        run: yarn hardhat test solidity
+
+      - name: Build web
+        run: yarn build:web
+
+      - name: Install Playwright Chromium
+        run: yarn playwright install --with-deps chromium
+
+      - name: E2E smoke
+        run: yarn test:e2e --project=desktop

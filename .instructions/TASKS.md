@@ -70,6 +70,7 @@
 - document API migration path from mock frontend services to backend adapters
 - consolidate repository abstraction for student progress, lesson completion and quiz attempts
 - add deterministic state integrity checks before production persistence migration
+- define JSON, in-memory and Postgres-placeholder repository adapter boundaries
 
 ---
 
@@ -105,6 +106,7 @@
 - harden `PoKMinter` against duplicate validation and proof hash replay
 - expose public `/readiness` and `/openapi.json` for integration consumers
 - document on-chain/off-chain boundaries and keep educational state out of contracts
+- add runtime Solidity tests for `PoKMinter` and `LockedNeuronsVault` replay, duplicate validation, unauthorized caller, reward cap and locked accounting flows
 
 ---
 
@@ -112,6 +114,7 @@
 - add Playwright configuration for desktop, tablet and mobile smoke coverage
 - add Academy browser smoke specs for routes, learning workspace, quiz/PoK and reward gate visibility
 - install Playwright runner and browsers before CI execution
+- add CI workflow for typecheck, lint, unit tests, contract compile, web build and Playwright smoke execution
 
 ---
 
@@ -138,6 +141,8 @@
 - backend/API progression telemetry pending
 - contract writes, minting, transfers, withdrawals, and real certification issuance remain disabled
 - TypeScript-aware ESLint coverage requires adding versioned `@typescript-eslint` dependencies without workspace install stalls
+- production database schema and Postgres adapter implementation pending
+- audited deployment and production contract address governance pending
 
 ---
 

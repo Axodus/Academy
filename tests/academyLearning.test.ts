@@ -10,6 +10,11 @@ import { rewardGateService } from "../src/modules/academy/services/rewardGateSer
 import { rewardPolicyService } from "../src/modules/academy/services/rewardPolicyService";
 import { stateIntegrityService } from "../src/modules/academy/services/stateIntegrityService";
 import { studentAcademyService } from "../src/modules/academy/services/studentAcademyService";
+import {
+  academyProgressRepositoryAdapters,
+  createInMemoryAcademyProgressRepository,
+  createPostgresAcademyProgressRepository
+} from "../src/repositories/academyProgressAdapters";
 import { academyProgressRepository } from "../src/services/academyPersistence";
 
 const token = signLoginJwt({ sub: "0x1111111111111111111111111111111111111111", net: "evm", kind: "evm", chainId: 1 });
@@ -185,6 +190,19 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
 
     expect(first).toEqual(second);
     expect(state.completedLessons).toHaveLength(1);
+  });
+
+  it("defines DB-ready repository adapters without enabling production Postgres persistence", async () => {
+    expect(academyProgressRepositoryAdapters.map((adapter) => adapter.kind)).toEqual(expect.arrayContaining(["json", "memory", "postgres"]));
+
+    const repository = createInMemoryAcademyProgressRepository();
+    await repository.completeLesson("student-memory-test", "course-constitutional-onboarding", "lesson-constitution-1");
+    const state = await repository.getStudentState("student-memory-test");
+
+    expect(state.completedLessons).toHaveLength(1);
+    await expect(createPostgresAcademyProgressRepository({ connectionString: "postgres://placeholder" }).getStudentState("student")).rejects.toThrow(
+      /placeholder/
+    );
   });
 
   it("detects invalid state transitions before production persistence adapters", () => {

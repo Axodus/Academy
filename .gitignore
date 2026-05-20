@@ -7,3 +7,5 @@ coverage
 .academy-data
 artifacts
 cache
+test-results
+playwright-report

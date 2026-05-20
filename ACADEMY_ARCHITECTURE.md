@@ -79,6 +79,8 @@ Does not own:
 
 Current:
 - JSON repository adapter for integration readiness
+- in-memory repository adapter for deterministic tests
+- Postgres repository placeholder for schema-approved production migration
 
 Target:
 - repository interface backed by PostgreSQL, Redis, indexers or chain sync services.
@@ -108,7 +110,7 @@ Do not own:
 Frontend
   -> Academy API
   -> AcademyProgressRepository
-  -> JSON adapter
+  -> JSON / memory / future Postgres adapter
   -> Progress / PoK / Reward Policy services
   -> Contract readiness read models
 ```
@@ -138,3 +140,5 @@ Frontend
 - No contract writes from frontend.
 - No production addresses invented in code.
 - No JSON persistence assumption in route logic.
+- Repository adapters must be swappable without frontend route rewrites.
+- Browser QA runs against the production bundle through Playwright.

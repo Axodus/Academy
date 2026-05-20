@@ -214,6 +214,22 @@ CONFIRMED
 
 ---
 
+## Academy Hardening Completion
+
+Decision:
+Academy hardening completion closes prototype infrastructure gaps without enabling production execution.
+
+The repository layer now exposes adapter-ready boundaries for JSON persistence, in-memory tests, and a Postgres production placeholder. State integrity validation and reward policy isolation remain off-chain.
+
+Playwright is installed with Chromium route smoke coverage. Solidity runtime tests cover `PoKMinter` and `LockedNeuronsVault` replay protection, duplicate validation rejection, unauthorized caller rejection, reward cap enforcement, locked balance accounting, and internal spend behavior.
+
+CI must run typecheck, lint, unit tests, contract compile, web build, and Playwright smoke tests before production database or contract work proceeds.
+
+Status:
+CONFIRMED
+
+---
+
 # Pending Decisions
 
 ## Canonical Learn-to-Win Emission Model

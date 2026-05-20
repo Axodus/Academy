@@ -2,6 +2,7 @@ import { mkdir, readFile, writeFile } from "node:fs/promises";
 import { dirname, resolve } from "node:path";
 import { z } from "zod";
 import { env } from "../config/env";
+import type { JsonAcademyProgressRepositoryOptions } from "../repositories/academyProgressAdapters";
 import type { AcademyProgressRepository, QuizAttemptRecord } from "../repositories/academyProgressRepository";
 
 const LessonCompletion = z.object({
@@ -32,9 +33,7 @@ const AcademyStore = z.object({
 export type AcademyStore = z.infer<typeof AcademyStore>;
 export type PersistedQuizAttempt = z.infer<typeof QuizAttempt>;
 
-const storePath = resolve(process.cwd(), env.academyDataFile);
-
-async function readStore(): Promise<AcademyStore> {
+async function readStore(storePath: string): Promise<AcademyStore> {
   try {
     const raw = await readFile(storePath, "utf8");
     return AcademyStore.parse(JSON.parse(raw));
@@ -44,7 +43,7 @@ async function readStore(): Promise<AcademyStore> {
   }
 }
 
-async function writeStore(store: AcademyStore) {
+async function writeStore(storePath: string, store: AcademyStore) {
   await mkdir(dirname(storePath), { recursive: true });
   await writeFile(storePath, `${JSON.stringify(store, null, 2)}\n`, "utf8");
 }
@@ -54,32 +53,38 @@ function ensureStudent(store: AcademyStore, studentId: string) {
   return store.students[studentId];
 }
 
-export const jsonAcademyProgressRepository: AcademyProgressRepository = {
-  async getStudentState(studentId: string) {
-    const store = await readStore();
-    return ensureStudent(store, studentId);
-  },
+export function createJsonAcademyProgressRepository(options: JsonAcademyProgressRepositoryOptions): AcademyProgressRepository {
+  return {
+    async getStudentState(studentId: string) {
+      const store = await readStore(options.storePath);
+      return ensureStudent(store, studentId);
+    },
 
-  async completeLesson(studentId: string, courseId: string, lessonId: string) {
-    const store = await readStore();
-    const student = ensureStudent(store, studentId);
-    const existing = student.completedLessons.find((item) => item.courseId === courseId && item.lessonId === lessonId);
-    if (existing) return existing;
+    async completeLesson(studentId: string, courseId: string, lessonId: string) {
+      const store = await readStore(options.storePath);
+      const student = ensureStudent(store, studentId);
+      const existing = student.completedLessons.find((item) => item.courseId === courseId && item.lessonId === lessonId);
+      if (existing) return existing;
 
-    const completion = { courseId, lessonId, completedAt: new Date().toISOString() };
-    student.completedLessons.push(completion);
-    await writeStore(store);
-    return completion;
-  },
+      const completion = { courseId, lessonId, completedAt: new Date().toISOString() };
+      student.completedLessons.push(completion);
+      await writeStore(options.storePath, store);
+      return completion;
+    },
 
-  async recordQuizAttempt(studentId: string, attempt: QuizAttemptRecord) {
-    const store = await readStore();
-    const student = ensureStudent(store, studentId);
-    student.quizAttempts.push(attempt);
-    await writeStore(store);
-    return attempt;
-  }
-};
+    async recordQuizAttempt(studentId: string, attempt: QuizAttemptRecord) {
+      const store = await readStore(options.storePath);
+      const student = ensureStudent(store, studentId);
+      student.quizAttempts.push(attempt);
+      await writeStore(options.storePath, store);
+      return attempt;
+    }
+  };
+}
+
+const storePath = resolve(process.cwd(), env.academyDataFile);
+
+export const jsonAcademyProgressRepository: AcademyProgressRepository = createJsonAcademyProgressRepository({ storePath });
 
 export const academyProgressRepository: AcademyProgressRepository = jsonAcademyProgressRepository;
 export const academyPersistence = academyProgressRepository;

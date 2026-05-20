@@ -1,7 +1,7 @@
 # Academy Roadmap
 
-Status: Prototype-ready mock nucleus
-Current progress: ~90%
+Status: Hardening-complete prototype nucleus
+Current progress: ~92-94%
 
 ---
 
@@ -25,7 +25,10 @@ Current progress: ~90%
 - On-chain/off-chain responsibilities documented in `ACADEMY_ONCHAIN_BOUNDARIES.md`.
 - Repository abstraction introduced for progress persistence.
 - State integrity service introduced for invalid transition detection.
-- Playwright QA scaffold introduced for future browser automation.
+- Playwright QA scaffold installed with Chromium smoke coverage for Academy routes.
+- Solidity runtime hardening tests cover `PoKMinter` and `LockedNeuronsVault` replay, permission, cap and locked accounting paths.
+- Repository layer exposes JSON, in-memory test and Postgres-placeholder adapter boundaries.
+- CI workflow includes typecheck, lint, unit tests, contract compile, web build and Playwright smoke execution.
 
 ---
 
@@ -40,7 +43,7 @@ Current progress: ~90%
 
 # Remaining Production Gaps
 
-- Persistent lesson completion and quiz attempts.
+- Production database-backed lesson completion and quiz attempts.
 - Backend progression telemetry.
 - ACS orchestration for tutoring, review, and escalation.
 - Real certification issuance and proof hashes.
@@ -48,11 +51,11 @@ Current progress: ~90%
 - Smart contract adapters for `PoKMinter`, `LockedNeuronsVault`, `RewardPolicy`, and `TreasuryEmissionBudget`.
 - TypeScript-aware ESLint coverage once versioned `@typescript-eslint` dependencies can be added cleanly.
 - Production database-backed persistence.
-- Contract test suite and audited deployment procedure.
-- Playwright dependency installation and browser snapshots in CI.
+- Audited deployment procedure.
+- Full browser snapshot baseline and mobile visual regression review.
 
 ---
 
 # Next Milestone
 
-Move from prototype-ready mock nucleus to persisted alpha by introducing a backend progression API, durable quiz attempts, and read-only governance/treasury adapters before any reward execution is enabled.
+Move from hardening-complete prototype to persisted alpha by approving the Academy database schema, replacing JSON persistence with a Postgres adapter, and adding read-only governance/treasury adapters before any reward execution is enabled.

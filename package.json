@@ -27,6 +27,7 @@
     "lint": "eslint .",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest",
+    "test:e2e": "playwright test",
     "start": "node dist/index.js"
   },
   "dependencies": {

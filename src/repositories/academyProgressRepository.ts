@@ -19,6 +19,16 @@ export type AcademyStudentProgressState = {
   quizAttempts: QuizAttemptRecord[];
 };
 
+export type AcademyProgressRepositoryAdapterKind = "json" | "postgres" | "memory";
+
+export type AcademyProgressRepositoryAdapterStatus = "active" | "placeholder" | "test-only";
+
+export type AcademyProgressRepositoryAdapterDescriptor = {
+  kind: AcademyProgressRepositoryAdapterKind;
+  status: AcademyProgressRepositoryAdapterStatus;
+  description: string;
+};
+
 export interface AcademyProgressRepository {
   getStudentState(studentId: string): Promise<AcademyStudentProgressState>;
   completeLesson(studentId: string, courseId: string, lessonId: string): Promise<LessonCompletionRecord>;
