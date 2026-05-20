@@ -10,7 +10,7 @@ const navItems = [
   { to: "/progress", label: "Progress", icon: Gauge },
   { to: "/certifications", label: "Certifications", icon: Award },
   { to: "/rewards", label: "Rewards", icon: Coins },
-  { to: "/academy-governance-review", label: "Academy Governance Review", icon: ClipboardCheck },
+  { to: "/governance-review", label: "Academy Governance Review", icon: ClipboardCheck },
   { to: "/paths/path-governance-operator", label: "Learning Path", icon: Route }
 ];
 

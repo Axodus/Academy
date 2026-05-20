@@ -1,0 +1,52 @@
+[
+  {
+    "type": "function",
+    "name": "available",
+    "stateMutability": "view",
+    "inputs": [{ "name": "account", "type": "address" }],
+    "outputs": [{ "name": "", "type": "uint256" }]
+  },
+  {
+    "type": "function",
+    "name": "balanceOf",
+    "stateMutability": "view",
+    "inputs": [{ "name": "account", "type": "address" }],
+    "outputs": [
+      { "name": "totalCredited", "type": "uint256" },
+      { "name": "spent", "type": "uint256" },
+      { "name": "availableBalance", "type": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "credit",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      { "name": "account", "type": "address" },
+      { "name": "amount", "type": "uint256" },
+      { "name": "reason", "type": "bytes32" }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "spend",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      { "name": "account", "type": "address" },
+      { "name": "amount", "type": "uint256" },
+      { "name": "utility", "type": "bytes32" }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "event",
+    "name": "LockedNeuronsCredited",
+    "inputs": [
+      { "name": "account", "type": "address", "indexed": true },
+      { "name": "amount", "type": "uint256", "indexed": false },
+      { "name": "reason", "type": "bytes32", "indexed": true }
+    ],
+    "anonymous": false
+  }
+]

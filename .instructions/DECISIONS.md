@@ -168,6 +168,38 @@ CONFIRMED
 
 ---
 
+## Academy Prototype Polish Status
+
+Decision:
+The Academy nucleus is now treated as an approximately 90% prototype-ready mock MVP.
+
+The student-side flow exists, including enrolled/purchased course surfaces, learning workspace, lesson completion mock actions, quiz state visualization, PoK threshold validation, staged reward gates, and Locked/Unlocked `$NEURONS` separation.
+
+Remaining gaps are production concerns: persistence, backend telemetry, real ACS orchestration, real certification issuance, contract writes, minting, withdrawals, transfers, and treasury execution.
+
+Status:
+CONFIRMED
+
+---
+
+## Academy Integration Readiness
+
+Decision:
+Academy may now expose wallet-authenticated backend readiness routes for student progress, lesson completion, quiz attempts, PoK validation read models, and reward gate read models.
+
+Persistence is local JSON-backed until a production database repository is approved. This enables integration testing without creating hidden production authority.
+
+`LockedNeuronsVault` and `PoKMinter` are contract scaffolds for governance-controlled validation and internal locked reward accounting. They do not enable withdrawals, swaps, external transfers, real token minting, or production certification issuance.
+
+Integration consumers should use `academy.openapi.json`, `src/abis/PoKMinter.json`, `src/abis/LockedNeuronsVault.json`, and `GET /academy/contracts/readiness` before any alpha deployment.
+
+`PoKMinter` must reject duplicate student/course validations and proof hash replay. Course reward policies may be deactivated by governance owner before production execution is ever enabled.
+
+Status:
+CONFIRMED
+
+---
+
 # Pending Decisions
 
 ## Canonical Learn-to-Win Emission Model

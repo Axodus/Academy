@@ -1,10 +1,9 @@
 import "dotenv/config";
 import { HardhatUserConfig } from "hardhat/config";
-import "@nomicfoundation/hardhat-toolbox";
 
-const PK = process.env["PRIVATE_KEY"] || "0x0000000000000000000000000000000000000000000000000000000000000000";
 const RPC = process.env["RPC_URL"] || "https://api.harmony.one";
 const CHAIN_ID = Number(process.env["CHAIN_ID"] || 1666600000);
+const PRIVATE_KEY = process.env["PRIVATE_KEY"];
 
 const config: HardhatUserConfig = {
   solidity: {
@@ -15,7 +14,7 @@ const config: HardhatUserConfig = {
     harmony: {
       url: RPC,
       chainId: CHAIN_ID,
-      accounts: [PK],
+      accounts: PRIVATE_KEY ? [PRIVATE_KEY] : [],
       type: "http"
     }
   }

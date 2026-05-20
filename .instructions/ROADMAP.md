@@ -22,7 +22,7 @@ Deliverables:
 
 # Phase 1 — Core Learning Infrastructure
 
-Status: IN PROGRESS
+Status: PROTOTYPE READY
 
 Objectives:
 - implement educational infrastructure
@@ -32,25 +32,30 @@ Objectives:
 Deliverables:
 - student-side learning platform
 - private course consumption workspace
+- polished learning workspace with player placeholder, progress rail, quiz panel, reward preview, and certification block
 - progression tracking across content, lessons, validation, certification, and rewards
 - onboarding flows
 - telemetry systems
 - educational dashboards
+- wallet-authenticated API readiness routes
+- local JSON persistence adapter for integration testing
 
 ---
 
 # Phase 2 — Proof-of-Knowledge Systems
 
-Status: MOCK PROTOTYPE
+Status: PROTOTYPE READY MOCK
 
 Objectives:
 - implement capability validation systems
 
 Deliverables:
 - mock Proof-of-Knowledge validation through quiz threshold scoring
+- quiz locked/available/passed/failed/retry visual states
 - educational verification
 - progression validation
 - governance readiness validation
+- `PoKMinter` contract scaffold for policy-limited validation records
 
 ---
 
@@ -87,7 +92,7 @@ Deliverables:
 
 # Phase 5 — Educational Economy
 
-Status: MOCK PROTOTYPE
+Status: PROTOTYPE READY MOCK
 
 Objectives:
 - implement sustainable Learn-to-Win systems
@@ -97,6 +102,8 @@ Deliverables:
 - Locked $NEURONS for free courses
 - Unlocked $NEURONS for paid courses
 - validation-weighted reward distribution
+- edge-case coverage for failed quiz, retry policies, restricted courses, ACS ineligibility, pending unlocked rewards, and empty enrollment
+- `LockedNeuronsVault` contract scaffold for non-transferable internal reward accounting
 - staking-linked progression
 - capability incentives
 - ecosystem participation rewards

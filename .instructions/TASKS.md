@@ -65,6 +65,9 @@
 - implement educational telemetry
 - implement reward aggregation
 - implement learning analytics
+- implement wallet-authenticated Academy API readiness routes
+- implement local persistence adapter for lesson completion and quiz attempts
+- document API migration path from mock frontend services to backend adapters
 
 ---
 
@@ -84,6 +87,21 @@
 - implement learning workspace at `/academy/learn/:courseId/lessons/:lessonId`
 - expose content progress, lesson completion, quiz score, PoK status, validation progress, certification eligibility, and reward unlock progress as separate UI signals
 - add service-layer read models for studentAcademyService, learningWorkspaceService, courseProgressService, quizService, pokValidationService, and rewardGateService
+- polish Academy prototype routes toward ~90% prototype readiness
+- improve learning workspace hierarchy, player placeholder, quiz state clarity, reward gate visualization, and responsive card behavior
+- add ESLint 9 flat config for JS/JSX lint execution while TypeScript lint parser remains a future tooling hardening task
+- add frontend `academyApi` adapter for wallet-authenticated backend integration readiness
+- add OpenAPI spec and frontend ABI read models for integration consumers
+
+---
+
+## Smart Contracts
+- implement `LockedNeuronsVault` contract scaffold for internal-only Locked $NEURONS accounting
+- implement `PoKMinter` contract scaffold for governance-controlled PoK validation and reward qualification
+- keep Unlocked $NEURONS as event/readiness qualification only until treasury/token contracts are approved
+- expose contract readiness status without enabling writes
+- harden `PoKMinter` against duplicate validation and proof hash replay
+- expose public `/readiness` and `/openapi.json` for integration consumers
 
 ---
 
@@ -104,6 +122,12 @@
 ## ACS Integration
 - adaptive learning orchestration pending
 - AI tutor behavioral constraints pending
+
+## Production Readiness
+- real persistence for lesson completion and quiz attempts pending
+- backend/API progression telemetry pending
+- contract writes, minting, transfers, withdrawals, and real certification issuance remain disabled
+- TypeScript-aware ESLint coverage requires adding versioned `@typescript-eslint` dependencies without workspace install stalls
 
 ---
 

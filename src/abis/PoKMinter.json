@@ -1,0 +1,89 @@
+[
+  {
+    "type": "function",
+    "name": "coursePolicies",
+    "stateMutability": "view",
+    "inputs": [{ "name": "courseId", "type": "bytes32" }],
+    "outputs": [
+      { "name": "active", "type": "bool" },
+      { "name": "rewardClass", "type": "uint8" },
+      { "name": "maxReward", "type": "uint256" },
+      { "name": "passingScoreBps", "type": "uint16" },
+      { "name": "policyHash", "type": "bytes32" }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "validations",
+    "stateMutability": "view",
+    "inputs": [
+      { "name": "student", "type": "address" },
+      { "name": "courseId", "type": "bytes32" }
+    ],
+    "outputs": [
+      { "name": "approved", "type": "bool" },
+      { "name": "scoreBps", "type": "uint16" },
+      { "name": "rewardAmount", "type": "uint256" },
+      { "name": "rewardClass", "type": "uint8" },
+      { "name": "proofHash", "type": "bytes32" },
+      { "name": "validatedAt", "type": "uint256" }
+    ]
+  },
+  {
+    "type": "function",
+    "name": "proofHashUsed",
+    "stateMutability": "view",
+    "inputs": [{ "name": "proofHash", "type": "bytes32" }],
+    "outputs": [{ "name": "", "type": "bool" }]
+  },
+  {
+    "type": "function",
+    "name": "setCoursePolicyActive",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      { "name": "courseId", "type": "bytes32" },
+      { "name": "active", "type": "bool" }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "function",
+    "name": "recordValidation",
+    "stateMutability": "nonpayable",
+    "inputs": [
+      { "name": "student", "type": "address" },
+      { "name": "courseId", "type": "bytes32" },
+      { "name": "scoreBps", "type": "uint16" },
+      { "name": "rewardAmount", "type": "uint256" },
+      { "name": "proofHash", "type": "bytes32" }
+    ],
+    "outputs": []
+  },
+  {
+    "type": "event",
+    "name": "CoursePolicySet",
+    "inputs": [
+      { "name": "courseId", "type": "bytes32", "indexed": true },
+      { "name": "active", "type": "bool", "indexed": false },
+      { "name": "rewardClass", "type": "uint8", "indexed": false },
+      { "name": "maxReward", "type": "uint256", "indexed": false },
+      { "name": "passingScoreBps", "type": "uint16", "indexed": false },
+      { "name": "policyHash", "type": "bytes32", "indexed": false }
+    ],
+    "anonymous": false
+  },
+  {
+    "type": "event",
+    "name": "ProofOfKnowledgeValidated",
+    "inputs": [
+      { "name": "student", "type": "address", "indexed": true },
+      { "name": "courseId", "type": "bytes32", "indexed": true },
+      { "name": "approved", "type": "bool", "indexed": false },
+      { "name": "scoreBps", "type": "uint16", "indexed": false },
+      { "name": "rewardAmount", "type": "uint256", "indexed": false },
+      { "name": "rewardClass", "type": "uint8", "indexed": false },
+      { "name": "proofHash", "type": "bytes32", "indexed": false }
+    ],
+    "anonymous": false
+  }
+]

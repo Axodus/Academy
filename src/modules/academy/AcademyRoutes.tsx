@@ -45,6 +45,7 @@ function academyRouteChildren() {
       <Route path="certifications" element={<CertificationViewer />} />
       <Route path="rewards" element={<RewardsDashboard />} />
       <Route path="academy-governance-review" element={<AcademyGovernanceReview />} />
+      <Route path="governance-review" element={<AcademyGovernanceReview />} />
       <Route path="paths/:id" element={<LearningPathViewer />} />
       <Route path="*" element={<NotFound />} />
     </>

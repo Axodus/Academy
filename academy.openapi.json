@@ -1,0 +1,230 @@
+{
+  "openapi": "3.1.0",
+  "info": {
+    "title": "Axodus Academy API",
+    "version": "0.3.0-readiness",
+    "description": "Wallet-authenticated Academy readiness API for mock persistence, PoK validation read models, reward gates, and contract readiness."
+  },
+  "servers": [
+    {
+      "url": "http://localhost:8080"
+    }
+  ],
+  "security": [
+    {
+      "bearerAuth": []
+    }
+  ],
+  "paths": {
+    "/auth/nonce": {
+      "post": {
+        "security": [],
+        "summary": "Create wallet login nonce",
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/NonceRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Nonce and signable message"
+          }
+        }
+      }
+    },
+    "/auth/verify": {
+      "post": {
+        "security": [],
+        "summary": "Verify wallet signature and issue JWT",
+        "responses": {
+          "200": {
+            "description": "JWT and wallet user"
+          },
+          "401": {
+            "description": "Invalid nonce or signature"
+          }
+        }
+      }
+    },
+    "/readiness": {
+      "get": {
+        "security": [],
+        "summary": "Public service readiness",
+        "responses": {
+          "200": {
+            "description": "Service readiness and safety flags"
+          }
+        }
+      }
+    },
+    "/openapi.json": {
+      "get": {
+        "security": [],
+        "summary": "OpenAPI specification",
+        "responses": {
+          "200": {
+            "description": "OpenAPI JSON document"
+          }
+        }
+      }
+    },
+    "/academy/me": {
+      "get": {
+        "summary": "Get authenticated Academy student readiness state",
+        "responses": {
+          "200": {
+            "description": "Identity, mock profile and persisted progress"
+          },
+          "401": {
+            "$ref": "#/components/responses/Unauthorized"
+          }
+        }
+      }
+    },
+    "/academy/courses/enrolled": {
+      "get": {
+        "summary": "Get enrolled and purchased course read models",
+        "responses": {
+          "200": {
+            "description": "Student course list"
+          }
+        }
+      }
+    },
+    "/academy/courses/{courseId}/progress": {
+      "get": {
+        "summary": "Get private course progress",
+        "parameters": [{ "$ref": "#/components/parameters/CourseId" }],
+        "responses": {
+          "200": {
+            "description": "Course progress and reward gates"
+          },
+          "404": {
+            "description": "Course not found"
+          }
+        }
+      }
+    },
+    "/academy/courses/{courseId}/lessons/{lessonId}/complete": {
+      "post": {
+        "summary": "Persist mock lesson completion",
+        "parameters": [{ "$ref": "#/components/parameters/CourseId" }, { "$ref": "#/components/parameters/LessonId" }],
+        "responses": {
+          "200": {
+            "description": "Completion persisted. Quiz may unlock if all required lessons are complete."
+          },
+          "404": {
+            "description": "Lesson not found"
+          }
+        }
+      }
+    },
+    "/academy/courses/{courseId}/quizzes/{quizId}/attempts": {
+      "post": {
+        "summary": "Persist mock quiz attempt and evaluate PoK",
+        "parameters": [{ "$ref": "#/components/parameters/CourseId" }, { "$ref": "#/components/parameters/QuizId" }],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/QuizAttemptRequest"
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Attempt persisted and PoK evaluated"
+          },
+          "409": {
+            "description": "Quiz locked until required lessons are completed"
+          }
+        }
+      }
+    },
+    "/academy/courses/{courseId}/reward-gates": {
+      "get": {
+        "summary": "Get reward gate distribution",
+        "parameters": [{ "$ref": "#/components/parameters/CourseId" }],
+        "responses": {
+          "200": {
+            "description": "Reward gate read model"
+          }
+        }
+      }
+    },
+    "/academy/contracts/readiness": {
+      "get": {
+        "summary": "Get contract readiness status",
+        "responses": {
+          "200": {
+            "description": "Contract address, ABI and safety readiness checks"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "bearerAuth": {
+        "type": "http",
+        "scheme": "bearer",
+        "bearerFormat": "JWT"
+      }
+    },
+    "parameters": {
+      "CourseId": {
+        "name": "courseId",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string" }
+      },
+      "LessonId": {
+        "name": "lessonId",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string" }
+      },
+      "QuizId": {
+        "name": "quizId",
+        "in": "path",
+        "required": true,
+        "schema": { "type": "string" }
+      }
+    },
+    "responses": {
+      "Unauthorized": {
+        "description": "JWT missing or invalid"
+      }
+    },
+    "schemas": {
+      "NonceRequest": {
+        "type": "object",
+        "required": ["network"],
+        "properties": {
+          "network": { "enum": ["evm", "solana"] },
+          "address": { "type": "string" },
+          "pubkey": { "type": "string" },
+          "chainId": { "type": "integer" }
+        }
+      },
+      "QuizAttemptRequest": {
+        "type": "object",
+        "required": ["score"],
+        "properties": {
+          "score": {
+            "type": "integer",
+            "minimum": 0,
+            "maximum": 100
+          }
+        }
+      }
+    }
+  }
+}
