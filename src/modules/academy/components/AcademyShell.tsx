@@ -1,5 +1,5 @@
 import { Award, BookOpen, ChartNoAxesCombined, ClipboardCheck, Coins, Gauge, GraduationCap, Home, LibraryBig, Route } from "lucide-react";
-import { NavLink, Outlet } from "react-router-dom";
+import { NavLink, Outlet, useLocation } from "react-router-dom";
 import LoginButton from "../../../components/LoginButton";
 
 const navItems = [
@@ -15,6 +15,9 @@ const navItems = [
 ];
 
 export function AcademyShell() {
+  const { pathname } = useLocation();
+  const basePath = pathname.startsWith("/academy") ? "/academy" : "";
+
   return (
     <div className="min-h-screen bg-slate-100 text-slate-950">
       <header className="border-b border-slate-200 bg-white">
@@ -44,7 +47,7 @@ export function AcademyShell() {
             return (
               <NavLink
                 key={item.to}
-                to={item.to}
+                to={item.to === "/" ? basePath || "/" : `${basePath}${item.to}`}
                 className={({ isActive }) =>
                   `inline-flex shrink-0 items-center gap-2 rounded-md border px-3 py-2 text-sm font-semibold ${
                     isActive ? "border-academy-blue bg-academy-blue text-white" : "border-slate-200 bg-white text-slate-700 hover:border-slate-300"

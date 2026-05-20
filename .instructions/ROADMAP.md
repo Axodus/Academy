@@ -22,7 +22,7 @@ Deliverables:
 
 # Phase 1 — Core Learning Infrastructure
 
-Status: PLANNED
+Status: IN PROGRESS
 
 Objectives:
 - implement educational infrastructure
@@ -30,8 +30,9 @@ Objectives:
 - implement onboarding systems
 
 Deliverables:
-- learning platform
-- progression tracking
+- student-side learning platform
+- private course consumption workspace
+- progression tracking across content, lessons, validation, certification, and rewards
 - onboarding flows
 - telemetry systems
 - educational dashboards
@@ -40,13 +41,13 @@ Deliverables:
 
 # Phase 2 — Proof-of-Knowledge Systems
 
-Status: PLANNED
+Status: MOCK PROTOTYPE
 
 Objectives:
 - implement capability validation systems
 
 Deliverables:
-- Proof-of-Knowledge validation
+- mock Proof-of-Knowledge validation through quiz threshold scoring
 - educational verification
 - progression validation
 - governance readiness validation
@@ -86,13 +87,16 @@ Deliverables:
 
 # Phase 5 — Educational Economy
 
-Status: FUTURE
+Status: MOCK PROTOTYPE
 
 Objectives:
 - implement sustainable Learn-to-Win systems
 
 Deliverables:
-- educational rewards
+- staged educational reward gates
+- Locked $NEURONS for free courses
+- Unlocked $NEURONS for paid courses
+- validation-weighted reward distribution
 - staking-linked progression
 - capability incentives
 - ecosystem participation rewards

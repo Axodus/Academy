@@ -17,6 +17,8 @@
 - define governance readiness validation
 - define progression checkpoints
 - define anti-farming mechanisms
+- implement mock quiz lock/unlock rules tied to required lesson completion
+- implement mock PoK approval/retry-required state from quiz score thresholds
 
 ---
 
@@ -53,6 +55,7 @@
 - define progression rewards
 - define sustainability controls
 - define treasury integration
+- implement staged reward gates where lesson consumption is low-weight and PoK validation is high-weight
 
 ---
 
@@ -76,6 +79,11 @@
 - implement explicit Locked $NEURONS and Unlocked $NEURONS reward class visibility
 - implement Academy Governance Review route for constitutional, treasury, reward, certification, and ACS review visibility
 - preserve multichain login as reusable identity/auth component
+- implement student-side `/academy/my-courses` course ownership dashboard
+- implement private enrolled course detail at `/academy/my-courses/:courseId`
+- implement learning workspace at `/academy/learn/:courseId/lessons/:lessonId`
+- expose content progress, lesson completion, quiz score, PoK status, validation progress, certification eligibility, and reward unlock progress as separate UI signals
+- add service-layer read models for studentAcademyService, learningWorkspaceService, courseProgressService, quizService, pokValidationService, and rewardGateService
 
 ---
 

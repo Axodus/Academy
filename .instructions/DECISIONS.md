@@ -152,6 +152,22 @@ CONFIRMED
 
 ---
 
+## Academy Learning Consumption and PoK Rewards
+
+Decision:
+Academy student-side progression must separate passive content consumption from validated capability.
+
+Watching lessons may release only small consumption rewards. The highest reward weight must come from quiz/evaluation success and final certification eligibility through Proof-of-Knowledge validation.
+
+Mock reward gates must classify each stage as lesson, module, quiz, or certification and expose locked, pending, unlocked, or rejected status.
+
+Free enrolled courses generate only `Locked $NEURONS`. Paid purchased courses generate `Unlocked $NEURONS` in the future production model, released progressively after validation and governance/treasury controls.
+
+Status:
+CONFIRMED
+
+---
+
 # Pending Decisions
 
 ## Canonical Learn-to-Win Emission Model

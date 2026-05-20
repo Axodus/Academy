@@ -19,22 +19,34 @@ export function AcademyRoutes() {
   return (
     <Routes>
       <Route element={<AcademyShell />}>
-        <Route index element={<AcademyHome />} />
-        <Route path="courses" element={<CourseExplorer />} />
-        <Route path="courses/:slug" element={<CourseDetails />} />
-        <Route path="my-courses" element={<StudentCourses />} />
-        <Route path="my-courses/:courseId" element={<StudentCourseDetail />} />
-        <Route path="learn/:courseId" element={<LearningCourseStart />} />
-        <Route path="learn/:courseId/lessons/:lessonId" element={<LearningWorkspace />} />
-        <Route path="dashboard" element={<LearningDashboard />} />
-        <Route path="progress" element={<ProgressEngine />} />
-        <Route path="tutors/:id" element={<TutorProfile />} />
-        <Route path="certifications" element={<CertificationViewer />} />
-        <Route path="rewards" element={<RewardsDashboard />} />
-        <Route path="academy-governance-review" element={<AcademyGovernanceReview />} />
-        <Route path="paths/:id" element={<LearningPathViewer />} />
-        <Route path="*" element={<NotFound />} />
+        {academyRouteChildren()}
       </Route>
+      <Route path="academy" element={<AcademyShell />}>
+        {academyRouteChildren()}
+      </Route>
+      <Route path="*" element={<NotFound />} />
     </Routes>
+  );
+}
+
+function academyRouteChildren() {
+  return (
+    <>
+      <Route index element={<AcademyHome />} />
+      <Route path="courses" element={<CourseExplorer />} />
+      <Route path="courses/:slug" element={<CourseDetails />} />
+      <Route path="my-courses" element={<StudentCourses />} />
+      <Route path="my-courses/:courseId" element={<StudentCourseDetail />} />
+      <Route path="learn/:courseId" element={<LearningCourseStart />} />
+      <Route path="learn/:courseId/lessons/:lessonId" element={<LearningWorkspace />} />
+      <Route path="dashboard" element={<LearningDashboard />} />
+      <Route path="progress" element={<ProgressEngine />} />
+      <Route path="tutors/:id" element={<TutorProfile />} />
+      <Route path="certifications" element={<CertificationViewer />} />
+      <Route path="rewards" element={<RewardsDashboard />} />
+      <Route path="academy-governance-review" element={<AcademyGovernanceReview />} />
+      <Route path="paths/:id" element={<LearningPathViewer />} />
+      <Route path="*" element={<NotFound />} />
+    </>
   );
 }
