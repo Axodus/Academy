@@ -229,6 +229,7 @@ Production note:
 # Next Production Steps
 
 - Replace JSON persistence with database repository.
+- Keep API routes depending on `AcademyProgressRepository` rather than concrete persistence adapters.
 - Add API integration tests with signed JWT fixtures.
 - Add contract tests for policy limits, failed validations and Locked Vault credits.
 - Add deployment scripts per chain without default private keys.
@@ -239,3 +240,4 @@ Production note:
   - `ACADEMY_CONTRACT_RPC_URL`
   - `ACADEMY_POK_MINTER_ADDRESS`
   - `ACADEMY_LOCKED_NEURONS_VAULT_ADDRESS`
+- Install Playwright runner before browser QA execution.

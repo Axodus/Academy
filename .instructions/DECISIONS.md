@@ -200,6 +200,20 @@ CONFIRMED
 
 ---
 
+## Academy Hardening Boundaries
+
+Decision:
+Academy hardening separates frontend, API, repository, Progress Engine, PoK validation, reward policy, persistence and contracts into explicit boundaries.
+
+API routes must depend on repository interfaces rather than JSON storage assumptions. Reward policy logic remains off-chain and separate from `PoKMinter`; contracts only enforce proof/accounting integrity.
+
+Playwright coverage is introduced as a QA boundary, but CI execution depends on installing the Playwright runner and browser binaries.
+
+Status:
+CONFIRMED
+
+---
+
 # Pending Decisions
 
 ## Canonical Learn-to-Win Emission Model

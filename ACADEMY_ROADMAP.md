@@ -21,6 +21,11 @@ Current progress: ~90%
 - Wallet-authenticated Academy API readiness routes exist.
 - Local JSON persistence supports integration testing for lesson completion and quiz attempts.
 - `PoKMinter` and `LockedNeuronsVault` contract scaffolds exist without production token execution.
+- Architecture boundaries documented in `ACADEMY_ARCHITECTURE.md`.
+- On-chain/off-chain responsibilities documented in `ACADEMY_ONCHAIN_BOUNDARIES.md`.
+- Repository abstraction introduced for progress persistence.
+- State integrity service introduced for invalid transition detection.
+- Playwright QA scaffold introduced for future browser automation.
 
 ---
 
@@ -44,6 +49,7 @@ Current progress: ~90%
 - TypeScript-aware ESLint coverage once versioned `@typescript-eslint` dependencies can be added cleanly.
 - Production database-backed persistence.
 - Contract test suite and audited deployment procedure.
+- Playwright dependency installation and browser snapshots in CI.
 
 ---
 

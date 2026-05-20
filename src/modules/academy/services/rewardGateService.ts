@@ -1,9 +1,10 @@
 import type { RewardClass, RewardGateStatus } from "../types/academy";
 import { academyData } from "./academyData";
+import { rewardPolicyService } from "./rewardPolicyService";
 
 export const rewardGateService = {
   getRewardGates(courseId: string) {
-    return academyData.rewardGates.filter((gate) => gate.courseId === courseId);
+    return rewardPolicyService.getRewardGates(courseId);
   },
 
   getRewardEvents(courseId: string) {
@@ -20,9 +21,7 @@ export const rewardGateService = {
   },
 
   getGateStatusAfterPok(currentStatus: RewardGateStatus, source: string, pokApproved: boolean): RewardGateStatus {
-    if (["lesson", "module"].includes(source)) return currentStatus;
-    if (!pokApproved) return currentStatus === "unlocked" ? "unlocked" : "locked";
-    return "unlocked";
+    return rewardPolicyService.getGateStatusAfterPok({ status: currentStatus, source: source as any }, pokApproved) as RewardGateStatus;
   },
 
   getUnlockedAmount(courseId: string) {
@@ -32,8 +31,6 @@ export const rewardGateService = {
   },
 
   getValidationWeight(courseId: string) {
-    return this.getRewardGates(courseId)
-      .filter((gate) => ["quiz", "certification"].includes(gate.source))
-      .reduce((sum, gate) => sum + gate.rewardPercentage, 0);
+    return rewardPolicyService.getValidationWeight(courseId);
   }
 };

@@ -7,7 +7,10 @@ import { courseProgressService } from "../src/modules/academy/services/coursePro
 import { pokValidationService } from "../src/modules/academy/services/pokValidationService";
 import { quizService } from "../src/modules/academy/services/quizService";
 import { rewardGateService } from "../src/modules/academy/services/rewardGateService";
+import { rewardPolicyService } from "../src/modules/academy/services/rewardPolicyService";
+import { stateIntegrityService } from "../src/modules/academy/services/stateIntegrityService";
 import { studentAcademyService } from "../src/modules/academy/services/studentAcademyService";
+import { academyProgressRepository } from "../src/services/academyPersistence";
 
 const token = signLoginJwt({ sub: "0x1111111111111111111111111111111111111111", net: "evm", kind: "evm", chainId: 1 });
 
@@ -172,5 +175,40 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
     expect(openapi.statusCode).toBe(200);
     expect(openapi.json().paths["/academy/contracts/readiness"]).toBeTruthy();
     await app.close();
+  });
+
+  it("uses repository abstraction for idempotent lesson completion", async () => {
+    const studentId = "student-repository-test";
+    const first = await academyProgressRepository.completeLesson(studentId, "course-constitutional-onboarding", "lesson-constitution-1");
+    const second = await academyProgressRepository.completeLesson(studentId, "course-constitutional-onboarding", "lesson-constitution-1");
+    const state = await academyProgressRepository.getStudentState(studentId);
+
+    expect(first).toEqual(second);
+    expect(state.completedLessons).toHaveLength(1);
+  });
+
+  it("detects invalid state transitions before production persistence adapters", () => {
+    const issues = stateIntegrityService.validateCourseState("course-constitutional-onboarding", {
+      completedLessons: [],
+      quizAttempts: [
+        {
+          courseId: "course-constitutional-onboarding",
+          quizId: "quiz-constitution",
+          score: 91,
+          threshold: 80,
+          result: "passed",
+          pokStatus: "approved",
+          attemptedAt: new Date().toISOString()
+        }
+      ]
+    });
+
+    expect(issues.map((issue) => issue.code)).toContain("pok_without_required_lessons");
+  });
+
+  it("keeps reward policy isolated from PoK validation and enforces reward class separation", () => {
+    expect(rewardPolicyService.getValidationWeight("course-constitutional-onboarding")).toBe(75);
+    expect(rewardPolicyService.validateRewardClassSeparation("course-constitutional-onboarding")).toBe(true);
+    expect(rewardPolicyService.validateRewardClassSeparation("course-treasury-risk")).toBe(true);
   });
 });

@@ -68,6 +68,8 @@
 - implement wallet-authenticated Academy API readiness routes
 - implement local persistence adapter for lesson completion and quiz attempts
 - document API migration path from mock frontend services to backend adapters
+- consolidate repository abstraction for student progress, lesson completion and quiz attempts
+- add deterministic state integrity checks before production persistence migration
 
 ---
 
@@ -102,6 +104,14 @@
 - expose contract readiness status without enabling writes
 - harden `PoKMinter` against duplicate validation and proof hash replay
 - expose public `/readiness` and `/openapi.json` for integration consumers
+- document on-chain/off-chain boundaries and keep educational state out of contracts
+
+---
+
+## QA Automation
+- add Playwright configuration for desktop, tablet and mobile smoke coverage
+- add Academy browser smoke specs for routes, learning workspace, quiz/PoK and reward gate visibility
+- install Playwright runner and browsers before CI execution
 
 ---
 

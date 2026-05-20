@@ -6,6 +6,7 @@ import { courseProgressService } from "../modules/academy/services/courseProgres
 import { pokValidationService } from "../modules/academy/services/pokValidationService";
 import { quizService } from "../modules/academy/services/quizService";
 import { rewardGateService } from "../modules/academy/services/rewardGateService";
+import { stateIntegrityService } from "../modules/academy/services/stateIntegrityService";
 import { studentAcademyService } from "../modules/academy/services/studentAcademyService";
 import { academyProgressRepository } from "../services/academyPersistence";
 
@@ -37,6 +38,10 @@ export default async function academyRoutes(f: FastifyInstance) {
       identity: (req as any).user,
       student: academyData.student,
       persisted,
+      integrity: {
+        constitutionalOnboarding: stateIntegrityService.validateCourseState("course-constitutional-onboarding", persisted),
+        treasuryRisk: stateIntegrityService.validateCourseState("course-treasury-risk", persisted)
+      },
       readiness: {
         mode: "integration-readiness",
         contractWritesEnabled: false,
