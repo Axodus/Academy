@@ -57,6 +57,7 @@ export const academyData = academyMock as {
   rewardGates: RewardGate[];
   rewardUnlockEvents: RewardUnlockEvent[];
   certificationRequirements: CertificationRequirement[];
+  edgeCaseScenarios: Record<string, unknown>;
   progressEngine: {
     nextUnlocks: Array<{ id: string; label: string; reward: string; requirement: string }>;
     analytics: Array<{ label: string; value: number }>;

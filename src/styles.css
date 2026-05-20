@@ -40,11 +40,31 @@ code {
     @apply rounded-lg border border-slate-200 bg-white shadow-panel;
   }
 
+  .academy-surface {
+    @apply rounded-lg border border-slate-200 bg-slate-50;
+  }
+
   .academy-label {
     @apply text-xs font-semibold uppercase tracking-normal text-slate-500;
   }
 
   .academy-pill {
     @apply inline-flex items-center rounded-full border border-slate-200 bg-slate-50 px-2.5 py-1 text-xs font-semibold text-slate-700;
+  }
+
+  .academy-pill-locked {
+    @apply inline-flex items-center rounded-full border border-cyan-200 bg-cyan-50 px-2.5 py-1 text-xs font-semibold text-cyan-900;
+  }
+
+  .academy-pill-unlocked {
+    @apply inline-flex items-center rounded-full border border-emerald-200 bg-emerald-50 px-2.5 py-1 text-xs font-semibold text-emerald-900;
+  }
+
+  .academy-action {
+    @apply inline-flex items-center justify-center rounded-md bg-academy-blue px-4 py-2 text-sm font-semibold text-white hover:bg-blue-800 disabled:bg-slate-300;
+  }
+
+  .academy-secondary-action {
+    @apply inline-flex items-center justify-center rounded-md border border-slate-200 bg-white px-4 py-2 text-sm font-semibold text-slate-700 hover:border-slate-300 hover:bg-slate-50;
   }
 }

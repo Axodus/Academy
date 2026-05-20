@@ -42,7 +42,7 @@ export function StudentCourseDetail() {
               <p className="academy-label">Modules and Lessons</p>
               <h3 className="text-xl font-semibold text-slate-950">Required content before quiz unlock</h3>
             </div>
-            <Link className="rounded-md bg-academy-blue px-3 py-2 text-sm font-semibold text-white" to={`/learn/${course.id}`}>
+            <Link className="academy-action" to={`/academy/learn/${course.id}`}>
               Open workspace
             </Link>
           </div>
@@ -62,7 +62,7 @@ export function StudentCourseDetail() {
                   .map((lesson) => {
                     const state = lessonProgress.find((item) => item.lessonId === lesson.id);
                     return (
-                      <Link key={lesson.id} to={`/learn/${course.id}/lessons/${lesson.id}`} className="rounded-md border border-slate-200 p-3 hover:border-academy-blue">
+                      <Link key={lesson.id} to={`/academy/learn/${course.id}/lessons/${lesson.id}`} className="rounded-md border border-slate-200 p-3 hover:border-academy-blue">
                         <div className="flex flex-wrap items-center justify-between gap-2">
                           <p className="font-semibold text-slate-900">{lesson.order}. {lesson.title}</p>
                           <StatusBadge label={state?.status ?? lesson.status} />
@@ -104,7 +104,7 @@ export function StudentCourseDetail() {
             <p className="academy-label">Reward distribution</p>
             <p className="mt-1 text-xl font-semibold text-slate-950">{formatNeurons(course.rewardAmount)} total</p>
             <p className="mt-2 text-sm text-slate-600">{validationWeight}% of reward weight is tied to quiz and certification validation.</p>
-            <p className="mt-2 text-sm font-semibold text-slate-800">
+            <p className={`mt-3 rounded-md border px-3 py-2 text-sm font-semibold ${course.accessType === "free" ? "border-cyan-200 bg-cyan-50 text-cyan-900" : "border-emerald-200 bg-emerald-50 text-emerald-900"}`}>
               {course.accessType === "free" ? "Free courses generate Locked $NEURONS only." : "Paid courses generate Unlocked $NEURONS progressively after validation."}
             </p>
           </section>

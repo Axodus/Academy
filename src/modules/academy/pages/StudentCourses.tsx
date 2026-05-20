@@ -40,29 +40,29 @@ export function StudentCourses() {
           if (!item) return null;
           const { course, progress, quiz, enrollment, validationWeight, rewardTypeLabel } = item;
           return (
-            <article key={course.id} className="academy-card grid gap-4 p-5">
+            <article key={course.id} className="academy-card grid gap-5 p-5">
               <div className="flex flex-wrap items-start justify-between gap-3">
                 <div>
                   <div className="flex flex-wrap gap-2">
                     <StatusBadge label={enrollment.accessState} />
                     <span className="academy-pill">{course.accessType === "free" ? "Free Course" : "Paid Course"}</span>
-                    <span className="academy-pill">{rewardTypeLabel}</span>
+                    <span className={course.accessType === "free" ? "academy-pill-locked" : "academy-pill-unlocked"}>{rewardTypeLabel}</span>
                   </div>
-                  <Link to={`/my-courses/${course.id}`} className="mt-3 block text-xl font-semibold text-slate-950 hover:text-academy-blue">
+                  <Link to={`/academy/my-courses/${course.id}`} className="mt-3 block text-xl font-semibold text-slate-950 hover:text-academy-blue">
                     {course.title}
                   </Link>
                   <p className="mt-2 text-sm text-slate-600">{course.shortDescription}</p>
                 </div>
-                <Link className="rounded-md bg-academy-blue px-3 py-2 text-sm font-semibold text-white" to={`/learn/${course.id}`}>
+                <Link className="academy-action" to={`/academy/learn/${course.id}`}>
                   Continue learning
                 </Link>
               </div>
 
-              <div className="grid gap-4 lg:grid-cols-4">
-                <ProgressBar value={progress?.contentProgress ?? 0} label="Content progress" />
-                <ProgressBar value={progress?.validationProgress ?? 0} label="Validation progress" />
-                <ProgressBar value={progress?.rewardUnlockProgress ?? 0} label="Reward unlock progress" />
-                <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+              <div className="grid gap-4 xl:grid-cols-[1fr_1fr_1fr_220px]">
+                <div className="academy-surface p-3"><ProgressBar value={progress?.contentProgress ?? 0} label="Content progress" /></div>
+                <div className="academy-surface p-3"><ProgressBar value={progress?.validationProgress ?? 0} label="Validation progress" /></div>
+                <div className="academy-surface p-3"><ProgressBar value={progress?.rewardUnlockProgress ?? 0} label="Reward unlock progress" /></div>
+                <div className="academy-surface p-3">
                   <p className="academy-label">PoK / quiz</p>
                   <div className="mt-2 flex flex-wrap gap-2">
                     <StatusBadge label={progress?.pokStatus ?? "pending"} />
@@ -72,19 +72,19 @@ export function StudentCourses() {
               </div>
 
               <dl className="grid gap-3 text-sm md:grid-cols-4">
-                <div>
+                <div className="academy-surface p-3">
                   <dt className="academy-label">Lessons</dt>
                   <dd className="mt-1 text-slate-800">{progress?.completedLessons ?? 0} completed / {progress?.pendingLessons ?? 0} pending</dd>
                 </div>
-                <div>
+                <div className="academy-surface p-3">
                   <dt className="academy-label">Certification</dt>
                   <dd className="mt-1 text-slate-800">{progress?.certificationEligibility ?? "not-eligible"}</dd>
                 </div>
-                <div>
+                <div className="academy-surface p-3">
                   <dt className="academy-label">Validation weight</dt>
                   <dd className="mt-1 text-slate-800">{validationWeight}% tied to quiz/certification</dd>
                 </div>
-                <div>
+                <div className="academy-surface p-3">
                   <dt className="academy-label">Next action</dt>
                   <dd className="mt-1 text-slate-800">{progress?.nextRecommendedAction ?? enrollment.nextAction}</dd>
                 </div>

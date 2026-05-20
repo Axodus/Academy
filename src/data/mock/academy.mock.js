@@ -485,6 +485,65 @@ export const academyMock = {
     { courseId: "course-marketplace-activation", requiredContentProgress: 100, requiredPokStatus: "approved", requiredQuizScore: 75, status: "eligible" },
     { courseId: "course-pok-certification", requiredContentProgress: 100, requiredPokStatus: "approved", requiredQuizScore: 85, status: "blocked" }
   ],
+  edgeCaseScenarios: {
+    failedQuiz: {
+      courseId: "course-treasury-risk",
+      quizState: "failed",
+      score: 64,
+      threshold: 82,
+      pokStatus: "retry-required",
+      userMessage: "Score below threshold. Validation-weighted rewards remain locked until retry passes."
+    },
+    retryAvailable: {
+      courseId: "course-treasury-risk",
+      retryPolicy: "retry-available",
+      nextAction: "Review failed topics and retry the PoK evaluation."
+    },
+    retryBlocked: {
+      courseId: "course-pok-certification",
+      retryPolicy: "retry-blocked",
+      nextAction: "ACS certification review is required before another attempt."
+    },
+    incompleteLessons: {
+      courseId: "course-constitutional-onboarding",
+      lockedReason: "Required lesson 3 is not consumed.",
+      quizState: "locked"
+    },
+    noCertificationCourse: {
+      id: "edge-no-certification-course",
+      title: "Marketplace Voucher Orientation",
+      certificateEnabled: false,
+      rewardType: "Locked $NEURONS"
+    },
+    pendingUnlockedRewards: {
+      courseId: "course-treasury-risk",
+      rewardType: "Unlocked $NEURONS",
+      pendingAmount: 875,
+      dependency: "PoK approval and treasury budget confirmation"
+    },
+    lockedOnlyFreeCourse: {
+      courseId: "course-constitutional-onboarding",
+      rewardType: "Locked $NEURONS",
+      transferability: "No withdrawal, no transfer, no swap"
+    },
+    governanceRestrictedCourse: {
+      courseId: "course-pok-certification",
+      standing: "under-review",
+      blockedReason: "Advanced certification reward policy is still under Academy Governance Review."
+    },
+    acsIneligibleStudent: {
+      studentId: "student_edge_acs_ineligible",
+      trustScore: 41,
+      acsEligibility: "not-eligible",
+      reason: "Trust score below ACS review threshold."
+    },
+    emptyEnrolledCourseList: {
+      studentId: "student_edge_empty",
+      enrolledCourses: [],
+      purchasedCourses: [],
+      message: "No enrolled or purchased courses yet."
+    }
+  },
   progressEngine: {
     nextUnlocks: [
       { id: "unlock-1", label: "Treasury Risk checkpoint", reward: "240 Unlocked $NEURONS", requirement: "Reach 75% progress and pass PoK review" },
