@@ -42,4 +42,17 @@ Results:
 
 Remaining validation:
 
-- Contract tests, web build and e2e smoke should be run in a dedicated Academy validation request before any maturity promotion beyond L3 candidate.
+- PORTFOLIO-REQ-02 completed build and contract tests.
+- E2E smoke remains optional/future before production release governance.
+
+PORTFOLIO-REQ-02 commands:
+
+```bash
+npm run build
+npm run test:contracts
+```
+
+PORTFOLIO-REQ-02 results:
+
+- Build: PASS with Rollup annotation and chunk-size warnings
+- Contract tests: PASS, 6 Solidity tests

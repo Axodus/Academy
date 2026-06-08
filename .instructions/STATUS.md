@@ -88,3 +88,35 @@ Production execution: DISABLED
 ## Next Recommended Request
 
 ACADEMY-REQ-01 - Current Validation Evidence and Production Boundary Review
+
+## PORTFOLIO-REQ-02 Validation Refresh
+
+Status: COMPLETE
+
+Validation result: PASS_WITH_WARNINGS
+
+Commands:
+
+```bash
+npm run typecheck
+npm run lint
+npm run test -- --run
+npm run build
+npm run test:contracts
+```
+
+Evidence:
+
+- typecheck: PASS
+- lint: PASS
+- tests: PASS, 20 tests
+- build: PASS with Rollup/chunk-size warnings
+- contract tests: PASS, 6 Solidity tests
+
+Maturity decision: PROMOTE_TO_L4_CANDIDATE
+
+Rationale:
+
+- Academy frontend/API/contracts validated locally.
+- Warnings are build/tooling size warnings, not reward, treasury, wallet or contract-execution approval.
+- Production rewards, certification issuance, contract deployment and treasury movement remain blocked.

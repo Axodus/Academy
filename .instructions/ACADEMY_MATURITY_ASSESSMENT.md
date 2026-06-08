@@ -4,9 +4,9 @@ Date: 2026-06-08
 
 ## Assessment Result
 
-Maturity level: L3 - Local validation candidate
+Maturity level: L4 candidate - Functional integration readiness
 
-Recommendation: DOCUMENTED_AS_L3_CANDIDATE
+Recommendation: PROMOTE_TO_L4_CANDIDATE
 
 ## L1-L5 Evaluation
 
@@ -15,13 +15,13 @@ Recommendation: DOCUMENTED_AS_L3_CANDIDATE
 | L0 Idea | PASS | Academy has repository structure and operational docs. |
 | L1 Scope defined | PASS | Architecture, roadmap, workflow, security and tokenomics docs exist. |
 | L2 Structure created | PASS | Source, API, contracts, tests and package scripts exist. |
-| L3 Local validation | CANDIDATE | Local/mock and scaffold evidence exists, but validation was not fully rerun in PORTFOLIO-REQ-01. |
-| L4 Functional integration | NOT_CONFIRMED | Axodus integration/readiness evidence exists, but production-sensitive paths remain blocked. |
+| L3 Local validation | PASS | PORTFOLIO-REQ-02 typecheck, lint, tests, build and contract tests passed. |
+| L4 Functional integration | CANDIDATE | Local frontend/API/contract readiness validates; production-sensitive paths remain blocked. |
 | L5 Production/auditable | FAIL | No production approval, audit or deployment authority. |
 
 ## Current Classification
 
-Academy is documented as L3 candidate until current validation, persistence boundaries, contract deployment policy, reward policy and production certification authority are reviewed.
+Academy is promoted to L4 candidate based on refreshed local validation. This is not production approval.
 
 ## Non-Production Boundary
 

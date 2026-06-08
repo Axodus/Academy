@@ -18,13 +18,13 @@ Resolution path: Define governance, treasury, compliance and contract approval p
 
 Severity: MEDIUM
 
-Status: OPEN
+Status: RESOLVED
 
 Description: Prior local evidence exists, but PORTFOLIO-REQ-01 did not initially have a consolidated current validation report.
 
 Impact: Maturity remains L3 candidate, not L4 final.
 
-Resolution path: Execute Academy validation request with typecheck, lint, unit tests, contract tests and build if safe.
+Resolution path: PORTFOLIO-REQ-02 completed typecheck, lint, tests, build and contract tests successfully. Build warnings remain non-blocking.
 
 ## ACADEMY-BLOCKER-003 - Production Persistence Not Approved
 
@@ -37,3 +37,11 @@ Description: Local JSON and adapter readiness exist, but production database sch
 Impact: Production learning state and certification state cannot be treated as authoritative.
 
 Resolution path: Approve persistence design and migration plan through a separate request.
+
+## PORTFOLIO-REQ-02 Blocker Review
+
+| Blocker | Status |
+|---|---|
+| Production reward authority missing | ACTIVE |
+| Current validation refresh required | RESOLVED |
+| Production persistence not approved | ACTIVE |
