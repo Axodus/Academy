@@ -1,44 +1,25 @@
-# Academy Rewards
+# Academy Reward Preview Boundary
 
-# Purpose
+## Current Capability
 
-Reward systems incentivize:
-- learning
-- contribution
-- governance participation
-- ecosystem growth
-- operational capability
+Academy may display deterministic, non-monetary preview points associated with mock/local learning scenarios.
 
----
+## Prohibited Authority
 
-# Reward Principles
+Academy EPIC-01 does not authorize:
 
-- sustainability-first
-- capability-oriented
-- anti-farming
-- governance-aware
+- token amounts or balances;
+- economic value or entitlement;
+- claims, minting, transfers or wallet distribution;
+- withdrawals, swaps, settlement or payouts;
+- treasury allocation or backing;
+- contract/provider execution;
+- production reward records.
 
----
+Progress, assessment results, reward preview and certificate preview remain separate states. A preview creates no right, balance or obligation.
 
-# Reward Categories
+## Existing Reward Scaffolds
 
-- progression rewards
-- certification rewards
-- governance rewards
-- contribution rewards
-- mentorship rewards
+Current token-oriented fixtures, UI labels, contracts and tests are historical compatibility scaffolds and are blockers for learner-facing semantic hardening. They provide no reward authority and must not be consumed by Sprint 02 read-only services.
 
----
-
-# Reward Constraints
-
-Rewards must never:
-- incentivize spam participation
-- incentivize fake progression
-- incentivize governance manipulation
-
----
-
-# Treasury Integration
-
-Educational rewards remain treasury-aware and governance-constrained.
+See `ACADEMY_EXECUTION_BOUNDARY.md`, `SECURITY.md` and `BLOCKER_REGISTER.md`.

@@ -22,7 +22,7 @@ export function CourseDetails() {
           <div className="flex flex-wrap gap-2">
             <StatusBadge label={course.constitutionalStanding} />
             <StatusBadge label={course.governanceStatus} />
-            <span className="academy-pill">{course.rewardType}</span>
+            <span className="academy-pill">{course.previewPointTier}</span>
             <span className="academy-pill">{course.proofOfKnowledgeRequired ? "PoK required" : "PoK optional"}</span>
           </div>
           <div className="grid gap-4 lg:grid-cols-[1fr_320px]">
@@ -32,10 +32,10 @@ export function CourseDetails() {
               <p className="mt-3 text-slate-600">{course.description}</p>
             </div>
             <aside className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-              <p className="academy-label">Reward model</p>
-              <p className="mt-1 text-2xl font-semibold text-slate-950">{formatNeurons(course.rewardAmount)}</p>
-              <p className="mt-1 text-sm font-semibold text-slate-800">{course.rewardSource} - {course.rewardType}</p>
-              <p className="mt-2 text-sm text-slate-600">{course.transferabilityStatus}</p>
+              <p className="academy-label">Preview model</p>
+              <p className="mt-1 text-2xl font-semibold text-slate-950">{formatNeurons(course.previewPoints)}</p>
+              <p className="mt-1 text-sm font-semibold text-slate-800">{course.previewSource} - {course.previewPointTier}</p>
+              <p className="mt-2 text-sm text-slate-600">{course.previewPolicy}</p>
             </aside>
           </div>
           <ProgressBar value={course.progress} label="Course progress" />
@@ -44,8 +44,8 @@ export function CourseDetails() {
 
       <section className="grid gap-4 lg:grid-cols-3">
         <Info title="Tutor" value={tutor?.name ?? "Academy tutor"} detail={tutor?.description ?? ""} link={tutor ? `/tutors/${tutor.id}` : undefined} />
-        <Info title="Access" value={course.accessType === "free" ? "Free Course" : `Paid Course / ${course.price} USDC`} detail={course.acceptedCurrencies.length ? course.acceptedCurrencies.join(", ") : "No payment required"} />
-        <Info title="Certification" value={course.certificateEnabled ? "Certificate preview enabled" : "No certificate"} detail={`PoK requirement: ${course.proofOfKnowledgeRequired ? "required" : "not required"}`} />
+        <Info title="Access" value={course.accessType === "free" ? "Free Course" : "Paid Course"} detail={course.enrollmentVisibility} />
+        <Info title="Recognition" value={course.recognitionPreviewEnabled ? "Recognition preview enabled" : "No recognition preview"} detail={`PoK requirement: ${course.proofOfKnowledgeRequired ? "required" : "not required"}`} />
       </section>
 
       <section className="grid gap-4 lg:grid-cols-[1fr_0.8fr]">
@@ -67,20 +67,20 @@ export function CourseDetails() {
           <h3 className="text-xl font-semibold text-slate-950">Reward and prerequisites</h3>
           <dl className="mt-4 grid gap-4 text-sm">
             <div>
-              <dt className="academy-label">Reward utility</dt>
-              <dd className="mt-1 text-slate-800">{course.rewardUtility.join(", ")}</dd>
+              <dt className="academy-label">Preview benefits</dt>
+              <dd className="mt-1 text-slate-800">{course.previewBenefits.join(", ")}</dd>
             </div>
             <div>
-              <dt className="academy-label">Supported chains</dt>
-              <dd className="mt-1 text-slate-800">{course.supportedChains.join(", ")}</dd>
+              <dt className="academy-label">Access descriptor</dt>
+              <dd className="mt-1 text-slate-800">{course.accessDescriptor}</dd>
             </div>
             <div>
               <dt className="academy-label">Prerequisites</dt>
               <dd className="mt-1 text-slate-800">{course.prerequisites.length ? course.prerequisites.map(getCourseTitle).join(", ") : "None"}</dd>
             </div>
             <div>
-              <dt className="academy-label">Reward records</dt>
-              <dd className="mt-1 text-slate-800">{rewards.length ? rewards.map((reward) => reward.unlockConditions.join(", ")).join(" / ") : "No issued reward yet"}</dd>
+              <dt className="academy-label">Preview records</dt>
+              <dd className="mt-1 text-slate-800">{rewards.length ? rewards.map((reward) => reward.previewMilestones.join(", ")).join(" / ") : "No preview record yet"}</dd>
             </div>
           </dl>
         </div>

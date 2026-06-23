@@ -32,7 +32,7 @@ export const learningWorkspaceService = {
       nextLesson,
       previousLesson,
       moduleProgress: courseProgressService.getModuleProgress(courseId),
-      rewardTypeLabel: rewardGateService.getRewardTypeLabel(courseId)
+      previewPointLabel: rewardGateService.getRewardTypeLabel(courseId)
     };
   }
 };

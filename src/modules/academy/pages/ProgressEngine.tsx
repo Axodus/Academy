@@ -17,7 +17,7 @@ export function ProgressEngine() {
             <p className="academy-label">Progress Engine</p>
             <h2 className="mt-1 text-3xl font-semibold text-slate-950">Capability, trust, unlocks, and ecosystem eligibility</h2>
             <p className="mt-2 max-w-3xl text-slate-600">
-              Central mock surface for Academy progression before real PoK, reward contracts, or wallet distribution are enabled.
+              Central mock surface for Academy progression before any production reward, credential, or provider authority is enabled.
             </p>
           </div>
           <StatusBadge label={student.constitutionalStanding} />
@@ -28,13 +28,13 @@ export function ProgressEngine() {
       <section className="grid gap-4 md:grid-cols-4">
         <MetricCard label="User level" value={student.level} detail={`Level index ${student.levelIndex}`} />
         <MetricCard label="Trust score" value={student.trustScore} detail="Mock anti-abuse and participation signal" />
-        <MetricCard label="Locked rewards" value={formatNeurons(student.lockedNeurons)} detail="No withdrawal, transfer, or swap" />
-        <MetricCard label="Unlocked rewards" value={formatNeurons(student.unlockedNeurons)} detail="Future wallet distribution model" />
+        <MetricCard label="Foundation points" value={formatNeurons(student.foundationPoints)} detail="No balance, claim, or transfer" />
+        <MetricCard label="Applied points" value={formatNeurons(student.appliedPoints)} detail="Local preview model" />
       </section>
 
       <section className="grid gap-4 md:grid-cols-4">
         <MetricCard label="Completed courses" value={student.completedCourses} />
-        <MetricCard label="Certifications" value={student.certifications} />
+        <MetricCard label="Recognition previews" value={student.recognitionPreviews} />
         <MetricCard label="ACS eligibility" value={student.acsEligibility} />
         <MetricCard label="Marketplace eligibility" value={student.marketplaceEligibility} />
       </section>
@@ -64,13 +64,13 @@ export function ProgressEngine() {
         <div className="grid gap-4">
           {studentCourses.map((item) => {
             if (!item) return null;
-            const { course, progress, validationWeight, rewardTypeLabel } = item;
+            const { course, progress, validationWeight, previewPointLabel } = item;
             return (
               <article key={course.id} className="rounded-lg border border-slate-200 p-4">
                 <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
                   <div>
                     <p className="font-semibold text-slate-950">{course.title}</p>
-                    <p className="mt-1 text-sm text-slate-600">{rewardTypeLabel} / {validationWeight}% validation-weighted reward</p>
+                    <p className="mt-1 text-sm text-slate-600">{previewPointLabel} / {validationWeight}% validation-weighted preview</p>
                   </div>
                   <StatusBadge label={progress?.pokStatus ?? "pending"} />
                 </div>

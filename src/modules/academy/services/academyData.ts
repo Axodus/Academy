@@ -1,6 +1,8 @@
 import { academyMock } from "../../../data/mock/academy.mock";
+import { parseAcademyPreviewFixture } from "./academyPreviewSchema";
 import type {
-  Certificate,
+  BoundaryMetadata,
+  CertificatePreview,
   CertificationRequirement,
   Course,
   LearningPath,
@@ -20,7 +22,12 @@ import type {
   UserCourseProgress
 } from "../types/academy";
 
-export const academyData = academyMock as {
+function sortByTitle<T extends { title: string }>(items: readonly T[]) {
+  return [...items].sort((left, right) => left.title.localeCompare(right.title));
+}
+
+export const academyData = parseAcademyPreviewFixture(academyMock) as {
+  boundary: BoundaryMetadata;
   student: {
     id: string;
     name: string;
@@ -31,9 +38,9 @@ export const academyData = academyMock as {
     pokReadiness: number;
     completedCourses: number;
     activeCourses: number;
-    certifications: number;
-    lockedNeurons: number;
-    unlockedNeurons: number;
+    recognitionPreviews: number;
+    foundationPoints: number;
+    appliedPoints: number;
     acsEligibility: string;
     marketplaceEligibility: string;
   };
@@ -41,7 +48,7 @@ export const academyData = academyMock as {
   tutors: Tutor[];
   courses: Course[];
   lessons: Lesson[];
-  certificates: Certificate[];
+  certificates: CertificatePreview[];
   rewards: RewardRecord[];
   enrolledCourses: StudentEnrollment[];
   purchasedCourses: StudentEnrollment[];
@@ -72,7 +79,7 @@ export function getTutor(tutorId: string) {
 }
 
 export function getCourseBySlug(slug: string | undefined) {
-  return academyData.courses.find((course) => course.slug === slug);
+  return sortByTitle(academyData.courses).find((course) => course.slug === slug);
 }
 
 export function getCourseLessons(courseId: string) {
@@ -84,9 +91,17 @@ export function getCourseRewards(courseId: string) {
 }
 
 export function getLearningPath(pathId: string | undefined) {
-  return academyData.learningPaths.find((path) => path.id === pathId);
+  return sortByTitle(academyData.learningPaths).find((path) => path.id === pathId);
 }
 
 export function getCourseTitle(courseId: string) {
   return academyData.courses.find((course) => course.id === courseId)?.title ?? "Unknown course";
+}
+
+export function listCatalogCourses() {
+  return sortByTitle(academyData.courses);
+}
+
+export function listLearningPaths() {
+  return sortByTitle(academyData.learningPaths);
 }

@@ -16,7 +16,7 @@ export function TutorProfile() {
     <>
       <section className="academy-card grid gap-5 p-6">
         <div className="flex flex-wrap gap-2">
-          <StatusBadge label={tutor.verificationStatus} />
+          <StatusBadge label={tutor.reviewStatus} />
           <StatusBadge label={tutor.governanceStanding} />
           <span className="academy-pill">{tutor.type}</span>
         </div>
@@ -29,7 +29,7 @@ export function TutorProfile() {
       <section className="grid gap-4 md:grid-cols-4">
         <MetricCard label="Reputation" value={tutor.reputation} />
         <MetricCard label="Courses published" value={tutor.coursesPublished} />
-        <MetricCard label="Certificates issued" value={tutor.certificatesIssued} />
+        <MetricCard label="Recognition previews" value={tutor.recognitionPreviewsAuthored} />
         <MetricCard label="Educational tier" value={tutor.educationalTier} />
       </section>
       <section>

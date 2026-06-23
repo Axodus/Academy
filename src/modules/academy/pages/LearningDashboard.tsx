@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { MetricCard } from "../components/MetricCard";
 import { ProgressBar } from "../components/ProgressBar";
 import { StatusBadge } from "../components/StatusBadge";
-import { academyData, getTutor } from "../services/academyData";
+import { academyData, getTutor, listCatalogCourses } from "../services/academyData";
 import { formatNeurons } from "../utils/format";
 
 export function LearningDashboard() {
@@ -16,20 +16,20 @@ export function LearningDashboard() {
       </section>
       <section className="grid gap-4 md:grid-cols-4">
         <MetricCard label="Completed courses" value={student.completedCourses} detail={`${student.activeCourses} active courses`} />
-        <MetricCard label="Certifications" value={student.certifications} detail="Mock verified credentials" />
-        <MetricCard label="Locked $NEURONS" value={formatNeurons(student.lockedNeurons)} detail="Internal balance only" />
-        <MetricCard label="Unlocked $NEURONS" value={formatNeurons(student.unlockedNeurons)} detail="Future wallet-compatible" />
+        <MetricCard label="Recognition previews" value={student.recognitionPreviews} detail="Mock learner recognition only" />
+        <MetricCard label="Foundation points" value={formatNeurons(student.foundationPoints)} detail="Local preview only" />
+        <MetricCard label="Applied points" value={formatNeurons(student.appliedPoints)} detail="Local preview only" />
       </section>
       <section className="grid gap-4 lg:grid-cols-[1fr_0.8fr]">
         <div className="academy-card grid gap-4 p-5">
           <h3 className="text-xl font-semibold text-slate-950">Active learning telemetry</h3>
-          {academyData.courses.map((course) => (
+          {listCatalogCourses().map((course) => (
             <article key={course.id} className="rounded-lg border border-slate-200 p-4">
               <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                 <Link to={`/courses/${course.slug}`} className="font-semibold text-slate-950 hover:text-academy-blue">{course.title}</Link>
                 <StatusBadge label={course.constitutionalStanding} />
               </div>
-              <ProgressBar value={course.progress} label={`${course.rewardType} / ${course.rewardSource}`} />
+              <ProgressBar value={course.progress} label={`${course.previewPointTier} / ${course.previewSource}`} />
             </article>
           ))}
         </div>
@@ -41,7 +41,7 @@ export function LearningDashboard() {
                 <p className="font-semibold text-slate-950">{tutor.name}</p>
                 <StatusBadge label={tutor.governanceStanding} />
               </div>
-              <p className="mt-2 text-sm text-slate-600">{tutor.coursesPublished} courses / {tutor.certificatesIssued} certificates / reputation {tutor.reputation}</p>
+              <p className="mt-2 text-sm text-slate-600">{tutor.coursesPublished} courses / {tutor.recognitionPreviewsAuthored} recognition previews / reputation {tutor.reputation}</p>
             </Link>
           ))}
           <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">

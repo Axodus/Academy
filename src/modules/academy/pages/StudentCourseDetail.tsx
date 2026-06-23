@@ -11,7 +11,7 @@ export function StudentCourseDetail() {
 
   if (!detail) return <Navigate to="/my-courses" replace />;
 
-  const { course, progress, lessons, lessonProgress, moduleProgress, quiz, quizState, pokStatus, rewardGates, certificationRequirement, rewardTypeLabel, validationWeight } = detail;
+  const { course, progress, lessons, lessonProgress, moduleProgress, quiz, quizState, pokStatus, rewardGates, certificationRequirement, previewPointLabel, validationWeight } = detail;
 
   return (
     <>
@@ -25,7 +25,7 @@ export function StudentCourseDetail() {
           <div className="flex flex-wrap gap-2">
             <StatusBadge label={course.constitutionalStanding} />
             <StatusBadge label={pokStatus?.status ?? "pending"} />
-            <span className="academy-pill">{rewardTypeLabel}</span>
+            <span className="academy-pill">{previewPointLabel}</span>
           </div>
         </div>
         <div className="grid gap-4 md:grid-cols-3">
@@ -101,11 +101,11 @@ export function StudentCourseDetail() {
           </section>
 
           <section className="academy-card p-5">
-            <p className="academy-label">Reward distribution</p>
-            <p className="mt-1 text-xl font-semibold text-slate-950">{formatNeurons(course.rewardAmount)} total</p>
-            <p className="mt-2 text-sm text-slate-600">{validationWeight}% of reward weight is tied to quiz and certification validation.</p>
+            <p className="academy-label">Preview distribution</p>
+            <p className="mt-1 text-xl font-semibold text-slate-950">{formatNeurons(course.previewPoints)} total</p>
+            <p className="mt-2 text-sm text-slate-600">{validationWeight}% of preview weight is tied to quiz and recognition validation.</p>
             <p className={`mt-3 rounded-md border px-3 py-2 text-sm font-semibold ${course.accessType === "free" ? "border-cyan-200 bg-cyan-50 text-cyan-900" : "border-emerald-200 bg-emerald-50 text-emerald-900"}`}>
-              {course.accessType === "free" ? "Free courses generate Locked $NEURONS only." : "Paid courses generate Unlocked $NEURONS progressively after validation."}
+              {course.accessType === "free" ? "Free courses surface Foundation Preview only." : "Paid courses surface Applied Preview after validation."}
             </p>
           </section>
         </aside>

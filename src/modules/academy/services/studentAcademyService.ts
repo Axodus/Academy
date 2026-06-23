@@ -24,7 +24,7 @@ export const studentAcademyService = {
           quiz,
           rewardGates,
           validationWeight,
-          rewardTypeLabel: rewardGateService.getRewardTypeLabel(course.id)
+          previewPointLabel: rewardGateService.getRewardTypeLabel(course.id)
         };
       })
       .filter(Boolean);
@@ -46,7 +46,7 @@ export const studentAcademyService = {
       pokStatus: academyData.pokValidationStatus.find((item) => item.courseId === courseId),
       rewardGates: rewardGateService.getRewardGates(courseId),
       certificationRequirement: courseProgressService.getCertificationRequirement(courseId),
-      rewardTypeLabel: rewardGateService.getRewardTypeLabel(courseId),
+      previewPointLabel: rewardGateService.getRewardTypeLabel(courseId),
       validationWeight: rewardGateService.getValidationWeight(courseId)
     };
   }

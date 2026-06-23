@@ -1,149 +1,55 @@
 # Academy Workflow
 
-# Development Philosophy
+## Required Sequence
 
-Academy development prioritizes:
-- capability formation
-- governance quality
-- educational integrity
-- sustainability
-- measurable progression
+1. Read `ACADEMY_EXECUTION_BOUNDARY.md`, `STATUS.md`, `BLOCKER_REGISTER.md` and `HANDOFF.md`.
+2. Add the required Codex configuration block to the request.
+3. Classify every touched surface as read-only, local preview, compatibility scaffold or prohibited authority.
+4. Define evidence and negative tests before implementation.
+5. Implement only within the approved request scope.
+6. Run command-specific validation and record terminal results.
+7. Reconcile status, blockers, decisions and handoff without promoting maturity from partial evidence.
 
-Avoid engagement-first educational systems.
+## Change Classification
 
----
+### Read-only/local domain changes
 
-# Operational Workflow
+May use `gpt-5.4` when bounded to schemas, fixtures, deterministic resolvers and tests with no authority-sensitive dependency.
 
-## 1. Educational Design
+### Authority-sensitive changes
 
-Before implementation:
-- define educational objective
-- define capability outcome
-- define governance implications
-- define progression structure
-- define sustainability impact
+Must use at least `gpt-5.5 + High` when touching operational gates, permissions, credentials, rewards, wallet/signing, treasury, billing, settlement, payouts, production APIs/databases, providers, cross-nucleus authority or governance.
 
-Education must produce real capability.
+### Security and maturity decisions
 
----
+Must use `gpt-5.5 + Extra high`.
 
-## 2. Capability Validation
+## Mutation Workflow
 
-Every learning system must:
-- expose measurable progression
-- expose capability verification
-- expose participation integrity
-- expose governance relevance
+Local preview mutation is forbidden until the preview mutation contract in `ACADEMY_EXECUTION_BOUNDARY.md` is implemented and tested. Authentication alone never enables mutation.
 
-Avoid meaningless progression systems.
+Once implemented, preview mutation must remain explicit, non-production, local-only, non-authoritative, non-executing and fail-closed.
 
----
+## Validation Workflow
 
-## 3. Reward Validation
+- Run the exact commands required by the request.
+- Record exit code, test counts, warnings, failures, skips and timeouts.
+- Do not convert a component pass into an aggregate pass.
+- Do not convert scaffold tests into authority evidence.
+- Do not hide or soften failures.
 
-Before deployment:
-- validate reward sustainability
-- validate anti-farming systems
-- validate progression integrity
-- validate educational consistency
-- validate treasury implications
+## Documentation Workflow
 
----
+Any architecture or authority change must reconcile:
 
-## 4. Implementation
+- `ARCHITECTURE.md`;
+- `SECURITY.md`;
+- `DECISIONS.md`;
+- `TASKS.md`;
+- `ROADMAP.md`;
+- `STATUS.md`;
+- `BLOCKER_REGISTER.md`;
+- `VALIDATION.md`;
+- `HANDOFF.md`.
 
-Implementation rules:
-- isolate educational domains
-- isolate certification systems
-- isolate reward accounting
-- expose telemetry
-- expose progression visibility
-
----
-
-## 5. Runtime Validation
-
-Before merge:
-- validate progression tracking
-- validate reward accounting
-- validate certification integrity
-- validate governance formation flows
-- validate ACS integration
-
----
-
-# Learning Workflow
-
-## Learning Creation
-- define learning goals
-- define capability outcomes
-- define progression checkpoints
-- define telemetry requirements
-
----
-
-## Learning Execution
-- educational progression
-- participation tracking
-- telemetry generation
-- capability evaluation
-
----
-
-## Learning Completion
-- finalize progression state
-- validate capability
-- issue certifications
-- generate reward accounting
-
----
-
-# Certification Workflow
-
-## Certification Creation
-- define specialization
-- define capability requirements
-- define validation standards
-
----
-
-## Certification Issuance
-- validate progression
-- validate Proof-of-Knowledge
-- issue certification
-- update telemetry
-
----
-
-# ACS Workflow
-
-## AI-assisted Learning
-- adaptive progression
-- tutoring systems
-- cognitive assistance
-- educational simulations
-
-ACS systems must remain assistive and bounded.
-
----
-
-# Security Workflow
-
-All Academy-sensitive changes must:
-- document progression implications
-- document governance implications
-- document reward implications
-- document sustainability implications
-
----
-
-# Documentation Workflow
-
-All architecture changes must update:
-- ARCHITECTURE.md
-- TASKS.md
-- ROADMAP.md
-- DECISIONS.md
-
-The `.instructions` layer must remain operationally current.
+The canonical execution boundary may be strengthened only through an explicit authority-sensitive request. It must never be weakened implicitly.

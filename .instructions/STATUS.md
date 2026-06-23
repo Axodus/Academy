@@ -1,122 +1,79 @@
 # Academy Status
 
-Last updated: 2026-06-08
+Last updated: 2026-06-23
 
-## Portfolio Normalization
+## Current Request
 
-Request: PORTFOLIO-REQ-01 - Portfolio Status Normalization
+`ACADEMY-SPRINT-01` - Current State and Instruction Alignment
 
-Normalization result: COMPLETE
+- `ACADEMY-REQ-01`: baseline established in `ACADEMY_CURRENT_STATE_BASELINE.md`.
+- `ACADEMY-REQ-02`: boundary established in `ACADEMY_EXECUTION_BOUNDARY.md`.
 
-## Current Maturity
+## Current Classification
 
-Detected level: L3 - Local validation candidate
-
-Maturity recommendation: DOCUMENTED_AS_L3_CANDIDATE
-
-Rationale:
-
-- `.instructions` exists and contains roadmap, workflow, security, architecture, decisions, rewards, tokenomics and Academy planning guidance.
-- Product source exists with frontend/API surfaces, local persistence readiness, OpenAPI evidence, Solidity scaffold contracts and tests.
-- Existing instructions describe mock/frontend-first Academy flow, local JSON persistence, PoK validation read models, reward gate state and contract readiness surfaces.
-- PORTFOLIO-REQ-01 reran typecheck, lint and unit/API tests successfully, but did not run contract tests, web build or e2e smoke.
-
-This status does not classify Academy as production-ready or L4 final.
-
-## Evidence Used
-
-- `.instructions/ROADMAP.md`
-- `.instructions/TASKS.md`
-- `.instructions/WORKFLOW.md`
-- `.instructions/SECURITY.md`
-- `.instructions/DECISIONS.md`
-- `README.md`
-- `package.json`
-- `academy.openapi.json`
-- `src/`
-- `contracts/`
-- `tests/`
-
-## Missing Operational Files Before Normalization
-
-- `.instructions/STATUS.md`
-- `.instructions/BLOCKER_REGISTER.md`
-- `.instructions/VALIDATION.md`
-- `.instructions/HANDOFF.md`
-
-## Blockers
-
-- Production database schema and Postgres adapter are not approved as production execution infrastructure.
-- Production certification issuance is not approved.
-- Contract deployment, contract writes, minting, withdrawals, transfers and treasury execution remain blocked.
-- Reward/token claims require governance, treasury and compliance review before public production use.
-- Current full validation evidence must be refreshed before any maturity promotion.
-- Contract tests, web build and e2e validation remain pending before maturity promotion.
-
-## Dependencies
-
-- Governance approval for production certification and reward policy.
-- Treasury policy for any value-bearing reward handling.
-- Contract audit/review before deployment.
-- Production persistence decision.
-- AxodusAPP/Core integration review for consumer contracts.
-
-## Execution Policy
-
-Allowed:
-
-- local/mock learning flow validation;
-- read-only integration readiness documentation;
-- local tests/builds when dependencies are present;
-- contract scaffold validation without deployment.
-
-Forbidden without explicit approval:
-
-- production certification issuance;
-- real token minting or reward transfer;
-- treasury movement;
-- wallet signing;
-- on-chain writes;
-- production deployment claims.
-
-## Production Status
-
+```txt
+L-Level: L3_CANDIDATE_VALIDATION_INCOMPLETE
+L4 promotion: NOT_SUPPORTED
+D-Level: NOT_EVALUATED
 Production readiness: NO
-
 Production execution: DISABLED
-
-## Next Recommended Request
-
-ACADEMY-REQ-01 - Current Validation Evidence and Production Boundary Review
-
-## PORTFOLIO-REQ-02 Validation Refresh
-
-Status: COMPLETE
-
-Validation result: PASS_WITH_WARNINGS
-
-Commands:
-
-```bash
-npm run typecheck
-npm run lint
-npm run test -- --run
-npm run build
-npm run test:contracts
+Evidence result: PARTIAL_PASS_WITH_BLOCKERS
 ```
 
-Evidence:
+L-Level describes maturity evidence only. It grants no D-Level, deployment permission, financial authority, credential authority or production authority.
 
-- typecheck: PASS
-- lint: PASS
-- tests: PASS, 20 tests
-- build: PASS with Rollup/chunk-size warnings
-- contract tests: PASS, 6 Solidity tests
+## Canonical Operating Mode
 
-Maturity decision: PROMOTE_TO_L4_CANDIDATE
+```txt
+NON_PRODUCTION
+MOCK_OR_CONFIG_FIRST
+READ_ONLY_OR_PREVIEW_ONLY_WHEN_APPLICABLE
+EXECUTION_GATED
+TREASURY_GATED
+CERTIFICATION_ISSUANCE_GATED
+REWARDS_GATED
+FAIL_CLOSED_BY_DEFAULT
+```
 
-Rationale:
+The canonical rules are in `ACADEMY_EXECUTION_BOUNDARY.md`.
 
-- Academy frontend/API/contracts validated locally.
-- Warnings are build/tooling size warnings, not reward, treasury, wallet or contract-execution approval.
-- Production rewards, certification issuance, contract deployment and treasury movement remain blocked.
+## Current Evidence
+
+- Typecheck: PASS.
+- Lint: PASS.
+- Unit/API tests: PASS, 20 tests.
+- Solidity scaffold tests: PASS, 6 tests; not authority evidence.
+- Web build: PASS_WITH_WARNINGS.
+- API build: PASS.
+- Aggregate build: PASS on exact-command rerun with a 480-second limit; the initial 240-second attempt was incomplete.
+- Desktop E2E: FAIL, 7 passed and `/academy/progress` failed.
+- Tablet/mobile E2E: NOT RUN.
+- Preview mutation gate: NOT IMPLEMENTED.
+- Negative static authority checks: NOT IMPLEMENTED.
+
+## Authority Status
+
+| Area | Status |
+|---|---|
+| Local fixtures and read models | ALLOWED, mock/local only |
+| Read-only catalog/path work | ALLOWED after Sprint 01 handoff |
+| Local progress mutation | BLOCKED until explicit fail-closed preview gate is implemented |
+| Wallet authentication | COMPATIBILITY SCAFFOLD only |
+| Wallet transaction signing | CLOSED |
+| Certificate/badge preview | PREVIEW ONLY |
+| Certification issuance/verification | CLOSED |
+| Non-monetary reward preview | PREVIEW ONLY |
+| Token reward, claim or transfer | CLOSED |
+| Contract tests/static inspection | ALLOWED as scaffold validation |
+| Contract deployment/write | CLOSED |
+| Production database/API/provider | CLOSED |
+| Treasury, billing, settlement, payout | CLOSED |
+| Cross-nucleus/governance authority | CLOSED |
+
+## Promotion Blockers
+
+See `BLOCKER_REGISTER.md`. The primary blockers are the absent preview mutation gate, unsafe learner-facing authority semantics, absent negative static checks and the failing E2E route.
+
+## Next Safe Work
+
+`ACADEMY-SPRINT-02`, limited to validated local schemas/fixtures and deterministic read-only catalog/learning-path services. Sprint 02 must not consume or extend mutation, wallet, contract, payment, credential, provider or production authority.

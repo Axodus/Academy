@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { academyData } from "../services/academyData";
+import { academyData, listCatalogCourses } from "../services/academyData";
 import { formatNeurons } from "../utils/format";
 import { CourseCard } from "../components/CourseCard";
 import { MetricCard } from "../components/MetricCard";
@@ -7,7 +7,7 @@ import { ProgressBar } from "../components/ProgressBar";
 import { StatusBadge } from "../components/StatusBadge";
 
 export function AcademyHome() {
-  const featured = academyData.courses.slice(0, 3);
+  const featured = listCatalogCourses().slice(0, 3);
 
   return (
     <>
@@ -22,7 +22,7 @@ export function AcademyHome() {
             <div>
               <p className="academy-label">Academy nucleus</p>
               <h2 className="mt-2 max-w-4xl text-4xl font-semibold leading-tight text-slate-950">
-                Constitutional education, progression, and $NEURONS qualification before real token execution.
+                Constitutional education, progression, and preview qualification before any production authority.
               </h2>
               <p className="mt-4 max-w-3xl text-base text-slate-600">
                 Academy validates learning, trust, Proof of Knowledge readiness, and treasury-aware reward classes through mock read models before contracts are enabled.
@@ -36,20 +36,20 @@ export function AcademyHome() {
         </div>
         <div className="academy-card grid gap-4 p-5">
           <div>
-            <p className="academy-label">Reward doctrine</p>
-            <h3 className="mt-1 text-xl font-semibold text-slate-950">Free Course to Locked $NEURONS</h3>
-            <p className="mt-2 text-sm text-slate-600">Internal balance only: no withdrawal, no transfer, no swap. Usable for vouchers, NFTs, marketplace, internal services, licenses, benefits, and voting utilities.</p>
+            <p className="academy-label">Preview doctrine</p>
+            <h3 className="mt-1 text-xl font-semibold text-slate-950">Free Course to Foundation Preview</h3>
+            <p className="mt-2 text-sm text-slate-600">Local preview points only. No balance, claim, transfer, payout, settlement, or execution authority is created.</p>
           </div>
           <div className="rounded-lg border border-slate-200 p-4">
-            <h3 className="text-xl font-semibold text-slate-950">Paid Course to Unlocked $NEURONS</h3>
-            <p className="mt-2 text-sm text-slate-600">Higher reward potential with progress, milestone, completion, or certification unlocks. Future direct wallet distribution requires governance and treasury approval.</p>
+            <h3 className="text-xl font-semibold text-slate-950">Paid Course to Applied Preview</h3>
+            <p className="mt-2 text-sm text-slate-600">Higher preview visibility with progress, milestone completion, and recognition-preview eligibility. No monetary, signer, or treasury authority is implied.</p>
           </div>
         </div>
       </section>
 
       <section className="grid gap-4 md:grid-cols-4">
-        <MetricCard label="Locked $NEURONS" value={formatNeurons(academyData.student.lockedNeurons)} detail="Internal ecosystem utility" />
-        <MetricCard label="Unlocked $NEURONS" value={formatNeurons(academyData.student.unlockedNeurons)} detail="Future wallet-compatible rewards" />
+        <MetricCard label="Foundation points" value={formatNeurons(academyData.student.foundationPoints)} detail="Local preview utility" />
+        <MetricCard label="Applied points" value={formatNeurons(academyData.student.appliedPoints)} detail="Advanced local preview" />
         <MetricCard label="Trust score" value={academyData.student.trustScore} detail={academyData.student.constitutionalStanding} />
         <MetricCard label="PoK readiness" value={`${academyData.student.pokReadiness}%`} detail="Mock validation score" />
       </section>

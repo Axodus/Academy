@@ -20,7 +20,7 @@ export const rewardPolicyService = {
 
   validateRewardClassSeparation(courseId: string) {
     const course = academyData.courses.find((item) => item.id === courseId);
-    const expectedClass = course?.accessType === "paid" ? "unlocked" : "locked";
+    const expectedClass = course?.accessType === "paid" ? "applied" : "foundation";
     return this.getRewardGates(courseId).every((gate) => gate.rewardClass === expectedClass);
   }
 };

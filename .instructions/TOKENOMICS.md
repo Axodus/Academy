@@ -1,5 +1,7 @@
 # Academy Tokenomics
 
+Operational note: this document is future design context only. `ACADEMY_EXECUTION_BOUNDARY.md` prohibits token balances, claims, transfers, settlement, payouts and treasury execution under EPIC-01.
+
 # Purpose
 
 Academy tokenomics coordinates:

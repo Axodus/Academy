@@ -5,10 +5,10 @@ type CourseFiltersProps = {
   filters: {
     category: string;
     level: string;
-    rewardType: string;
+    previewPointTier: string;
     accessType: string;
     language: string;
-    certification: string;
+    recognition: string;
   };
   onChange: (key: keyof CourseFiltersProps["filters"], value: string) => void;
 };
@@ -20,7 +20,7 @@ function unique(values: string[]) {
 export function CourseFilters({ courses, filters, onChange }: CourseFiltersProps) {
   const categories = unique(courses.map((course) => course.category));
   const levels = unique(courses.map((course) => course.level));
-  const rewardTypes = unique(courses.map((course) => course.rewardType));
+  const previewPointTiers = unique(courses.map((course) => course.previewPointTier));
   const languages = unique(courses.map((course) => course.language));
 
   return (
@@ -32,10 +32,10 @@ export function CourseFilters({ courses, filters, onChange }: CourseFiltersProps
       <div className="grid gap-3 md:grid-cols-3 xl:grid-cols-6">
         <Select label="Category" value={filters.category} options={categories} onChange={(value) => onChange("category", value)} />
         <Select label="Level" value={filters.level} options={levels} onChange={(value) => onChange("level", value)} />
-        <Select label="Reward" value={filters.rewardType} options={rewardTypes} onChange={(value) => onChange("rewardType", value)} />
+        <Select label="Preview Tier" value={filters.previewPointTier} options={previewPointTiers} onChange={(value) => onChange("previewPointTier", value)} />
         <Select label="Access" value={filters.accessType} options={["free", "paid"]} onChange={(value) => onChange("accessType", value)} />
         <Select label="Language" value={filters.language} options={languages} onChange={(value) => onChange("language", value)} />
-        <Select label="Certificate" value={filters.certification} options={["enabled", "not-enabled"]} onChange={(value) => onChange("certification", value)} />
+        <Select label="Recognition" value={filters.recognition} options={["enabled", "not-enabled"]} onChange={(value) => onChange("recognition", value)} />
       </div>
     </section>
   );

@@ -1,24 +1,40 @@
 export type AcademyStanding = "compliant" | "approved" | "under-review" | "restricted" | "deprecated";
 export type AccessType = "free" | "paid";
-export type RewardType = "Locked $NEURONS" | "Unlocked $NEURONS";
-export type RewardClass = "locked" | "unlocked";
+export type PreviewPointTier = "Foundation Preview" | "Applied Preview";
+export type RewardClass = "foundation" | "applied";
 export type LessonProgressStatus = "locked" | "available" | "completed" | "validated";
 export type QuizState = "locked" | "available" | "in-progress" | "passed" | "failed";
 export type PokStatus = "pending" | "approved" | "rejected" | "retry-required";
 export type RewardGateStatus = "locked" | "pending" | "unlocked" | "rejected";
+export type BoundaryMetadata = {
+  mode: "local-preview";
+  authority: "non-authoritative";
+  fixtureSource: "academy-mock-local";
+  catalogVersion: string;
+  deterministicOrder: {
+    courses: "title-asc";
+    learningPaths: "title-asc";
+  };
+  productionSensitiveGates: {
+    contractWritesEnabled: false;
+    providerExecutionEnabled: false;
+    rewardExecutionEnabled: false;
+    credentialIssuanceEnabled: false;
+    productionPersistenceEnabled: false;
+  };
+};
 
 export type Tutor = {
   id: string;
   name: string;
   type: string;
-  verificationStatus: string;
+  reviewStatus: string;
   governanceStanding: string;
   reputation: number;
   coursesPublished: number;
-  certificatesIssued: number;
+  recognitionPreviewsAuthored: number;
   educationalTier: string;
   constitutionalBound: boolean;
-  rewardEligible: boolean;
   description: string;
 };
 
@@ -44,19 +60,16 @@ export type Course = {
   status: string;
   governanceStatus: string;
   constitutionalStanding: AcademyStanding;
-  certificateEnabled: boolean;
+  recognitionPreviewEnabled: boolean;
   proofOfKnowledgeRequired: boolean;
-  rewardType: RewardType;
-  rewardAmount: number;
-  rewardLocked: boolean;
-  rewardSource: string;
-  rewardUtility: string[];
-  transferabilityStatus: string;
+  previewPointTier: PreviewPointTier;
+  previewPoints: number;
+  previewSource: string;
+  previewBenefits: string[];
+  previewPolicy: string;
   prerequisites: string[];
-  supportedChains: string[];
-  nftAccessRequired: boolean;
-  price: number;
-  acceptedCurrencies: string[];
+  accessDescriptor: string;
+  enrollmentVisibility: string;
   progress: number;
   createdAt: string;
   updatedAt: string;
@@ -76,33 +89,30 @@ export type Lesson = {
   status: string;
 };
 
-export type Certificate = {
+export type CertificatePreview = {
   id: string;
   courseId: string;
   studentId: string;
-  issueDate: string;
-  expiration: string;
-  verificationStatus: string;
-  governanceValidated: boolean;
-  nftCompatible: boolean;
-  proofHash: string;
-  certificationLevel: string;
+  reviewedOn: string;
+  expiresOn: string;
+  previewStatus: string;
+  governanceReviewed: boolean;
+  recognitionLevel: string;
+  previewNote: string;
 };
 
 export type RewardRecord = {
   id: string;
   studentId: string;
   courseId: string;
-  rewardType: RewardType;
-  rewardSource: string;
-  amount: number;
-  locked: boolean;
-  unlockConditions: string[];
-  claimable: boolean;
+  previewPointTier: PreviewPointTier;
+  previewSource: string;
+  previewPoints: number;
+  previewMilestones: string[];
   governanceControlled: boolean;
-  transferabilityStatus: string;
-  utility: string[];
-  issuedAt: string;
+  previewPolicy: string;
+  previewBenefits: string[];
+  reviewedOn: string;
 };
 
 export type LearningPath = {
@@ -137,8 +147,8 @@ export type UserCourseProgress = {
   quizState: QuizState;
   finalEvaluationStatus: string;
   nextRecommendedAction: string;
-  lockedNeuronsEarned: number;
-  unlockedNeuronsEarned: number;
+  foundationPointsEarned: number;
+  appliedPointsEarned: number;
   pendingRewardGates: string[];
 };
 
@@ -208,7 +218,7 @@ export type RewardGate = {
   courseId: string;
   source: "lesson" | "module" | "quiz" | "certification";
   rewardPercentage: number;
-  rewardAmount: number;
+  previewPoints: number;
   rewardClass: RewardClass;
   unlockCondition: string;
   status: RewardGateStatus;
@@ -218,8 +228,8 @@ export type RewardUnlockEvent = {
   id: string;
   courseId: string;
   gateId: string;
-  amount: number;
-  rewardType: RewardType;
+  previewPoints: number;
+  previewPointTier: PreviewPointTier;
   reason: string;
   occurredAt: string;
 };

@@ -1,41 +1,41 @@
 import { RewardClassPanel } from "../components/RewardClassPanel";
 import { RewardGateList } from "../components/RewardGateList";
-import { academyData } from "../services/academyData";
+import { academyData, listCatalogCourses } from "../services/academyData";
 import { rewardGateService } from "../services/rewardGateService";
 
 export function RewardsDashboard() {
-  const lockedRewards = academyData.rewards.filter((reward) => reward.rewardType === "Locked $NEURONS");
-  const unlockedRewards = academyData.rewards.filter((reward) => reward.rewardType === "Unlocked $NEURONS");
+  const foundationRewards = academyData.rewards.filter((reward) => reward.previewPointTier === "Foundation Preview");
+  const appliedRewards = academyData.rewards.filter((reward) => reward.previewPointTier === "Applied Preview");
 
   return (
     <>
       <section>
         <p className="academy-label">Rewards Dashboard</p>
-        <h2 className="mt-1 text-3xl font-semibold text-slate-950">Reward Classes and treasury-controlled mock accounting</h2>
+        <h2 className="mt-1 text-3xl font-semibold text-slate-950">Preview tiers and treasury-isolated mock accounting</h2>
         <p className="mt-2 max-w-3xl text-slate-600">
-          The MVP separates free-course Locked $NEURONS from paid-course Unlocked $NEURONS. All balances are mock-only.
+          The MVP separates free-course foundation previews from paid-course applied previews. All values are local, deterministic, and non-authoritative.
         </p>
       </section>
       <RewardClassPanel
-        title="Locked Rewards"
-        description="Free Course -> Locked $NEURONS. Internal balance only with no withdrawal, no transfer, and no swap. Utility is limited to vouchers, NFTs, marketplace purchases, internal services, licenses, benefits, and voting utilities."
-        rewards={lockedRewards}
+        title="Foundation Preview"
+        description="Free Course -> Foundation Preview. Local preview points only with no balance, claim, transfer, payout, or settlement semantics."
+        rewards={foundationRewards}
       />
       <RewardClassPanel
-        title="Unlocked Rewards"
-        description="Paid Course -> Unlocked $NEURONS. Higher reward potential with future direct wallet distribution after progress, certification, governance, and treasury approval."
-        rewards={unlockedRewards}
+        title="Applied Preview"
+        description="Paid Course -> Applied Preview. Higher preview visibility after progress, recognition review, and governance-controlled mock checks."
+        rewards={appliedRewards}
       />
       <section className="academy-card grid gap-4 p-5">
         <div>
-          <p className="academy-label">Reward Gate System</p>
-          <h3 className="text-xl font-semibold text-slate-950">Main reward weight is tied to Proof-of-Knowledge validation</h3>
+          <p className="academy-label">Preview Gate System</p>
+          <h3 className="text-xl font-semibold text-slate-950">Main preview weight is tied to Proof-of-Knowledge validation</h3>
           <p className="mt-2 max-w-3xl text-sm text-slate-600">
-            Lesson consumption gates are intentionally small. Quiz and certification gates carry the highest percentages to prevent passive reward farming.
+            Lesson consumption gates are intentionally small. Quiz and recognition gates carry the highest percentages to prevent passive preview farming.
           </p>
         </div>
         <div className="grid gap-4 lg:grid-cols-2">
-          {academyData.courses.slice(0, 2).map((course) => (
+          {listCatalogCourses().slice(0, 2).map((course) => (
             <article key={course.id} className="rounded-lg border border-slate-200 bg-slate-50 p-4">
               <div className="mb-3 flex flex-wrap items-center justify-between gap-2">
                 <p className="font-semibold text-slate-950">{course.title}</p>

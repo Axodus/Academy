@@ -33,12 +33,12 @@ export function RewardGateList({ gates }: RewardGateListProps) {
               <p className="mt-1 font-semibold text-slate-900">{gate.source === "quiz" || gate.source === "certification" ? "PoK weighted" : "Low-weight progress"}</p>
             </div>
             <div>
-              <p className="academy-label">Amount</p>
-              <p className="mt-1 font-semibold text-slate-900">{formatNeurons(gate.rewardAmount)}</p>
+              <p className="academy-label">Preview points</p>
+              <p className="mt-1 font-semibold text-slate-900">{formatNeurons(gate.previewPoints)}</p>
             </div>
             <div>
-              <p className="academy-label">Class</p>
-              <p className={`mt-1 font-semibold ${gate.rewardClass === "locked" ? "text-cyan-900" : "text-emerald-900"}`}>{gate.rewardClass === "locked" ? "Locked $NEURONS" : "Unlocked $NEURONS"}</p>
+              <p className="academy-label">Tier</p>
+              <p className={`mt-1 font-semibold ${gate.rewardClass === "foundation" ? "text-cyan-900" : "text-emerald-900"}`}>{gate.rewardClass === "foundation" ? "Foundation Preview" : "Applied Preview"}</p>
             </div>
           </div>
         </article>

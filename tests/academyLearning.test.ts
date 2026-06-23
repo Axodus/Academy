@@ -1,8 +1,10 @@
-import { rm } from "node:fs/promises";
+import { readdir, readFile, rm } from "node:fs/promises";
+import path from "node:path";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { buildApp } from "../src/serverApp";
 import { signLoginJwt } from "../src/libs/jwt";
-import { academyData } from "../src/modules/academy/services/academyData";
+import { academyData, listCatalogCourses, listLearningPaths } from "../src/modules/academy/services/academyData";
+import { certificatePreviewSchema, rewardRecordSchema } from "../src/modules/academy/services/academyPreviewSchema";
 import { courseProgressService } from "../src/modules/academy/services/courseProgressService";
 import { pokValidationService } from "../src/modules/academy/services/pokValidationService";
 import { quizService } from "../src/modules/academy/services/quizService";
@@ -74,9 +76,9 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
     expect(result.status).toBe("retry-required");
   });
 
-  it("keeps free courses on Locked $NEURONS and paid courses on Unlocked $NEURONS", () => {
-    expect(rewardGateService.getRewardTypeLabel("course-constitutional-onboarding")).toBe("Locked $NEURONS");
-    expect(rewardGateService.getRewardTypeLabel("course-treasury-risk")).toBe("Unlocked $NEURONS");
+  it("keeps free courses on Foundation Preview and paid courses on Applied Preview", () => {
+    expect(rewardGateService.getRewardTypeLabel("course-constitutional-onboarding")).toBe("Foundation Preview");
+    expect(rewardGateService.getRewardTypeLabel("course-treasury-risk")).toBe("Applied Preview");
   });
 
   it("shows reward gate states and validation-heavy weights", () => {
@@ -91,9 +93,13 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
     expect(courseProgressService.isCertificationEligible("course-constitutional-onboarding", "approved", 100, 95)).toBe(true);
   });
 
-  it("keeps future contract and reward data mock-only", () => {
+  it("keeps future contract and preview data mock-only", () => {
     expect(academyData.futureContracts.every((contract) => contract.writesEnabled === false)).toBe(true);
     expect(academyData.rewardGates.some((gate) => gate.source === "quiz" && gate.rewardPercentage >= 40)).toBe(true);
+    expect(academyData.boundary).toMatchObject({
+      mode: "local-preview",
+      authority: "non-authoritative"
+    });
   });
 
   it("documents edge cases for failed quiz, retry policy, restricted access, and empty enrollment", () => {
@@ -229,4 +235,109 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
     expect(rewardPolicyService.validateRewardClassSeparation("course-constitutional-onboarding")).toBe(true);
     expect(rewardPolicyService.validateRewardClassSeparation("course-treasury-risk")).toBe(true);
   });
+
+  it("validates strict preview schemas and rejects prohibited authority fields", () => {
+    expect(() =>
+      rewardRecordSchema.parse({
+        id: "preview-1",
+        studentId: "student",
+        courseId: "course",
+        previewPointTier: "Foundation Preview",
+        previewSource: "fixture",
+        previewPoints: 10,
+        previewMilestones: ["lesson"],
+        governanceControlled: true,
+        previewPolicy: "local preview only",
+        previewBenefits: ["visibility"],
+        reviewedOn: "2026-06-23",
+        claimable: true
+      })
+    ).toThrow();
+
+    expect(() =>
+      certificatePreviewSchema.parse({
+        id: "recognition-1",
+        courseId: "course",
+        studentId: "student",
+        reviewedOn: "2026-06-23",
+        expiresOn: "2027-06-23",
+        previewStatus: "mock-preview",
+        governanceReviewed: true,
+        recognitionLevel: "Foundational",
+        previewNote: "preview only",
+        proofHash: "forbidden"
+      })
+    ).toThrow();
+  });
+
+  it("orders catalog courses and learning paths deterministically", () => {
+    expect(listCatalogCourses().map((course) => course.title)).toEqual([
+      "Axodus Constitutional Onboarding",
+      "Marketplace Activation and Tutor Monetization",
+      "Proof of Knowledge Recognition Design",
+      "Treasury Risk and Sustainable Emissions"
+    ]);
+
+    expect(listLearningPaths().map((path) => path.title)).toEqual([
+      "Governance Operator Path",
+      "Marketplace Creator Path"
+    ]);
+  });
+
+  it("keeps learner-facing academy sources free of prohibited authority identifiers", async () => {
+    const roots = [
+      path.resolve("src/data/mock/academy.mock.js"),
+      path.resolve("src/modules/academy"),
+      path.resolve("src/routes/academy.ts")
+    ];
+    const prohibited = [
+      "claimable",
+      "claimed",
+      "minted",
+      "issued",
+      "issuanceDate",
+      "proofHash",
+      "verificationUrl",
+      "verificationStatus",
+      "walletDistribution",
+      "tokenBalance",
+      "transferable",
+      "sbt",
+      "nft",
+      "onChain",
+      "txHash",
+      "contractAddress"
+    ];
+
+    const files = await collectFiles(roots);
+    const lowerContents = await Promise.all(files.map(async (file) => ({ file, text: (await readFile(file, "utf8")).toLowerCase() })));
+
+    for (const term of prohibited) {
+      const offender = lowerContents.find(({ text }) => text.includes(term.toLowerCase()));
+      expect(offender?.file, `unexpected prohibited learner-facing identifier: ${term}`).toBeUndefined();
+    }
+  });
 });
+
+async function collectFiles(entries: string[]): Promise<string[]> {
+  const results: string[] = [];
+
+  for (const entry of entries) {
+    const stats = await readdir(entry, { withFileTypes: true }).catch(() => null);
+    if (!stats) {
+      results.push(entry);
+      continue;
+    }
+
+    for (const item of stats) {
+      const next = path.join(entry, item.name);
+      if (item.isDirectory()) {
+        results.push(...(await collectFiles([next])));
+      } else if (/\.(ts|tsx|js)$/.test(item.name)) {
+        results.push(next);
+      }
+    }
+  }
+
+  return results;
+}

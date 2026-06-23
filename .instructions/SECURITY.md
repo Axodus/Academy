@@ -1,124 +1,71 @@
 # Academy Security
 
-# Security Philosophy
+## Security Objective
 
-Academy security protects:
-- educational integrity
-- capability validation
-- governance formation quality
-- reward sustainability
-- certification legitimacy
+Protect educational integrity while preventing mock/local features and compatibility scaffolds from being interpreted or reused as production, financial, credential, wallet, contract or governance authority.
 
-Educational systems must resist manipulation and farming behavior.
+The mandatory controls are defined in `ACADEMY_EXECUTION_BOUNDARY.md`.
 
----
+## Critical Controls
 
-# Critical Security Areas
+### Default deny
 
-## Proof-of-Knowledge
-Highest strategic priority.
+- Mutations fail closed unless an explicit non-production preview gate is implemented and enabled.
+- Missing, invalid or ambiguous configuration denies mutation.
+- No fallback may select a production database or provider.
 
-Proof-of-Knowledge systems must:
-- validate real understanding
-- resist automation abuse
-- resist fake participation
-- expose validation telemetry
+### Domain isolation
 
-Capability validation must remain meaningful.
+- Progress, assessment, certificate preview and reward preview remain separate.
+- Authentication does not grant learner entitlement or execution authority.
+- Contract/provider modules cannot be reached from mock learner services.
 
----
+### Credential safety
 
-## Certifications
+Learner-facing surfaces may show preview eligibility and preview presentation only. They must not assert issuance, verification, proof, ownership, chain anchoring or transferability.
 
-Certification systems must:
-- represent real capability
-- expose issuance visibility
-- expose progression integrity
-- resist credential inflation
+### Reward safety
 
-Fake competency damages governance quality.
+Learner-facing surfaces may show non-monetary preview points only. They must not assert token amounts, balances, claimability, wallet distribution, transfer, settlement, payout or treasury backing.
 
----
+### Compatibility scaffolds
 
-## Rewards
+Contracts, ABIs, deployment scripts, wallet-authenticated routes, readiness endpoints and persistence placeholders must be isolated, documented as non-authoritative and tested only for boundary behavior.
 
-Reward systems must:
-- remain sustainable
-- resist farming behavior
-- expose accounting visibility
-- expose progression consistency
+## Mandatory Negative Checks
 
-Unsustainable educational rewards are forbidden.
+ACADEMY-REQ-07 must fail on prohibited identifiers or authority labels in learner-facing models, fixtures, services, API responses and UI, including:
 
----
+```txt
+claimable
+claimed
+minted
+issued
+issuanceDate
+proofHash
+verificationUrl
+verificationStatus
+walletDistribution
+tokenBalance
+transferable
+sbt
+nft
+onChain
+txHash
+contractAddress
+```
 
-## Governance Formation
+Exceptions are limited to explicit blocklists, negative tests, security documentation and reviewed compatibility-scaffold allowlists.
 
-Governance education must:
-- remain transparent
-- remain auditable
-- expose progression telemetry
-- preserve ecosystem alignment
+## Review Requirements
 
-Governance quality is sovereign infrastructure.
+Security, maturity, promotion and production-risk review require `gpt-5.5 + Extra high`.
 
----
+A review must verify:
 
-# Non-Negotiables
-
-- no fake certifications
-- no opaque progression systems
-- no unsustainable rewards
-- no automated farming
-- no hidden educational manipulation
-- no governance bypass
-
----
-
-# ACS Integration
-
-ACS systems must remain:
-- assistive
-- observable
-- bounded
-- telemetry-driven
-
-AI systems must never:
-- manipulate progression
-- bypass capability validation
-- autonomously issue certifications
-
----
-
-# Reward Security
-
-Educational rewards must:
-- expose accounting
-- expose issuance visibility
-- expose sustainability metrics
-- expose participation validation
-
----
-
-# Upgradeability
-
-Upgradeability must:
-- remain governance-controlled
-- expose educational compatibility
-- expose deployment history
-- expose progression continuity
-
-Avoid opaque educational authority.
-
----
-
-# Security Reviews
-
-Before production deployment:
-- progression review
-- certification review
-- reward review
-- governance formation review
-- ACS integration review
-- telemetry review
-- dependency review
+- runtime gates fail closed;
+- no production side effect is reachable;
+- no authority is inferred from UI or scaffold state;
+- validation evidence is complete and current;
+- L-Level and D-Level remain separate;
+- all production-sensitive gates remain closed.

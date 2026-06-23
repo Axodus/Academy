@@ -6,7 +6,7 @@ export function AcademyGovernanceReview() {
     <>
       <section>
         <p className="academy-label">Academy Governance Review</p>
-        <h2 className="mt-1 text-3xl font-semibold text-slate-950">Constitutional, treasury, reward, and certification review surface</h2>
+        <h2 className="mt-1 text-3xl font-semibold text-slate-950">Constitutional, treasury, preview, and recognition review surface</h2>
         <p className="mt-2 max-w-3xl text-slate-600">
           This page represents review visibility, not direct user control over governance.
         </p>

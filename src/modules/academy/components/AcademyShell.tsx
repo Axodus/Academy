@@ -8,7 +8,7 @@ const navItems = [
   { to: "/my-courses", label: "My Courses", icon: LibraryBig },
   { to: "/dashboard", label: "Dashboard", icon: ChartNoAxesCombined },
   { to: "/progress", label: "Progress", icon: Gauge },
-  { to: "/certifications", label: "Certifications", icon: Award },
+  { to: "/certifications", label: "Recognition", icon: Award },
   { to: "/rewards", label: "Rewards", icon: Coins },
   { to: "/governance-review", label: "Academy Governance Review", icon: ClipboardCheck },
   { to: "/paths/path-governance-operator", label: "Learning Path", icon: Route }

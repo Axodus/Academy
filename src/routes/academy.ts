@@ -35,6 +35,7 @@ export default async function academyRoutes(f: FastifyInstance) {
     const studentId = (req as any).user.sub as string;
     const persisted = await academyProgressRepository.getStudentState(studentId);
     return rep.send({
+      boundary: academyData.boundary,
       identity: (req as any).user,
       student: academyData.student,
       persisted,
@@ -51,7 +52,7 @@ export default async function academyRoutes(f: FastifyInstance) {
   });
 
   f.get("/academy/courses/enrolled", async (_req, rep) => {
-    return rep.send({ courses: studentAcademyService.getStudentCourses() });
+    return rep.send({ boundary: academyData.boundary, courses: studentAcademyService.getStudentCourses() });
   });
 
   f.get("/academy/courses/:courseId/progress", async (req, rep) => {
@@ -60,6 +61,7 @@ export default async function academyRoutes(f: FastifyInstance) {
     if (!course) return rep.code(404).send({ error: "course_not_found" });
 
     return rep.send({
+      boundary: academyData.boundary,
       course,
       progress: courseProgressService.getProgress(courseId),
       rewardGates: rewardGateService.getRewardGates(courseId)
@@ -77,6 +79,7 @@ export default async function academyRoutes(f: FastifyInstance) {
     const completedLessonIds = persisted.completedLessons.filter((item) => item.courseId === courseId).map((item) => item.lessonId);
 
     return rep.send({
+      boundary: academyData.boundary,
       completion,
       contentProgress: courseProgressService.getContentProgress(courseId, completedLessonIds),
       quizState: quizService.getQuizState(courseId, completedLessonIds),
@@ -113,6 +116,7 @@ export default async function academyRoutes(f: FastifyInstance) {
     });
 
     return rep.send({
+      boundary: academyData.boundary,
       attempt,
       validation,
       rewardGates: rewardGateService.getRewardGates(courseId).map((gate) => ({
@@ -126,14 +130,18 @@ export default async function academyRoutes(f: FastifyInstance) {
   f.get("/academy/courses/:courseId/reward-gates", async (req, rep) => {
     const { courseId } = CourseParams.parse(req.params);
     return rep.send({
+      boundary: academyData.boundary,
       courseId,
-      rewardType: rewardGateService.getRewardTypeLabel(courseId),
+      previewPointTier: rewardGateService.getRewardTypeLabel(courseId),
       validationWeight: rewardGateService.getValidationWeight(courseId),
       gates: rewardGateService.getRewardGates(courseId)
     });
   });
 
   f.get("/academy/contracts/readiness", async (_req, rep) => {
-    return rep.send(academyContractReadiness.getStatus());
+    return rep.send({
+      boundary: academyData.boundary,
+      ...academyContractReadiness.getStatus()
+    });
   });
 }

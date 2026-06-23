@@ -40,7 +40,7 @@ export function LearningWorkspace() {
 
   if (!workspace?.lesson) return <Navigate to="/academy/my-courses" replace />;
 
-  const { course, lessons, lesson, resources, rewardGates, quiz, nextLesson, previousLesson, moduleProgress, rewardTypeLabel } = workspace;
+  const { course, lessons, lesson, resources, rewardGates, quiz, nextLesson, previousLesson, moduleProgress, previewPointLabel } = workspace;
   const currentProgress = workspace.lessonProgress;
   const isCompleted = completedLessonIds.includes(lesson.id) || ["completed", "validated"].includes(currentProgress?.status ?? "");
   const contentProgress = courseProgressService.getContentProgress(course.id, completedLessonIds);
@@ -60,7 +60,7 @@ export function LearningWorkspace() {
     : "Quiz is locked until every required lesson in this module is consumed.";
   const pokStatus = validationResult?.status ?? workspace.progress?.pokStatus ?? "pending";
   const nextAction = validationResult?.approved
-    ? "Review certification eligibility and unlocked validation-weighted reward gates."
+    ? "Review recognition eligibility and unlocked validation-weighted preview gates."
     : requiredCompleted
       ? "Run a passing mock attempt to approve PoK and release validation gates."
       : "Complete the remaining required lessons to unlock the quiz.";
@@ -82,10 +82,10 @@ export function LearningWorkspace() {
           <div>
             <p className="academy-label">Learning Workspace</p>
             <h2 className="mt-1 text-3xl font-semibold text-slate-950">{course.title}</h2>
-            <p className="mt-2 max-w-3xl text-slate-600">Lesson consumption can release only a small reward. The primary reward gates remain dependent on quiz and PoK validation.</p>
+            <p className="mt-2 max-w-3xl text-slate-600">Lesson consumption can advance only a small preview. The primary preview gates remain dependent on quiz and PoK validation.</p>
           </div>
           <div className="flex flex-wrap gap-2">
-            <span className={course.accessType === "free" ? "academy-pill-locked" : "academy-pill-unlocked"}>{rewardTypeLabel}</span>
+            <span className={course.accessType === "free" ? "academy-pill-locked" : "academy-pill-unlocked"}>{previewPointLabel}</span>
             <StatusBadge label={quizState} />
             <StatusBadge label={pokStatus} />
           </div>
@@ -93,7 +93,7 @@ export function LearningWorkspace() {
         <div className="grid gap-4 lg:grid-cols-[1fr_1fr_1fr_280px]">
           <div className="academy-surface p-4"><ProgressBar value={contentProgress} label="Content progress" /></div>
           <div className="academy-surface p-4"><ProgressBar value={validationResult?.approved ? 100 : workspace.progress?.validationProgress ?? 0} label="Validation progress" /></div>
-          <div className="academy-surface p-4"><ProgressBar value={certificationEligible ? 100 : workspace.progress?.rewardUnlockProgress ?? 0} label="Reward unlock progress" /></div>
+          <div className="academy-surface p-4"><ProgressBar value={certificationEligible ? 100 : workspace.progress?.rewardUnlockProgress ?? 0} label="Preview unlock progress" /></div>
           <div className="academy-surface p-4">
             <p className="academy-label">Next action</p>
             <p className="mt-2 text-sm font-semibold text-slate-800">{nextAction}</p>
@@ -171,12 +171,12 @@ export function LearningWorkspace() {
             <div className="grid gap-3 rounded-lg border border-slate-200 bg-slate-50 p-4">
               <div className="flex items-center gap-2">
                 <ClipboardCheck size={18} className="text-academy-blue" />
-                <p className="academy-label">Lesson reward preview</p>
+            <p className="academy-label">Lesson preview points</p>
               </div>
               <p className="text-sm text-slate-700">
-                This lesson can contribute up to {lessonGate ? formatNeurons(lessonGate.rewardAmount) : "a small consumption reward"} across the lesson gate. Major rewards remain locked behind quiz and certification gates.
+                This lesson can contribute up to {lessonGate ? formatNeurons(lessonGate.previewPoints) : "a small local preview"} across the lesson gate. Major preview points remain locked behind quiz and recognition gates.
               </p>
-              <p className="text-sm font-semibold text-slate-900">{validationWeight}% of this course reward is validation-weighted.</p>
+              <p className="text-sm font-semibold text-slate-900">{validationWeight}% of this course preview is validation-weighted.</p>
             </div>
 
             <div className="flex flex-wrap gap-3">
@@ -237,8 +237,8 @@ export function LearningWorkspace() {
           </section>
 
           <section className="academy-card p-4">
-            <p className="academy-label">Certification progress</p>
-            <h3 className="mt-1 font-semibold text-slate-950">{certificationEligible ? "Eligible after PoK" : "Not eligible yet"}</h3>
+            <p className="academy-label">Recognition progress</p>
+            <h3 className="mt-1 font-semibold text-slate-950">{certificationEligible ? "Recognition preview eligible after PoK" : "Recognition preview not eligible yet"}</h3>
             <dl className="mt-3 grid gap-2 text-sm">
               <div className="academy-surface p-3">
                 <dt className="academy-label">Required content</dt>
@@ -258,7 +258,7 @@ export function LearningWorkspace() {
       </section>
 
       <section className="academy-card grid gap-4 p-5">
-        <p className="academy-label">Reward gates after current mock state</p>
+        <p className="academy-label">Preview gates after current mock state</p>
         <RewardGateList gates={visibleGates} />
       </section>
     </>

@@ -2,6 +2,8 @@
 
 Operational guidance for using bub-agents inside the Academy workspace.
 
+All recommendations must comply with `ACADEMY_EXECUTION_BOUNDARY.md`. Agents may analyze compatibility scaffolds but must not treat them as authority evidence.
+
 ## Purpose
 
 Bub-agents are advisory execution-support agents for planning, architecture review, security review, QA, documentation, and implementation analysis. They do not override the latest user instruction, this workspace `.instructions`, repository reality, security constraints, or Axodus architecture principles.
@@ -57,7 +59,7 @@ Constraints:
 ## Workspace-Specific Rules
 
 - Course progress, quiz completion, certificates, and rewards eligibility must be separate concepts.
-- Rewards must be treated as eligibility unless real claim execution is explicitly implemented.
+- Rewards are non-monetary previews under EPIC-01. Real claim execution requires a separate approved authority request and is not an Academy implementation fallback.
 - Learning access should remain compatible with Marketplace entitlements and ACS policy.
 - Do not infer Governance approval, ACS access, or reward execution from UI state alone.
 - Proof of Knowledge flows must be auditable and testable.
@@ -79,4 +81,3 @@ State whether bub-agents were used, roles used, key findings, accepted recommend
 When a sprint is completed, run practical validation, check `git status`, commit the completed sprint, and report the commit hash.
 
 Recommended commit format: `academy: <short description>`
-

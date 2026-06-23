@@ -27,7 +27,7 @@ export function CourseCard({ course, tutor }: CourseCardProps) {
         <div className="grid gap-2 text-sm text-slate-600">
           <span>{course.category} / {course.level}</span>
           <span>{tutor?.name ?? "Academy tutor"}</span>
-          <span className="font-semibold text-slate-900">{formatNeurons(course.rewardAmount)} as {course.rewardType}</span>
+          <span className="font-semibold text-slate-900">{formatNeurons(course.previewPoints)} as {course.previewPointTier}</span>
         </div>
         <ProgressBar value={course.progress} label="Learning progress" />
       </div>

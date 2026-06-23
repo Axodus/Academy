@@ -1,5 +1,7 @@
 # Learn-to-Win
 
+Operational note: this document describes long-term philosophy. Current Academy behavior is governed by `ACADEMY_EXECUTION_BOUNDARY.md` and permits only non-monetary preview points; it creates no financial entitlement.
+
 # Purpose
 
 Learn-to-Win transforms knowledge into economic participation infrastructure.

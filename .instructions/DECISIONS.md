@@ -1,266 +1,83 @@
 # Academy Decisions
 
-# Active Decisions
+Last updated: 2026-06-23
 
-## Academy Direction
+## Active Decisions
 
-Decision:
-Academy acts as the sovereign cognitive formation infrastructure of the Axodus ecosystem.
+### Canonical Execution Boundary
 
-Status:
-CONFIRMED
+Decision: `ACADEMY_EXECUTION_BOUNDARY.md` is the controlling authority contract for all Academy work.
 
----
+Status: CONFIRMED
 
-## Learn-to-Win Philosophy
+### Current Maturity
 
-Decision:
-The ecosystem prioritizes capability-driven participation over speculative participation.
+Decision: Academy remains `L3_CANDIDATE_VALIDATION_INCOMPLETE`. Previous L4-candidate promotion language is superseded by current evidence.
 
-Knowledge becomes economic infrastructure.
+Status: CONFIRMED
 
-Status:
-CONFIRMED
+### L-Level and D-Level Separation
 
----
+Decision: L-Level measures maturity evidence only. It cannot grant D-Level, production permission, financial authority, credential authority or governance authority.
 
-## Proof-of-Knowledge Philosophy
+Status: CONFIRMED
 
-Decision:
-Proof-of-Knowledge validates:
-- understanding
-- capability
-- operational competence
-- governance readiness
+### Mock/Preview Domain
 
-Status:
-CONFIRMED
+Decision: Current Academy learner functionality is non-production and mock/local. Courses and learning paths are config/read-only; learner state is preview-only where mutation is explicitly gated.
 
----
+Status: CONFIRMED
 
-## Governance Formation
+### Preview Mutation
 
-Decision:
-Academy contributes directly to governance quality and ecosystem sustainability.
+Decision: POST compatibility routes must fail closed by default. Authentication is insufficient. Local mutation requires every condition in the canonical preview mutation contract.
 
-Governance participation should increasingly favor informed participants.
+Implementation status: NOT IMPLEMENTED
 
-Status:
-CONFIRMED
+### Certificate and Badge Semantics
 
----
+Decision: Academy exposes preview eligibility and presentation only. It has no issuance, verification, ownership, chain or cross-nucleus credential authority.
 
-## ACS Integration
+Status: CONFIRMED
 
-Decision:
-ACS systems may provide:
-- AI tutors
-- adaptive learning
-- personalized progression
-- governance simulations
+### Reward Semantics
 
-ACS systems remain assistive, not sovereign.
+Decision: Academy learner-facing rewards are non-monetary previews only. They create no token balance, claim, transfer, settlement, payout or treasury entitlement.
 
-Status:
-CONFIRMED
+Status: CONFIRMED
 
----
+### Compatibility Scaffolds
 
-## Certification Philosophy
+Decision: Wallet authentication, contracts, ABIs, deployment scripts, readiness endpoints, persistence placeholders and provider modules are isolated compatibility scaffolds. They never count as functional authority evidence.
 
-Decision:
-Certifications must represent real demonstrated capability.
+Status: CONFIRMED
 
-Avoid meaningless credential inflation.
+### Validation and Promotion
 
-Status:
-CONFIRMED
+Decision: Only current, observed, command-specific terminal results count. No partial result supports global readiness or maturity promotion.
 
----
+Status: CONFIRMED
 
-## Educational Rewards
+### Codex Configuration
 
-Decision:
-Educational rewards must prioritize:
-- sustainability
-- meaningful participation
-- real capability
-- ecosystem contribution
+Decision: Every Academy EPIC, Sprint and REQ includes the model/reasoning block in `ACADEMY_EPIC_01.md`. Authority-sensitive work uses at least `gpt-5.5 + High`; security and maturity decisions use `gpt-5.5 + Extra high`.
 
-Avoid reward farming systems.
+Status: CONFIRMED
 
-Status:
-CONFIRMED
+## Superseded Operational Decisions
 
----
+The following prior interpretations are no longer active:
 
-## Educational Economy
+- `PROMOTE_TO_L4_CANDIDATE` based on 2026-06-08 validation;
+- using mock Locked/Unlocked token classes as the target learner-facing model;
+- treating wallet-authenticated routes as integration readiness evidence;
+- describing contract scaffolds as future execution readiness within the active sprint;
+- treating E2E as optional for current maturity evidence.
 
-Decision:
-The Academy acts as long-term ecosystem formation infrastructure.
+Historical text remains available through version control and grants no authority.
 
-Educational systems contribute to:
-- governance quality
-- treasury sustainability
-- ecosystem intelligence
-- operational capability
+## Pending Decisions
 
-Status:
-CONFIRMED
-
----
-
-## Academy MVP Nucleus
-
-Decision:
-The initial Academy implementation is frontend-first and mock-only.
-
-It must represent Academy as the Proof-of-Knowledge-based, governance-controlled `$NEURONS` distribution and qualification layer of Axodus, not as a generic LMS.
-
-Status:
-CONFIRMED
-
----
-
-## Academy Reward Classes
-
-Decision:
-Free courses issue mock `Locked $NEURONS`.
-
-Paid courses issue mock `Unlocked $NEURONS`.
-
-`NRS` is not valid reward terminology for Academy MVP surfaces.
-
-Status:
-CONFIRMED
-
----
-
-## Academy Future Contract Compatibility
-
-Decision:
-The MVP may expose mock read-model metadata for future contract surfaces:
-- PoKMinter
-- LockedNeuronsVault
-- RewardPolicy
-- TreasuryEmissionBudget
-
-No contract writes, minting, withdrawal, transfer, or certification issuance are enabled in the MVP.
-
-Status:
-CONFIRMED
-
----
-
-## Academy Learning Consumption and PoK Rewards
-
-Decision:
-Academy student-side progression must separate passive content consumption from validated capability.
-
-Watching lessons may release only small consumption rewards. The highest reward weight must come from quiz/evaluation success and final certification eligibility through Proof-of-Knowledge validation.
-
-Mock reward gates must classify each stage as lesson, module, quiz, or certification and expose locked, pending, unlocked, or rejected status.
-
-Free enrolled courses generate only `Locked $NEURONS`. Paid purchased courses generate `Unlocked $NEURONS` in the future production model, released progressively after validation and governance/treasury controls.
-
-Status:
-CONFIRMED
-
----
-
-## Academy Prototype Polish Status
-
-Decision:
-The Academy nucleus is now treated as an approximately 90% prototype-ready mock MVP.
-
-The student-side flow exists, including enrolled/purchased course surfaces, learning workspace, lesson completion mock actions, quiz state visualization, PoK threshold validation, staged reward gates, and Locked/Unlocked `$NEURONS` separation.
-
-Remaining gaps are production concerns: persistence, backend telemetry, real ACS orchestration, real certification issuance, contract writes, minting, withdrawals, transfers, and treasury execution.
-
-Status:
-CONFIRMED
-
----
-
-## Academy Integration Readiness
-
-Decision:
-Academy may now expose wallet-authenticated backend readiness routes for student progress, lesson completion, quiz attempts, PoK validation read models, and reward gate read models.
-
-Persistence is local JSON-backed until a production database repository is approved. This enables integration testing without creating hidden production authority.
-
-`LockedNeuronsVault` and `PoKMinter` are contract scaffolds for governance-controlled validation and internal locked reward accounting. They do not enable withdrawals, swaps, external transfers, real token minting, or production certification issuance.
-
-Integration consumers should use `academy.openapi.json`, `src/abis/PoKMinter.json`, `src/abis/LockedNeuronsVault.json`, and `GET /academy/contracts/readiness` before any alpha deployment.
-
-`PoKMinter` must reject duplicate student/course validations and proof hash replay. Course reward policies may be deactivated by governance owner before production execution is ever enabled.
-
-Status:
-CONFIRMED
-
----
-
-## Academy Hardening Boundaries
-
-Decision:
-Academy hardening separates frontend, API, repository, Progress Engine, PoK validation, reward policy, persistence and contracts into explicit boundaries.
-
-API routes must depend on repository interfaces rather than JSON storage assumptions. Reward policy logic remains off-chain and separate from `PoKMinter`; contracts only enforce proof/accounting integrity.
-
-Playwright coverage is introduced as a QA boundary, but CI execution depends on installing the Playwright runner and browser binaries.
-
-Status:
-CONFIRMED
-
----
-
-## Academy Hardening Completion
-
-Decision:
-Academy hardening completion closes prototype infrastructure gaps without enabling production execution.
-
-The repository layer now exposes adapter-ready boundaries for JSON persistence, in-memory tests, and a Postgres production placeholder. State integrity validation and reward policy isolation remain off-chain.
-
-Playwright is installed with Chromium route smoke coverage. Solidity runtime tests cover `PoKMinter` and `LockedNeuronsVault` replay protection, duplicate validation rejection, unauthorized caller rejection, reward cap enforcement, locked balance accounting, and internal spend behavior.
-
-CI must run typecheck, lint, unit tests, contract compile, web build, and Playwright smoke tests before production database or contract work proceeds.
-
-Status:
-CONFIRMED
-
----
-
-# Pending Decisions
-
-## Canonical Learn-to-Win Emission Model
-
-Status:
-PENDING
-
----
-
-## Governance Weighting for Certifications
-
-Status:
-PENDING
-
----
-
-## Proof-of-Knowledge Validation Mechanics
-
-Status:
-PENDING
-
----
-
-## Enterprise Academy Strategy
-
-Status:
-PENDING
-
----
-
-## DAO Academy Federation Model
-
-Status:
-PENDING
+- exact runtime configuration interface for fail-closed local preview mutations;
+- reviewed allowlist structure for ACADEMY-REQ-07 negative checks;
+- production database, providers, contracts, credentials, rewards and financial execution, each requiring separate future authority.

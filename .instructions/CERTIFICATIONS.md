@@ -1,51 +1,25 @@
-# Certifications
+# Academy Certificate Preview Boundary
 
-# Purpose
+## Current Capability
 
-Certifications validate demonstrated capability inside the Axodus ecosystem.
+Academy may calculate certificate-preview eligibility and render a clearly labeled preview from mock/local learner state.
 
-Certifications represent:
-- operational competence
-- governance understanding
-- ecosystem specialization
-- practical capability
+## Prohibited Authority
 
----
+Academy EPIC-01 does not authorize:
 
-# Certification Categories
+- certificate or badge issuance;
+- credential verification or verification URLs;
+- proof hashes, signatures or issuer identity;
+- NFT/SBT or on-chain metadata;
+- wallet ownership or transferability;
+- production learner identity or persistence;
+- governance, operational or cross-nucleus qualification.
 
-- governance
-- treasury
-- trading
-- ACS operations
-- ecosystem development
-- DAO operations
+Completion, assessment success and preview eligibility are separate states. None is a credential.
 
----
+## Required Model Direction
 
-# Certification Principles
+Sprint 02 must use explicit `CertificatePreview`-style semantics with persistent preview-only labeling and without authoritative credential fields.
 
-- capability-driven
-- progression-aware
-- governance-compatible
-- telemetry-visible
-
----
-
-# Certification Constraints
-
-Avoid:
-- fake credentials
-- participation-only certifications
-- non-validated progression
-
----
-
-# ACS Integration
-
-ACS may assist:
-- progression analysis
-- adaptive evaluation
-- learning recommendations
-
-ACS systems must never autonomously certify participants.
+See `ACADEMY_EXECUTION_BOUNDARY.md` and `SECURITY.md`.

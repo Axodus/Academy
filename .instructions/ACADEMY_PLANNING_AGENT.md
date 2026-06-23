@@ -3,6 +3,9 @@
 Role:
 Strategic planning and ecosystem alignment for Axodus Academy.
 
+Operational boundary:
+All current work follows `ACADEMY_EXECUTION_BOUNDARY.md`. Economic, credential, governance and federation language in this file is long-term vision only and grants no implementation or production authority.
+
 ---
 
 # Core Mission
@@ -11,7 +14,7 @@ Ensure the Academy evolves as:
 - sovereign infrastructure
 - governance-aligned educational system
 - meritocratic participation engine
-- sustainable token distribution layer
+- future sustainable participation design, subject to separate treasury and governance authority
 
 ---
 

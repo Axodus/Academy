@@ -1,186 +1,73 @@
-# Axodus Academy Workspace
+# Axodus Academy Workspace Instructions
 
-# Purpose
+## Purpose
 
-The Academy workspace is the cognitive formation and educational infrastructure of the Axodus ecosystem.
+Academy coordinates educational content, learning paths, local learner progression, assessments and preview-only learner recognition for the Axodus ecosystem.
 
-Academy coordinates:
-- Learn-to-Win systems
-- Proof-of-Knowledge infrastructure
-- certification systems
-- educational onboarding
-- governance formation
-- skill validation
-- AI-assisted learning
-- cognitive progression
-- educational reward systems
+Academy is capability-oriented infrastructure, not production financial, credential, governance or provider authority.
 
-Academy is not a traditional LMS.
+## Canonical Authority
 
-Academy is sovereign cognitive formation infrastructure.
+All work in this workspace is governed by:
 
----
+1. `ACADEMY_EXECUTION_BOUNDARY.md` - mandatory execution and authority rules.
+2. `ACADEMY_CURRENT_STATE_BASELINE.md` - current repository evidence.
+3. `STATUS.md` and `BLOCKER_REGISTER.md` - current classification and open blockers.
+4. `VALIDATION.md` - command-specific evidence.
+5. `HANDOFF.md` - next safe implementation scope.
 
-# Academy Philosophy
+If another instruction conflicts with the canonical boundary, the stricter fail-closed interpretation wins and the conflict must be recorded.
 
-Knowledge is sovereign infrastructure.
+Root-level Academy Markdown files are product/design context, not operational authority. They cannot override `.instructions/ACADEMY_EXECUTION_BOUNDARY.md`, current status, blockers or validation evidence.
 
-The Academy exists to:
-- form capable participants
-- improve governance quality
-- improve treasury sustainability
-- create long-term ecosystem intelligence
-- create skilled operators
-- create aligned community growth
+## Current Operating Mode
 
-The objective is not passive education.
+```txt
+NON_PRODUCTION
+MOCK_OR_CONFIG_FIRST
+READ_ONLY_OR_PREVIEW_ONLY_WHEN_APPLICABLE
+EXECUTION_GATED
+TREASURY_GATED
+CERTIFICATION_ISSUANCE_GATED
+REWARDS_GATED
+FAIL_CLOSED_BY_DEFAULT
+```
 
-The objective is transformation through capability.
+## Domain Separation
 
----
+Keep these concepts independent:
 
-# Learn-to-Win Philosophy
+- content access;
+- lesson progress;
+- quiz and assessment results;
+- certificate preview eligibility;
+- non-monetary reward preview;
+- wallet authentication compatibility;
+- production or governance authority.
 
-Academy replaces:
-- speculative participation
-with:
-- capability-driven participation
+No state in one domain grants state or authority in another.
 
-The ecosystem should reward:
-- learning
-- contribution
-- skill
-- governance participation
-- operational capability
+## Compatibility Scaffolds
 
-Knowledge becomes economic infrastructure.
+Wallet-authenticated routes, contracts, ABIs, deployment scripts, readiness endpoints, local persistence and provider modules are compatibility scaffolds. They may demonstrate isolation or local behavior, but never production readiness, wallet execution, credential authority, economic entitlement or L4 functional authority.
 
----
+## Codex Selection Rule
 
-# Governance Relationship
+Every Academy EPIC, Sprint and REQ must include the configuration block defined in `ACADEMY_EPIC_01.md`.
 
-Academy is governance-aware.
+- Bounded local schemas/read-only services: `gpt-5.4 + Medium` or `High`.
+- Boundaries, blockers, validation and authority-sensitive work: `gpt-5.5 + High`.
+- Security, maturity and promotion decisions: `gpt-5.5 + Extra high`.
 
-Academy contributes to:
-- governance quality
-- DAO formation
-- constitutional understanding
-- ecosystem alignment
-- operational education
+When unsure, use `gpt-5.5 + High`.
 
-Governance participation should increasingly favor informed participants.
+## Non-Negotiables
 
----
-
-# ACS Relationship
-
-Academy integrates deeply with ACS.
-
-ACS may provide:
-- AI tutors
-- adaptive learning
-- cognitive assistants
-- personalized learning flows
-- governance simulations
-- operational mentoring
-
-AI systems assist formation but do not replace human sovereignty.
-
----
-
-# Defi Relationship
-
-Academy integrates with Defi through:
-- Learn-to-Win rewards
-- staking incentives
-- Proof-of-Knowledge rewards
-- treasury-backed educational incentives
-- certification utility
-
-Economic incentives must remain sustainable.
-
----
-
-# Core Academy Domains
-
-## Learn-to-Win
-Capability-based economic participation.
-
----
-
-## Proof-of-Knowledge
-Skill validation and educational verification.
-
----
-
-## Certifications
-Competency validation systems.
-
----
-
-## Governance Formation
-DAO and governance education.
-
----
-
-## AI-assisted Learning
-ACS-powered adaptive learning systems.
-
----
-
-## Skill Progression
-Capability development and learning paths.
-
----
-
-## Educational Rewards
-Reward systems tied to real progression.
-
----
-
-# Certification Philosophy
-
-Certifications represent:
-- demonstrated capability
-- ecosystem contribution
-- operational understanding
-- governance understanding
-
-Avoid meaningless credential inflation.
-
----
-
-# Educational Reward Philosophy
-
-Rewards must prioritize:
-- long-term sustainability
-- real capability
-- meaningful participation
-- ecosystem contribution
-
-Avoid unsustainable reward farming.
-
----
-
-# Current Priority
-
-1. Learn-to-Win architecture
-2. Proof-of-Knowledge systems
-3. certification infrastructure
-4. educational progression systems
-5. governance formation
-6. ACS learning integration
-7. educational rewards
-8. ecosystem onboarding
-
----
-
-# Non-Negotiables
-
-- knowledge over speculation
-- capability over hype
-- sustainability over extraction
-- governance awareness
-- real skill validation
-- transparent educational progression
-- AI-assisted but human-centered learning
+- no production claims from mock/local behavior;
+- no maturity promotion from partial evidence;
+- no mutation without an explicit fail-closed preview gate;
+- no credential issuance or verification;
+- no token, claim, payment, settlement, payout or treasury execution;
+- no wallet transaction signing or contract/provider execution;
+- no cross-nucleus or governance authority by implication;
+- no scaffold counted as authority evidence.

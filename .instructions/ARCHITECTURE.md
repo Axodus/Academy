@@ -1,175 +1,62 @@
 # Academy Architecture
 
-# Architectural Mission
+## Current Nucleus
 
-The Academy workspace coordinates the cognitive and educational formation of the Axodus ecosystem.
+Academy currently contains:
 
-Academy coordinates:
-- educational infrastructure
-- Proof-of-Knowledge systems
-- learning progression
-- certification systems
-- governance education
-- AI-assisted learning
-- educational rewards
+- React/Vite learner-facing routes;
+- local mock fixtures and TypeScript read models;
+- course, progress, quiz, PoK and reward-preview-oriented services;
+- Fastify health, authentication and Academy routes;
+- local JSON/in-memory persistence with a Postgres placeholder;
+- Solidity contracts, ABIs, readiness views and deployment scripts;
+- unit/API, Solidity and Playwright tests.
 
-while remaining:
-- governance-compatible
-- economically sustainable
-- capability-oriented
-- cognitively scalable
+The authoritative inventory is `ACADEMY_CURRENT_STATE_BASELINE.md`.
 
----
+## Architectural Boundaries
 
-# Academy Topology
+### Educational domain
 
-Core educational layers:
-- learning layer
-- progression layer
-- certification layer
-- Proof-of-Knowledge layer
-- governance formation layer
-- ACS integration layer
-- rewards layer
+Courses, lessons, learning paths, progress and assessments may operate over validated mock/local data. Sprint 02 services are read-only and deterministic.
 
----
+### Learner recognition
 
-# Learning Layer
+Badges and certificates are previews only. Eligibility is a learner-state calculation, not issuance, verification, ownership or credential authority.
 
-The learning layer coordinates:
-- educational content
-- learning paths
-- operational education
-- governance education
-- ecosystem onboarding
+### Reward preview
 
-Learning systems must prioritize:
-- clarity
-- progression
-- capability development
-- practical understanding
+Learner rewards are non-monetary preview points only. They create no token balance, claim, transfer, payout or treasury entitlement.
 
----
+### API and persistence
 
-# Progression Layer
+GET routes may expose mock/read-only data with boundary metadata. POST compatibility routes remain blocked from approved use until a separate explicit preview gate fails closed by default. Persistence remains in-memory or local ignored-file storage.
 
-Progression systems coordinate:
-- educational milestones
-- capability evolution
-- ecosystem participation
-- operational maturity
+### Wallet authentication
 
-Progression must remain measurable and observable.
+Wallet signatures may establish a compatibility session. They do not authorize Academy transactions, claims, credentials, payments or production execution.
 
----
+### Contracts and providers
 
-# Proof-of-Knowledge Layer
+Contracts, ABIs, scripts, readiness services and dormant provider routes are isolated compatibility scaffolds. They are outside the Academy learner domain and provide no functional authority.
 
-Proof-of-Knowledge validates:
-- understanding
-- capability
-- operational competence
-- governance comprehension
+## Required Direction
 
-Proof-of-Knowledge acts as:
-- educational validation
-- capability verification
-- progression infrastructure
+1. Validated TypeScript schemas and fixtures.
+2. Immutable catalog and learning-path services.
+3. Pure mock learner transitions.
+4. Explicit certificate/reward preview models.
+5. Fail-closed runtime gates.
+6. Negative authority checks.
+7. Evidence-backed maturity assessment.
 
----
+## Constraints
 
-# Certification Layer
+- no hidden authority in frontend state or API adapters;
+- no provider call from mock/local domain services;
+- no production persistence fallback;
+- no learner field that implies economic or credential authority;
+- no contract or wallet state used as learner entitlement;
+- no L-Level interpreted as D-Level or production permission.
 
-Certifications coordinate:
-- capability validation
-- operational competency
-- governance readiness
-- ecosystem specialization
-
-Certifications should represent real capability.
-
----
-
-# Governance Formation Layer
-
-Governance education coordinates:
-- DAO understanding
-- constitutional understanding
-- treasury responsibility
-- governance participation
-- ecosystem alignment
-
-Governance quality is strategic infrastructure.
-
----
-
-# ACS Integration Layer
-
-ACS integration supports:
-- adaptive learning
-- AI tutors
-- personalized learning
-- cognitive assistance
-- educational simulations
-
-ACS systems remain assistive, not sovereign.
-
----
-
-# Rewards Layer
-
-The rewards layer coordinates:
-- educational incentives
-- progression rewards
-- staking-linked education
-- participation incentives
-
-Rewards must remain sustainable and capability-oriented.
-
----
-
-# Backend Architecture
-
-Backend responsibilities:
-- progression tracking
-- certification management
-- reward coordination
-- telemetry aggregation
-- educational analytics
-
-Backends must not become hidden authority layers.
-
----
-
-# Frontend Architecture
-
-Frontend responsibilities:
-- learning visibility
-- progression visibility
-- certification visibility
-- educational telemetry
-- governance education flows
-
-Business logic should remain outside frontend state whenever possible.
-
----
-
-# Governance Integration
-
-Academy remains governance-aware.
-
-Governance may:
-- define educational standards
-- define certification policies
-- define participation requirements
-- define governance formation paths
-
----
-
-# Architecture Constraints
-
-- no meaningless reward farming
-- no fake certifications
-- no opaque progression systems
-- no unsustainable educational incentives
-- no governance bypass
+See `ACADEMY_EXECUTION_BOUNDARY.md` for the mandatory authority matrix.

@@ -1,5 +1,5 @@
 export function formatNeurons(amount: number) {
-  return `${amount.toLocaleString("en-US")} $NEURONS`;
+  return `${amount.toLocaleString("en-US")} pts`;
 }
 
 export function statusTone(status: string) {

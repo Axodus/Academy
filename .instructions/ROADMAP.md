@@ -1,130 +1,62 @@
 # Academy Roadmap
 
-# Phase 0 — Educational Architecture
+Last updated: 2026-06-23
 
-Status: IN PROGRESS
+All phases are governed by `ACADEMY_EXECUTION_BOUNDARY.md`.
 
-Objectives:
-- define Learn-to-Win architecture
-- define Proof-of-Knowledge systems
-- define certification systems
-- define educational progression
-- define governance formation flows
+## ACADEMY-SPRINT-01 - Current State and Instruction Alignment
+
+Status: COMPLETE
 
 Deliverables:
-- Academy architecture specification
-- progression framework
-- certification framework
-- reward framework
-- ACS integration boundaries
 
----
+- evidence-backed baseline;
+- stale evidence classification;
+- canonical execution boundary;
+- normalized operational status, blockers, validation and handoff;
+- safe Sprint 02 scope.
 
-# Phase 1 — Core Learning Infrastructure
+Open runtime and validation blockers remain promotion blockers for later implementation; they do not invalidate the completed Sprint 01 baseline/boundary deliverables.
 
-Status: PROTOTYPE READY
+## ACADEMY-SPRINT-02 - Educational Domain Foundation
 
-Objectives:
-- implement educational infrastructure
-- implement progression systems
-- implement onboarding systems
+Status: READY WITH GATES
 
 Deliverables:
-- student-side learning platform
-- private course consumption workspace
-- polished learning workspace with player placeholder, progress rail, quiz panel, reward preview, and certification block
-- progression tracking across content, lessons, validation, certification, and rewards
-- onboarding flows
-- telemetry systems
-- educational dashboards
-- wallet-authenticated API readiness routes
-- local JSON persistence adapter for integration testing
 
----
+- validated education schemas;
+- deterministic mock/local fixtures;
+- immutable course catalog services;
+- immutable learning-path services;
+- non-monetary reward preview and certificate preview types;
+- bounded tests.
 
-# Phase 2 — Proof-of-Knowledge Systems
+No mutation, wallet, contract, provider, payment, credential or production authority is in scope.
 
-Status: PROTOTYPE READY MOCK
+## ACADEMY-SPRINT-03 - Learner Experience Mock/Local
 
-Objectives:
-- implement capability validation systems
+Status: BLOCKED ON SPRINT 02 AND RUNTIME GATES
 
-Deliverables:
-- mock Proof-of-Knowledge validation through quiz threshold scoring
-- quiz locked/available/passed/failed/retry visual states
-- educational verification
-- progression validation
-- governance readiness validation
-- `PoKMinter` contract scaffold for policy-limited validation records
+Planned deliverables:
 
----
+- pure mock learner transitions;
+- fail-closed local preview mutation enforcement;
+- read-only learner dashboard;
+- certificate and badge previews;
+- explicit preview boundary metadata.
 
-# Phase 3 — Certification Infrastructure
+## ACADEMY-SPRINT-04 - Validation and Consolidation
 
-Status: PLANNED
+Status: BLOCKED ON IMPLEMENTATION
 
-Objectives:
-- implement capability certification systems
+Planned deliverables:
 
-Deliverables:
-- certification issuance
-- skill validation
-- SBT integration
-- operational specialization tracks
+- negative static authority checks;
+- complete command-specific validation;
+- security gate review;
+- blocker reconciliation;
+- evidence-backed L4 decision and handoff.
 
----
+## Future Authority Work
 
-# Phase 4 — ACS-powered Learning
-
-Status: PLANNED
-
-Objectives:
-- integrate ACS into educational systems
-
-Deliverables:
-- AI tutors
-- adaptive learning
-- personalized progression
-- governance simulations
-- cognitive assistants
-
----
-
-# Phase 5 — Educational Economy
-
-Status: PROTOTYPE READY MOCK
-
-Objectives:
-- implement sustainable Learn-to-Win systems
-
-Deliverables:
-- staged educational reward gates
-- Locked $NEURONS for free courses
-- Unlocked $NEURONS for paid courses
-- validation-weighted reward distribution
-- edge-case coverage for failed quiz, retry policies, restricted courses, ACS ineligibility, pending unlocked rewards, and empty enrollment
-- `LockedNeuronsVault` contract scaffold for non-transferable internal reward accounting
-- staking-linked progression
-- capability incentives
-- ecosystem participation rewards
-
----
-
-# Phase 6 — Sovereign Cognitive Formation
-
-Status: FUTURE
-
-Objectives:
-- create ecosystem-wide cognitive formation systems
-
-Deliverables:
-- DAO formation programs
-- governance specialization
-- treasury education
-- ecosystem operational schools
-- decentralized educational federation
-
-The Academy must remain:
-- capability-oriented
-- governance-aware
-- sustainability-focused
+Production databases, providers, contracts, credentials, rewards, treasury, billing, settlement, payouts and cross-nucleus integration are not phases of EPIC-01. Each requires a separate approved request and cannot be inferred from L4 maturity.

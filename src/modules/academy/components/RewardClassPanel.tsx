@@ -9,7 +9,7 @@ type RewardClassPanelProps = {
 };
 
 export function RewardClassPanel({ title, description, rewards }: RewardClassPanelProps) {
-  const total = rewards.reduce((sum, reward) => sum + reward.amount, 0);
+  const total = rewards.reduce((sum, reward) => sum + reward.previewPoints, 0);
 
   return (
     <section className="academy-card grid gap-4 p-5">
@@ -29,23 +29,23 @@ export function RewardClassPanel({ title, description, rewards }: RewardClassPan
           <article key={reward.id} className="rounded-lg border border-slate-200 p-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
-                <p className="font-semibold text-slate-950">{formatNeurons(reward.amount)}</p>
-                <p className="text-sm text-slate-600">{reward.rewardSource}</p>
+                <p className="font-semibold text-slate-950">{formatNeurons(reward.previewPoints)}</p>
+                <p className="text-sm text-slate-600">{reward.previewSource}</p>
               </div>
               <StatusBadge label={reward.governanceControlled ? "governance-controlled" : "local-only"} />
             </div>
             <dl className="mt-4 grid gap-3 text-sm md:grid-cols-3">
               <div>
-                <dt className="academy-label">Reward Source</dt>
-                <dd className="mt-1 text-slate-800">{reward.rewardSource}</dd>
+                <dt className="academy-label">Preview Source</dt>
+                <dd className="mt-1 text-slate-800">{reward.previewSource}</dd>
               </div>
               <div>
-                <dt className="academy-label">Reward Utility</dt>
-                <dd className="mt-1 text-slate-800">{reward.utility.join(", ")}</dd>
+                <dt className="academy-label">Preview Benefits</dt>
+                <dd className="mt-1 text-slate-800">{reward.previewBenefits.join(", ")}</dd>
               </div>
               <div>
-                <dt className="academy-label">Transferability Status</dt>
-                <dd className="mt-1 text-slate-800">{reward.transferabilityStatus}</dd>
+                <dt className="academy-label">Preview Policy</dt>
+                <dd className="mt-1 text-slate-800">{reward.previewPolicy}</dd>
               </div>
             </dl>
           </article>
