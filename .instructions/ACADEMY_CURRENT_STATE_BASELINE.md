@@ -121,3 +121,21 @@ The longer exact aggregate rerun closes the initial timeout as an observation-wi
 - Do not evaluate or infer D-Level.
 - Do not count routes, authentication, contracts, ABIs, scripts, placeholders or readiness documents as functional authority.
 - Start Sprint 02 only within the safe scope in `ACADEMY_EXECUTION_BOUNDARY.md` and `HANDOFF.md`.
+
+## REQ-05 Delta - 2026-06-23
+
+- Added explicit Academy runtime preview metadata and preview-mutation gating.
+- Implemented deterministic local/mock learner flow derivation for progress, quiz, assessment, reward preview, recognition preview and certificate-preview eligibility.
+- Updated Academy POST routes to fail closed by default and require explicit local preview configuration in non-production runtime.
+- Added Academy learner tests proving deterministic progress, retry preview behavior, prohibited-field absence and boundary-metadata denial.
+- Corrected the desktop E2E preview-gates expectation and reran desktop E2E to PASS.
+
+Current delta classification:
+
+```txt
+ACADEMY-REQ-05: PASS
+L-Level: L3_CANDIDATE_VALIDATION_INCOMPLETE
+L4 promotion supported: NO
+D-Level evaluated: NO
+Production execution: DISABLED
+```

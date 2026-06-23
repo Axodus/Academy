@@ -13,6 +13,7 @@ The mandatory controls are defined in `ACADEMY_EXECUTION_BOUNDARY.md`.
 - Mutations fail closed unless an explicit non-production preview gate is implemented and enabled.
 - Missing, invalid or ambiguous configuration denies mutation.
 - No fallback may select a production database or provider.
+- `AcademyRuntimeBoundary` metadata alone never authorizes POST behavior.
 
 ### Domain isolation
 
@@ -31,6 +32,14 @@ Learner-facing surfaces may show non-monetary preview points only. They must not
 ### Compatibility scaffolds
 
 Contracts, ABIs, deployment scripts, wallet-authenticated routes, readiness endpoints and persistence placeholders must be isolated, documented as non-authoritative and tested only for boundary behavior.
+
+## Current REQ-05 Enforcement Status
+
+- Registered Academy POST routes are fail-closed by default.
+- Local preview mutation is enabled only when the runtime is non-production and `ACADEMY_LOCAL_PREVIEW_MUTATION=true`.
+- Responses remain labeled `mock-local`, `preview-only`, `non-authoritative` and `production: false`.
+- No provider, wallet signing, contract write, payment, treasury, settlement or production persistence path is opened by REQ-05.
+- Repository-wide negative static checks remain deferred; current protection is limited to Academy learner-flow tests plus the route/UI changes delivered in REQ-05.
 
 ## Mandatory Negative Checks
 

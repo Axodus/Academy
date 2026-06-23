@@ -20,7 +20,7 @@ export function RewardClassPanel({ title, description, rewards }: RewardClassPan
           <p className="mt-2 max-w-2xl text-sm text-slate-600">{description}</p>
         </div>
         <div className="rounded-lg bg-slate-100 px-4 py-3 text-right">
-          <p className="academy-label">Mock balance</p>
+          <p className="academy-label">Preview total</p>
           <p className="text-lg font-semibold text-slate-950">{formatNeurons(total)}</p>
         </div>
       </div>

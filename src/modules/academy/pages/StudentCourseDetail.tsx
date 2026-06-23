@@ -94,7 +94,7 @@ export function StudentCourseDetail() {
                 <dd className="mt-1 text-slate-800">{progress?.quizScore ?? "Not attempted"}</dd>
               </div>
               <div>
-                <dt className="academy-label">Certification requirement</dt>
+                <dt className="academy-label">Recognition requirement</dt>
                 <dd className="mt-1 text-slate-800">{certificationRequirement?.status ?? "not configured"}</dd>
               </div>
             </dl>
@@ -113,7 +113,7 @@ export function StudentCourseDetail() {
 
       <section className="academy-card grid gap-4 p-5">
         <div>
-          <p className="academy-label">Reward Gates</p>
+          <p className="academy-label">Preview Gates</p>
           <h3 className="text-xl font-semibold text-slate-950">Passive consumption is intentionally low-weight</h3>
         </div>
         <RewardGateList gates={rewardGates} />

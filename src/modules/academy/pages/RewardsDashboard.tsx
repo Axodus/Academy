@@ -11,14 +11,14 @@ export function RewardsDashboard() {
     <>
       <section>
         <p className="academy-label">Rewards Dashboard</p>
-        <h2 className="mt-1 text-3xl font-semibold text-slate-950">Preview tiers and treasury-isolated mock accounting</h2>
+        <h2 className="mt-1 text-3xl font-semibold text-slate-950">Preview tiers and isolated mock accounting</h2>
         <p className="mt-2 max-w-3xl text-slate-600">
           The MVP separates free-course foundation previews from paid-course applied previews. All values are local, deterministic, and non-authoritative.
         </p>
       </section>
       <RewardClassPanel
         title="Foundation Preview"
-        description="Free Course -> Foundation Preview. Local preview points only with no balance, claim, transfer, payout, or settlement semantics."
+        description="Free Course -> Foundation Preview. Local preview points only with deterministic, non-authoritative preview semantics."
         rewards={foundationRewards}
       />
       <RewardClassPanel
@@ -47,7 +47,7 @@ export function RewardsDashboard() {
         </div>
       </section>
       <section className="academy-card grid gap-3 p-5">
-        <h3 className="text-xl font-semibold text-slate-950">Future contract read models</h3>
+        <h3 className="text-xl font-semibold text-slate-950">Future compatibility read models</h3>
         <div className="grid gap-3 md:grid-cols-2">
           {academyData.futureContracts.map((contract) => (
             <article key={contract.id} className="rounded-lg border border-slate-200 p-4">

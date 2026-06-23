@@ -19,11 +19,11 @@ for (const route of routes) {
   });
 }
 
-test("learning workspace exposes quiz, PoK and reward gates", async ({ page }) => {
+test("learning workspace exposes quiz, PoK and preview gates", async ({ page }) => {
   await page.goto("/academy/learn/course-constitutional-onboarding/lessons/lesson-constitution-3", { waitUntil: "domcontentloaded", timeout: 60_000 });
   await page.waitForLoadState("networkidle", { timeout: 30_000 }).catch(() => undefined);
 
   await expect(page.getByText("Learning Workspace")).toBeVisible();
   await expect(page.getByText("Quiz / PoK dependency")).toBeVisible();
-  await expect(page.getByText("Reward gates after current mock state")).toBeVisible();
+  await expect(page.getByText("Preview gates after current mock state")).toBeVisible();
 });

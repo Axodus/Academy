@@ -39,6 +39,25 @@ PARTIAL_PASS_WITH_BLOCKERS
 
 The result supports the existence of a working local prototype and contract scaffolds. It does not support L4 promotion, production readiness or any financial, credential, wallet, contract, database or provider authority.
 
+## ACADEMY-REQ-05 Evidence
+
+Command date: 2026-06-23
+
+| Command | Result | Detail |
+|---|---|---|
+| `npm run typecheck` | PASS | Exit 0 |
+| `npm run lint` | PASS | Exit 0 after ignoring generated Playwright artifact directories in `eslint.config.js` |
+| `./node_modules/.bin/vitest --run tests/academyLearning.test.ts` | PASS | Exit 0; 31/31 tests |
+| `npm run test:e2e -- --project=desktop` | PASS | Exit 0; 8/8 tests |
+
+REQ-05 validation result:
+
+```txt
+PASS
+```
+
+This PASS applies to the REQ-05 mock/local learner flow only. It does not promote the repository to L4, does not authorize production execution and does not remove the remaining EPIC-01 blockers.
+
 ## Required Before L4 Consolidation
 
 - exact aggregate build continues to have a terminal PASS after implementation changes;

@@ -6,6 +6,9 @@ export type LessonProgressStatus = "locked" | "available" | "completed" | "valid
 export type QuizState = "locked" | "available" | "in-progress" | "passed" | "failed";
 export type PokStatus = "pending" | "approved" | "rejected" | "retry-required";
 export type RewardGateStatus = "locked" | "pending" | "unlocked" | "rejected";
+export type PreviewProgressState = "not-started" | "in-progress" | "completed-preview" | "locked-preview";
+export type PreviewAssessmentState = "locked" | "available" | "passed" | "not-met" | "retry" | "pending-preview";
+export type PreviewMutationState = "disabled" | "enabled-local-only";
 export type BoundaryMetadata = {
   mode: "local-preview";
   authority: "non-authoritative";
@@ -22,6 +25,14 @@ export type BoundaryMetadata = {
     credentialIssuanceEnabled: false;
     productionPersistenceEnabled: false;
   };
+};
+export type RuntimePreviewMetadata = {
+  authority: "mock-local";
+  outputAuthority: "preview-only";
+  nonAuthoritative: true;
+  production: false;
+  execution: "gated";
+  previewMutation: PreviewMutationState;
 };
 
 export type Tutor = {
@@ -240,4 +251,55 @@ export type CertificationRequirement = {
   requiredPokStatus: PokStatus;
   requiredQuizScore: number;
   status: string;
+};
+
+export type LearnerRewardPreview = {
+  previewPointTier: PreviewPointTier;
+  totalPreviewPoints: number;
+  unlockedPreviewPoints: number;
+  pendingPreviewPoints: number;
+  unlockedMilestones: string[];
+  lockedMilestones: string[];
+  nonMonetary: true;
+  nonAuthoritative: true;
+};
+
+export type LearnerRecognitionPreview = {
+  status: "locked-preview" | "pending-preview" | "eligible-preview";
+  badgePreview: string;
+  nonAuthoritative: true;
+};
+
+export type CertificatePreviewEligibility = {
+  eligible: boolean;
+  status: "not-met" | "pending-preview" | "eligible-preview";
+  previewOnly: true;
+  nonAuthoritative: true;
+  recognitionOnly: true;
+  externallyProvable: false;
+  chainLinked: false;
+  authorityBearing: false;
+  portable: false;
+};
+
+export type LearnerAssessmentPreview = {
+  state: PreviewAssessmentState;
+  score: number | null;
+  threshold: number;
+  retryAvailable: boolean;
+  deterministic: true;
+  nonAuthoritative: true;
+};
+
+export type LearnerCoursePreviewFlow = {
+  courseId: string;
+  progressState: PreviewProgressState;
+  completedLessons: number;
+  pendingLessons: number;
+  contentProgress: number;
+  quizState: PreviewAssessmentState;
+  assessment: LearnerAssessmentPreview;
+  rewardPreview: LearnerRewardPreview;
+  recognitionPreview: LearnerRecognitionPreview;
+  certificatePreviewEligibility: CertificatePreviewEligibility;
 };

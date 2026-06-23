@@ -28,14 +28,14 @@ export function AcademyShell() {
             </div>
             <div>
               <p className="academy-label">Axodus Academy</p>
-              <h1 className="text-2xl font-semibold text-slate-950">PoK-based $NEURONS qualification nucleus</h1>
+              <h1 className="text-2xl font-semibold text-slate-950">PoK-based preview qualification nucleus</h1>
               <p className="mt-1 max-w-3xl text-sm text-slate-600">
-                Mock-only constitutional learning infrastructure for progression, trust, treasury-aware rewards, and ecosystem unlocks.
+                Mock-only constitutional learning infrastructure for progression, trust, preview points, and ecosystem unlock previews.
               </p>
             </div>
           </div>
           <details className="academy-card p-3 lg:w-[360px]">
-            <summary className="cursor-pointer text-sm font-semibold text-slate-800">Identity / multichain login</summary>
+            <summary className="cursor-pointer text-sm font-semibold text-slate-800">Identity preview login</summary>
             <div className="mt-3">
               <LoginButton />
             </div>

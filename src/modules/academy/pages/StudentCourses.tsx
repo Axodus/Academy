@@ -61,7 +61,7 @@ export function StudentCourses() {
               <div className="grid gap-4 xl:grid-cols-[1fr_1fr_1fr_220px]">
                 <div className="academy-surface p-3"><ProgressBar value={progress?.contentProgress ?? 0} label="Content progress" /></div>
                 <div className="academy-surface p-3"><ProgressBar value={progress?.validationProgress ?? 0} label="Validation progress" /></div>
-                <div className="academy-surface p-3"><ProgressBar value={progress?.rewardUnlockProgress ?? 0} label="Reward unlock progress" /></div>
+                <div className="academy-surface p-3"><ProgressBar value={progress?.rewardUnlockProgress ?? 0} label="Preview unlock progress" /></div>
                 <div className="academy-surface p-3">
                   <p className="academy-label">PoK / quiz</p>
                   <div className="mt-2 flex flex-wrap gap-2">

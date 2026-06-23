@@ -35,7 +35,7 @@ This file is the canonical Academy authority contract. Other `.instructions` fil
 | Capability | Current status | Allowed Academy behavior |
 |---|---|---|
 | Course catalog and learning paths | MOCK/LOCAL | Read-only fixture/config resolution |
-| Learner progress and quiz state | LOCAL PREVIEW | Pure mock transitions; local mutation only after explicit preview gate implementation |
+| Learner progress and quiz state | LOCAL PREVIEW | Pure mock transitions; local mutation only behind the explicit preview gate, non-production runtime checks and local/mock persistence |
 | Certificate | PREVIEW ONLY | Eligibility and visual preview; no issuance, verification or ownership claim |
 | Badge | PREVIEW ONLY | Display metadata; no credential authority |
 | Reward | NON-MONETARY PREVIEW ONLY | Preview points/labels; no token, balance, claim, transfer or economic entitlement |
@@ -62,7 +62,7 @@ A future local preview mutation is permitted only when all conditions are true:
 5. The response declares `mock/preview`, `local-only`, `non-authoritative` and `non-executing` semantics.
 6. Tests prove default denial and fail-closed behavior for invalid or missing configuration.
 
-Current implementation status: `NOT_ENFORCED`. Until implemented and tested, Academy POST routes are blockers and must not be used as evidence for L4 consolidation.
+Current implementation status: `ENFORCED_FOR_REGISTERED_ACADEMY_POST_ROUTES`. The Academy POST routes now fail closed by default and require explicit local preview gating plus non-production runtime checks. This does not count as production authority and does not remove the remaining L4 blockers.
 
 Local preview mutation must never:
 

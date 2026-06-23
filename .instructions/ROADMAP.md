@@ -20,7 +20,7 @@ Open runtime and validation blockers remain promotion blockers for later impleme
 
 ## ACADEMY-SPRINT-02 - Educational Domain Foundation
 
-Status: READY WITH GATES
+Status: COMPLETE
 
 Deliverables:
 
@@ -35,15 +35,21 @@ No mutation, wallet, contract, provider, payment, credential or production autho
 
 ## ACADEMY-SPRINT-03 - Learner Experience Mock/Local
 
-Status: BLOCKED ON SPRINT 02 AND RUNTIME GATES
+Status: IN PROGRESS, `ACADEMY-REQ-05` PASS
 
-Planned deliverables:
+Delivered in `ACADEMY-REQ-05`:
 
 - pure mock learner transitions;
 - fail-closed local preview mutation enforcement;
-- read-only learner dashboard;
-- certificate and badge previews;
+- progress, quiz and assessment preview flow;
+- reward, recognition and certificate-preview separation;
 - explicit preview boundary metadata.
+
+Remaining Sprint 03 work:
+
+- repository-wide negative static authority checks;
+- any further learner dashboard/certificate-preview cleanup beyond the minimal compatibility changes;
+- additional E2E/device validation if later required by scope.
 
 ## ACADEMY-SPRINT-04 - Validation and Consolidation
 

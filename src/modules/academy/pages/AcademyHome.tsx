@@ -25,7 +25,7 @@ export function AcademyHome() {
                 Constitutional education, progression, and preview qualification before any production authority.
               </h2>
               <p className="mt-4 max-w-3xl text-base text-slate-600">
-                Academy validates learning, trust, Proof of Knowledge readiness, and treasury-aware reward classes through mock read models before contracts are enabled.
+                Academy tracks learning, trust, Proof of Knowledge readiness, and preview point classes through deterministic mock read models inside the local preview boundary.
               </p>
             </div>
             <div className="flex flex-wrap gap-3">
@@ -38,11 +38,11 @@ export function AcademyHome() {
           <div>
             <p className="academy-label">Preview doctrine</p>
             <h3 className="mt-1 text-xl font-semibold text-slate-950">Free Course to Foundation Preview</h3>
-            <p className="mt-2 text-sm text-slate-600">Local preview points only. No balance, claim, transfer, payout, settlement, or execution authority is created.</p>
+            <p className="mt-2 text-sm text-slate-600">Local preview points only. Progress remains deterministic, local, and non-authoritative.</p>
           </div>
           <div className="rounded-lg border border-slate-200 p-4">
             <h3 className="text-xl font-semibold text-slate-950">Paid Course to Applied Preview</h3>
-            <p className="mt-2 text-sm text-slate-600">Higher preview visibility with progress, milestone completion, and recognition-preview eligibility. No monetary, signer, or treasury authority is implied.</p>
+            <p className="mt-2 text-sm text-slate-600">Higher preview visibility with progress, milestone completion, and recognition-preview eligibility. Execution authority remains closed.</p>
           </div>
         </div>
       </section>
@@ -62,7 +62,7 @@ export function AcademyHome() {
           ))}
         </div>
         <div className="academy-card grid gap-3 p-5">
-          <h2 className="text-xl font-semibold text-slate-950">Future Contract Compatibility</h2>
+          <h2 className="text-xl font-semibold text-slate-950">Future Compatibility Read Models</h2>
           {academyData.futureContracts.map((contract) => (
             <div key={contract.id} className="rounded-lg border border-slate-200 p-3">
               <div className="flex flex-wrap items-center justify-between gap-2">

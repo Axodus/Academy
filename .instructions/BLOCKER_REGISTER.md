@@ -7,20 +7,20 @@ Last updated: 2026-06-23
 ### ACADEMY-BLOCKER-001 - Preview Mutation Gate Missing
 
 Severity: HIGH
-Status: OPEN
+Status: RESOLVED
 
-Academy POST routes accept wallet-derived JWT authentication and write local JSON state without a separate explicit preview-mode gate. Authentication is not authorization for preview execution.
+Academy POST routes now fail closed by default. Local preview behavior requires explicit local preview configuration, non-production runtime classification and local/mock persistence only. Authentication remains insufficient by itself.
 
-Resolution: implement the six-condition preview mutation contract in `ACADEMY_EXECUTION_BOUNDARY.md` and prove default denial with tests.
+Resolution: implemented in `ACADEMY-REQ-05` and covered by Academy tests proving default denial and boundary-metadata denial.
 
 ### ACADEMY-BLOCKER-002 - Learner-Facing Authority Semantics
 
 Severity: HIGH
-Status: OPEN
+Status: PARTIAL
 
-Current models, fixtures and UI contain credential/reward fields such as issue dates, verification status, proof hashes, NFT compatibility, claimability, token amounts and wallet-distribution language.
+REQ-05 removed prohibited authority semantics from the current learner flow, route serialization and minimal compatibility UI touched by the sprint. Repository-wide enforcement is still incomplete until the deferred negative static checks exist.
 
-Resolution: replace these with explicit non-monetary reward previews and certificate previews, then validate all learner-facing surfaces.
+Resolution: continue with repository-wide negative checks and any remaining UI cleanup required by later scope.
 
 ### ACADEMY-BLOCKER-003 - Negative Static Checks Missing
 
@@ -34,11 +34,11 @@ Resolution: implement ACADEMY-REQ-07 checks with reviewed exceptions limited to 
 ### ACADEMY-BLOCKER-004 - Desktop E2E Failure
 
 Severity: MEDIUM
-Status: OPEN
+Status: RESOLVED
 
-Current desktop E2E result is 7 passed / 1 failed. `/academy/progress` did not render the expected `Axodus Academy` shell marker.
+The prior desktop E2E failure was a stale expectation in the learning workspace preview-gates assertion. Current desktop result is 8 passed / 0 failed.
 
-Resolution: diagnose and fix or correct the route expectation, then run desktop, tablet and mobile projects with terminal results.
+Resolution: expectation corrected and desktop E2E rerun to PASS during `ACADEMY-REQ-05`.
 
 ## Closed-by-Policy Production Gates
 

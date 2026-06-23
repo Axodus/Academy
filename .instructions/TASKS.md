@@ -30,13 +30,25 @@ Last updated: 2026-06-23
 - explicit not-found/invalid-reference behavior;
 - unit tests without provider, persistence or wallet dependencies.
 
+## Sprint 03
+
+### ACADEMY-REQ-05
+
+- [x] implement deterministic local/mock learner progress flow;
+- [x] normalize quiz availability, scoring and retry preview behavior;
+- [x] keep progress, assessment, reward preview, recognition preview and certificate-preview eligibility as separate states;
+- [x] enforce fail-closed Academy POST behavior by default;
+- [x] require explicit local preview configuration and non-production runtime for local preview POST behavior;
+- [x] prove boundary metadata alone cannot authorize POST behavior;
+- [x] keep learner-facing serialized responses free of prohibited authority fields;
+- [x] rerun required typecheck, lint, Academy learner tests and desktop E2E;
+- [x] update `.instructions` with REQ-05 results and remaining blockers.
+
 ## Promotion Blockers
 
-- implement the explicit fail-closed preview mutation gate;
-- remove authority-adjacent learner fields and labels;
-- implement negative static authority checks;
-- resolve the `/academy/progress` desktop E2E failure;
-- preserve the passing exact aggregate build result after implementation changes;
+- implement repository-wide negative static authority checks;
+- complete broader learner dashboard/certificate-preview cleanup if a later request requires it;
+- preserve broader validation coverage as implementation continues;
 - run required desktop/tablet/mobile acceptance coverage before L4 review.
 
 ## Closed Gates / Not Active Tasks

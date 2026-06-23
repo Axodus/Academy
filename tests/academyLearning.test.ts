@@ -4,7 +4,9 @@ import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { buildApp } from "../src/serverApp";
 import { signLoginJwt } from "../src/libs/jwt";
 import { academyData, listCatalogCourses, listLearningPaths } from "../src/modules/academy/services/academyData";
+import { academyLearnerPreviewService } from "../src/modules/academy/services/academyLearnerPreviewService";
 import { certificatePreviewSchema, rewardRecordSchema } from "../src/modules/academy/services/academyPreviewSchema";
+import { getAcademyPreviewMutationGate, getAcademyPreviewRuntime } from "../src/modules/academy/services/academyPreviewRuntime";
 import { courseProgressService } from "../src/modules/academy/services/courseProgressService";
 import { pokValidationService } from "../src/modules/academy/services/pokValidationService";
 import { quizService } from "../src/modules/academy/services/quizService";
@@ -27,6 +29,8 @@ beforeEach(async () => {
 
 afterEach(async () => {
   await rm(".academy-data", { recursive: true, force: true });
+  delete process.env.ACADEMY_LOCAL_PREVIEW_MUTATION;
+  delete process.env.NODE_ENV;
 });
 
 describe("Academy learning consumption and PoK reward mechanics", () => {
@@ -93,6 +97,73 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
     expect(courseProgressService.isCertificationEligible("course-constitutional-onboarding", "approved", 100, 95)).toBe(true);
   });
 
+  it("derives deterministic learner preview progress, assessment, reward preview, and certificate-preview states", () => {
+    const emptyState = { completedLessons: [], quizAttempts: [] };
+    const emptyFlow = academyLearnerPreviewService.getCourseFlow("course-constitutional-onboarding", emptyState);
+
+    expect(emptyFlow.progressState).toBe("not-started");
+    expect(emptyFlow.quizState).toBe("locked");
+    expect(emptyFlow.assessment.state).toBe("locked");
+    expect(emptyFlow.rewardPreview.nonMonetary).toBe(true);
+    expect(emptyFlow.rewardPreview.nonAuthoritative).toBe(true);
+    expect(emptyFlow.certificatePreviewEligibility.eligible).toBe(false);
+    expect(emptyFlow.certificatePreviewEligibility.previewOnly).toBe(true);
+
+    const passedState = {
+      completedLessons: [
+        { courseId: "course-constitutional-onboarding", lessonId: "lesson-constitution-1", completedAt: "2026-06-23T00:00:00.000Z" },
+        { courseId: "course-constitutional-onboarding", lessonId: "lesson-constitution-2", completedAt: "2026-06-23T00:00:01.000Z" },
+        { courseId: "course-constitutional-onboarding", lessonId: "lesson-constitution-3", completedAt: "2026-06-23T00:00:02.000Z" }
+      ],
+      quizAttempts: [
+        {
+          courseId: "course-constitutional-onboarding",
+          quizId: "quiz-constitution",
+          score: 91,
+          threshold: 80,
+          result: "passed" as const,
+          pokStatus: "approved" as const,
+          attemptedAt: "2026-06-23T00:00:03.000Z"
+        }
+      ]
+    };
+    const passedFlow = academyLearnerPreviewService.getCourseFlow("course-constitutional-onboarding", passedState);
+
+    expect(passedFlow.progressState).toBe("completed-preview");
+    expect(passedFlow.quizState).toBe("passed");
+    expect(passedFlow.assessment.state).toBe("passed");
+    expect(passedFlow.rewardPreview.unlockedPreviewPoints).toBeGreaterThan(0);
+    expect(passedFlow.recognitionPreview.status).toBe("eligible-preview");
+    expect(passedFlow.certificatePreviewEligibility.eligible).toBe(true);
+    expect(passedFlow.certificatePreviewEligibility.portable).toBe(false);
+  });
+
+  it("moves failed assessments into retry state without creating authority", () => {
+    const retryFlow = academyLearnerPreviewService.getCourseFlow("course-treasury-risk", {
+      completedLessons: [
+        { courseId: "course-treasury-risk", lessonId: "lesson-treasury-1", completedAt: "2026-06-23T00:00:00.000Z" },
+        { courseId: "course-treasury-risk", lessonId: "lesson-treasury-2", completedAt: "2026-06-23T00:00:01.000Z" },
+        { courseId: "course-treasury-risk", lessonId: "lesson-treasury-3", completedAt: "2026-06-23T00:00:02.000Z" }
+      ],
+      quizAttempts: [
+        {
+          courseId: "course-treasury-risk",
+          quizId: "quiz-treasury",
+          score: 64,
+          threshold: 82,
+          result: "failed",
+          pokStatus: "retry-required",
+          attemptedAt: "2026-06-23T00:00:03.000Z"
+        }
+      ]
+    });
+
+    expect(retryFlow.quizState).toBe("retry");
+    expect(retryFlow.assessment.retryAvailable).toBe(true);
+    expect(retryFlow.certificatePreviewEligibility.eligible).toBe(false);
+    expect(retryFlow.rewardPreview.nonAuthoritative).toBe(true);
+  });
+
   it("keeps future contract and preview data mock-only", () => {
     expect(academyData.futureContracts.every((contract) => contract.writesEnabled === false)).toBe(true);
     expect(academyData.rewardGates.some((gate) => gate.source === "quiz" && gate.rewardPercentage >= 40)).toBe(true);
@@ -117,7 +188,56 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
     await app.close();
   });
 
-  it("persists lesson completion and unlocks quiz attempts after required lessons", async () => {
+  it("fails lesson completion POST closed by default", async () => {
+    const app = await buildApp();
+    const response = await app.inject({
+      method: "POST",
+      url: "/academy/courses/course-constitutional-onboarding/lessons/lesson-constitution-1/complete",
+      headers: { authorization: `Bearer ${token}` }
+    });
+
+    expect(response.statusCode).toBe(403);
+    expect(response.json()).toMatchObject({
+      error: "preview_mutation_gated",
+      runtime: {
+        authority: "mock-local",
+        outputAuthority: "preview-only",
+        nonAuthoritative: true,
+        production: false,
+        execution: "gated",
+        previewMutation: "disabled"
+      }
+    });
+    await app.close();
+  });
+
+  it("fails quiz attempt POST closed by default even when boundary metadata exists", async () => {
+    const app = await buildApp();
+    const response = await app.inject({
+      method: "POST",
+      url: "/academy/courses/course-constitutional-onboarding/quizzes/quiz-constitution/attempts",
+      headers: { authorization: `Bearer ${token}` },
+      payload: {
+        score: 91,
+        boundary: academyData.boundary
+      }
+    });
+
+    expect(response.statusCode).toBe(403);
+    expect(response.json()).toMatchObject({
+      boundary: academyData.boundary,
+      error: "preview_mutation_gated",
+      runtime: {
+        previewMutation: "disabled"
+      }
+    });
+    await app.close();
+  });
+
+  it("allows local preview POST behavior only with an explicit non-production gate", async () => {
+    process.env.ACADEMY_LOCAL_PREVIEW_MUTATION = "true";
+    process.env.NODE_ENV = "development";
+
     const app = await buildApp();
     const headers = { authorization: `Bearer ${token}` };
     const courseId = "course-constitutional-onboarding";
@@ -140,12 +260,24 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
     const body = attempt.json();
 
     expect(attempt.statusCode).toBe(200);
+    expect(body.runtime).toMatchObject({
+      authority: "mock-local",
+      outputAuthority: "preview-only",
+      nonAuthoritative: true,
+      production: false,
+      execution: "gated",
+      previewMutation: "enabled-local-only"
+    });
     expect(body.validation.status).toBe("approved");
-    expect(body.certificationEligible).toBe(true);
+    expect(body.certificatePreviewEligibility.eligible).toBe(true);
+    expect(body.certificatePreviewEligibility.portable).toBe(false);
     await app.close();
   });
 
-  it("keeps API quiz attempts locked until persisted required lessons are completed", async () => {
+  it("keeps API quiz attempts locked until persisted required lessons are completed when preview gating is enabled", async () => {
+    process.env.ACADEMY_LOCAL_PREVIEW_MUTATION = "true";
+    process.env.NODE_ENV = "development";
+
     const app = await buildApp();
     const response = await app.inject({
       method: "POST",
@@ -156,6 +288,28 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
 
     expect(response.statusCode).toBe(409);
     expect(response.json()).toMatchObject({ error: "quiz_locked" });
+    await app.close();
+  });
+
+  it("does not allow preview mutation in production even when the explicit flag is set", async () => {
+    process.env.ACADEMY_LOCAL_PREVIEW_MUTATION = "true";
+    process.env.NODE_ENV = "production";
+
+    const app = await buildApp();
+    const response = await app.inject({
+      method: "POST",
+      url: "/academy/courses/course-constitutional-onboarding/lessons/lesson-constitution-1/complete",
+      headers: { authorization: `Bearer ${token}` }
+    });
+
+    expect(response.statusCode).toBe(403);
+    expect(response.json()).toMatchObject({
+      error: "preview_mutation_gated",
+      gate: {
+        runtimeNonProduction: false,
+        previewFlagEnabled: true
+      }
+    });
     await app.close();
   });
 
@@ -316,6 +470,80 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
       const offender = lowerContents.find(({ text }) => text.includes(term.toLowerCase()));
       expect(offender?.file, `unexpected prohibited learner-facing identifier: ${term}`).toBeUndefined();
     }
+  });
+
+  it("keeps learner-facing Academy UI copy free of restricted authority semantics", async () => {
+    const roots = [
+      path.resolve("src/modules/academy/pages"),
+      path.resolve("src/modules/academy/components"),
+      path.resolve("src/routes/academy.ts")
+    ];
+    const restricted = [
+      "$neurons",
+      "multichain",
+      "claim",
+      "transfer",
+      "payout",
+      "settlement",
+      "issuance",
+      "verification",
+      "ownership",
+      "signer",
+      "mock balance"
+    ];
+
+    const files = await collectFiles(roots);
+    const lowerContents = await Promise.all(files.map(async (file) => ({ file, text: (await readFile(file, "utf8")).toLowerCase() })));
+
+    for (const term of restricted) {
+      const offender = lowerContents.find(({ text }) => text.includes(term));
+      expect(offender?.file, `unexpected restricted learner-facing UI semantic: ${term}`).toBeUndefined();
+    }
+  });
+
+  it("exposes explicit runtime preview metadata without allowing boundary metadata to authorize mutation", () => {
+    expect(getAcademyPreviewRuntime()).toMatchObject({
+      authority: "mock-local",
+      outputAuthority: "preview-only",
+      nonAuthoritative: true,
+      production: false,
+      execution: "gated",
+      previewMutation: "disabled"
+    });
+    expect(getAcademyPreviewMutationGate().allowed).toBe(false);
+  });
+
+  it("keeps learner-facing serialized academy responses free of prohibited authority fields", async () => {
+    const app = await buildApp();
+    const response = await app.inject({
+      method: "GET",
+      url: "/academy/courses/course-constitutional-onboarding/progress",
+      headers: { authorization: `Bearer ${token}` }
+    });
+
+    expect(response.statusCode).toBe(200);
+    const body = JSON.stringify(response.json()).toLowerCase();
+
+    for (const term of [
+      "claimable",
+      "proofhash",
+      "verificationurl",
+      "verificationstatus",
+      "walletdistribution",
+      "tokenbalance",
+      "transferable",
+      "txhash",
+      "contractaddress",
+      "walletclaim",
+      "rewardclaim",
+      "certificateissue",
+      "credentialverification",
+      "tokenreward"
+    ]) {
+      expect(body.includes(term), `unexpected prohibited serialized field: ${term}`).toBe(false);
+    }
+
+    await app.close();
   });
 });
 

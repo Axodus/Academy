@@ -28,7 +28,7 @@ export function ProgressEngine() {
       <section className="grid gap-4 md:grid-cols-4">
         <MetricCard label="User level" value={student.level} detail={`Level index ${student.levelIndex}`} />
         <MetricCard label="Trust score" value={student.trustScore} detail="Mock anti-abuse and participation signal" />
-        <MetricCard label="Foundation points" value={formatNeurons(student.foundationPoints)} detail="No balance, claim, or transfer" />
+        <MetricCard label="Foundation points" value={formatNeurons(student.foundationPoints)} detail="Local preview utility" />
         <MetricCard label="Applied points" value={formatNeurons(student.appliedPoints)} detail="Local preview model" />
       </section>
 
@@ -78,7 +78,7 @@ export function ProgressEngine() {
                   <ProgressBar value={progress?.contentProgress ?? 0} label="Content progress" />
                   <ProgressBar value={progress?.lessonCompletion ?? 0} label="Lesson completion" />
                   <ProgressBar value={progress?.validationProgress ?? 0} label="Validation progress" />
-                  <ProgressBar value={progress?.rewardUnlockProgress ?? 0} label="Reward unlock" />
+                  <ProgressBar value={progress?.rewardUnlockProgress ?? 0} label="Preview unlock" />
                 </div>
               </article>
             );

@@ -1,6 +1,8 @@
 import { FastifyInstance } from "fastify";
 import { z } from "zod";
 import { academyData, getCourseLessons } from "../modules/academy/services/academyData";
+import { academyLearnerPreviewService } from "../modules/academy/services/academyLearnerPreviewService";
+import { getAcademyPreviewMutationGate, getAcademyPreviewRuntime } from "../modules/academy/services/academyPreviewRuntime";
 import { academyContractReadiness } from "../modules/academy/services/contractReadiness";
 import { courseProgressService } from "../modules/academy/services/courseProgressService";
 import { pokValidationService } from "../modules/academy/services/pokValidationService";
@@ -28,17 +30,39 @@ const QuizAttemptBody = z.object({
   score: z.number().int().min(0).max(100)
 });
 
+function gatedPreviewMutationResponse() {
+  const gate = getAcademyPreviewMutationGate();
+
+  return {
+    statusCode: 403,
+    body: {
+      boundary: academyData.boundary,
+      runtime: gate.runtime,
+      error: "preview_mutation_gated",
+      reason: "Local preview mutation is disabled unless explicit non-production local preview gating is enabled.",
+      gate: gate.conditions
+    }
+  };
+}
+
 export default async function academyRoutes(f: FastifyInstance) {
   f.addHook("onRequest", (f as any).authenticate);
 
   f.get("/academy/me", async (req, rep) => {
     const studentId = (req as any).user.sub as string;
     const persisted = await academyProgressRepository.getStudentState(studentId);
+    const runtime = getAcademyPreviewRuntime();
+    const learnerFlows = [...academyData.enrolledCourses, ...academyData.purchasedCourses].map((enrollment) =>
+      academyLearnerPreviewService.getCourseFlow(enrollment.courseId, persisted)
+    );
+
     return rep.send({
       boundary: academyData.boundary,
+      runtime,
       identity: (req as any).user,
       student: academyData.student,
       persisted,
+      learnerFlows,
       integrity: {
         constitutionalOnboarding: stateIntegrityService.validateCourseState("course-constitutional-onboarding", persisted),
         treasuryRisk: stateIntegrityService.validateCourseState("course-treasury-risk", persisted)
@@ -51,24 +75,43 @@ export default async function academyRoutes(f: FastifyInstance) {
     });
   });
 
-  f.get("/academy/courses/enrolled", async (_req, rep) => {
-    return rep.send({ boundary: academyData.boundary, courses: studentAcademyService.getStudentCourses() });
+  f.get("/academy/courses/enrolled", async (req, rep) => {
+    const studentId = (req as any).user.sub as string;
+    const persisted = await academyProgressRepository.getStudentState(studentId);
+    const runtime = getAcademyPreviewRuntime();
+
+    return rep.send({
+      boundary: academyData.boundary,
+      runtime,
+      courses: studentAcademyService.getStudentCourses().map((course) => ({
+        ...course,
+        learnerFlow: academyLearnerPreviewService.getCourseFlow(course?.course.id ?? "", persisted)
+      }))
+    });
   });
 
   f.get("/academy/courses/:courseId/progress", async (req, rep) => {
     const { courseId } = CourseParams.parse(req.params);
+    const studentId = (req as any).user.sub as string;
+    const persisted = await academyProgressRepository.getStudentState(studentId);
     const course = studentAcademyService.getStudentCourse(courseId);
     if (!course) return rep.code(404).send({ error: "course_not_found" });
 
     return rep.send({
       boundary: academyData.boundary,
+      runtime: getAcademyPreviewRuntime(),
       course,
-      progress: courseProgressService.getProgress(courseId),
+      progress: academyLearnerPreviewService.getCourseFlow(courseId, persisted),
       rewardGates: rewardGateService.getRewardGates(courseId)
     });
   });
 
   f.post("/academy/courses/:courseId/lessons/:lessonId/complete", async (req, rep) => {
+    const gated = gatedPreviewMutationResponse();
+    if (gated.statusCode !== 200 && gated.body.runtime.previewMutation !== "enabled-local-only") {
+      return rep.code(gated.statusCode).send(gated.body);
+    }
+
     const { courseId, lessonId } = LessonParams.parse(req.params);
     const studentId = (req as any).user.sub as string;
     const lesson = getCourseLessons(courseId).find((item) => item.id === lessonId);
@@ -80,14 +123,21 @@ export default async function academyRoutes(f: FastifyInstance) {
 
     return rep.send({
       boundary: academyData.boundary,
+      runtime: getAcademyPreviewRuntime(),
       completion,
       contentProgress: courseProgressService.getContentProgress(courseId, completedLessonIds),
       quizState: quizService.getQuizState(courseId, completedLessonIds),
-      note: "Lesson completion is content consumption only. Main rewards require PoK validation."
+      learnerFlow: academyLearnerPreviewService.getCourseFlow(courseId, persisted),
+      note: "Lesson completion is a local preview only. No external authority is created."
     });
   });
 
   f.post("/academy/courses/:courseId/quizzes/:quizId/attempts", async (req, rep) => {
+    const gated = gatedPreviewMutationResponse();
+    if (gated.statusCode !== 200 && gated.body.runtime.previewMutation !== "enabled-local-only") {
+      return rep.code(gated.statusCode).send(gated.body);
+    }
+
     const { courseId, quizId } = QuizAttemptParams.parse(req.params);
     const { score } = QuizAttemptBody.parse(req.body);
     const studentId = (req as any).user.sub as string;
@@ -114,16 +164,21 @@ export default async function academyRoutes(f: FastifyInstance) {
       pokStatus: evaluation.pokStatus,
       attemptedAt: new Date().toISOString()
     });
+    const nextState = await academyProgressRepository.getStudentState(studentId);
 
     return rep.send({
       boundary: academyData.boundary,
+      runtime: getAcademyPreviewRuntime(),
       attempt,
       validation,
+      assessment: academyLearnerPreviewService.getCourseFlow(courseId, nextState).assessment,
       rewardGates: rewardGateService.getRewardGates(courseId).map((gate) => ({
         ...gate,
         status: rewardGateService.getGateStatusAfterPok(gate.status, gate.source, validation.approved)
       })),
-      certificationEligible: courseProgressService.isCertificationEligible(courseId, validation.status, 100, score)
+      rewardPreview: academyLearnerPreviewService.getCourseFlow(courseId, nextState).rewardPreview,
+      recognitionPreview: academyLearnerPreviewService.getCourseFlow(courseId, nextState).recognitionPreview,
+      certificatePreviewEligibility: academyLearnerPreviewService.getCourseFlow(courseId, nextState).certificatePreviewEligibility
     });
   });
 
@@ -131,6 +186,7 @@ export default async function academyRoutes(f: FastifyInstance) {
     const { courseId } = CourseParams.parse(req.params);
     return rep.send({
       boundary: academyData.boundary,
+      runtime: getAcademyPreviewRuntime(),
       courseId,
       previewPointTier: rewardGateService.getRewardTypeLabel(courseId),
       validationWeight: rewardGateService.getValidationWeight(courseId),
@@ -141,6 +197,7 @@ export default async function academyRoutes(f: FastifyInstance) {
   f.get("/academy/contracts/readiness", async (_req, rep) => {
     return rep.send({
       boundary: academyData.boundary,
+      runtime: getAcademyPreviewRuntime(),
       ...academyContractReadiness.getStatus()
     });
   });

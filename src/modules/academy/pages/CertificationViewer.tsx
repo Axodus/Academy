@@ -8,7 +8,7 @@ export function CertificationViewer() {
       <section>
         <p className="academy-label">Recognition Viewer</p>
         <h2 className="mt-1 text-3xl font-semibold text-slate-950">Recognition previews with PoK and governance review visibility</h2>
-        <p className="mt-2 max-w-3xl text-slate-600">No credential issuance, verification, ownership, or contract execution occurs in this MVP.</p>
+        <p className="mt-2 max-w-3xl text-slate-600">Recognition previews remain review-only, local, and non-authoritative in this MVP.</p>
       </section>
       <section className="grid gap-4 lg:grid-cols-2">
         {academyData.certificates.map((certificate) => (

@@ -4,10 +4,10 @@ Last updated: 2026-06-23
 
 ## Current Request
 
-`ACADEMY-SPRINT-01` - Current State and Instruction Alignment
+`ACADEMY-SPRINT-03` - Learner Experience Mock/Local and Fail-Closed Preview Flow
 
-- `ACADEMY-REQ-01`: baseline established in `ACADEMY_CURRENT_STATE_BASELINE.md`.
-- `ACADEMY-REQ-02`: boundary established in `ACADEMY_EXECUTION_BOUNDARY.md`.
+- `ACADEMY-REQ-05`: PASS on 2026-06-23.
+- Sprint 02 foundation remains the required base in `src/modules/academy/services/academyPreviewSchema.ts`, `src/data/mock/academy.mock.js`, `src/modules/academy/services/academyData.ts` and `src/routes/academy.ts`.
 
 ## Current Classification
 
@@ -17,7 +17,7 @@ L4 promotion: NOT_SUPPORTED
 D-Level: NOT_EVALUATED
 Production readiness: NO
 Production execution: DISABLED
-Evidence result: PARTIAL_PASS_WITH_BLOCKERS
+Current request result: PASS
 ```
 
 L-Level describes maturity evidence only. It grants no D-Level, deployment permission, financial authority, credential authority or production authority.
@@ -41,23 +41,21 @@ The canonical rules are in `ACADEMY_EXECUTION_BOUNDARY.md`.
 
 - Typecheck: PASS.
 - Lint: PASS.
-- Unit/API tests: PASS, 20 tests.
-- Solidity scaffold tests: PASS, 6 tests; not authority evidence.
-- Web build: PASS_WITH_WARNINGS.
-- API build: PASS.
-- Aggregate build: PASS on exact-command rerun with a 480-second limit; the initial 240-second attempt was incomplete.
-- Desktop E2E: FAIL, 7 passed and `/academy/progress` failed.
-- Tablet/mobile E2E: NOT RUN.
-- Preview mutation gate: NOT IMPLEMENTED.
-- Negative static authority checks: NOT IMPLEMENTED.
+- Academy learner tests: PASS, `tests/academyLearning.test.ts`, 31 tests.
+- Desktop E2E: PASS, 8 passed.
+- Tablet/mobile E2E: NOT RUN for REQ-05.
+- Preview mutation gate: IMPLEMENTED for registered Academy POST routes.
+- Mutation enforcement: FAIL_CLOSED by default; local preview mutation requires explicit local preview configuration and non-production runtime.
+- Boundary metadata alone authorizes no POST behavior.
+- Negative static authority checks: PARTIAL only; Academy learner tests cover route serialization, prohibited learner-facing fields and restricted learner-facing UI semantics, but repository-wide checks are still deferred.
 
 ## Authority Status
 
 | Area | Status |
 |---|---|
 | Local fixtures and read models | ALLOWED, mock/local only |
-| Read-only catalog/path work | ALLOWED after Sprint 01 handoff |
-| Local progress mutation | BLOCKED until explicit fail-closed preview gate is implemented |
+| Read-only catalog/path work | ALLOWED |
+| Local progress mutation | ALLOWED only behind the explicit local preview gate and non-production runtime checks |
 | Wallet authentication | COMPATIBILITY SCAFFOLD only |
 | Wallet transaction signing | CLOSED |
 | Certificate/badge preview | PREVIEW ONLY |
@@ -72,8 +70,8 @@ The canonical rules are in `ACADEMY_EXECUTION_BOUNDARY.md`.
 
 ## Promotion Blockers
 
-See `BLOCKER_REGISTER.md`. The primary blockers are the absent preview mutation gate, unsafe learner-facing authority semantics, absent negative static checks and the failing E2E route.
+See `BLOCKER_REGISTER.md`. The primary blockers are the missing repository-wide negative static checks, incomplete broader validation coverage and deferred dashboard/certificate-preview cleanup outside REQ-05.
 
 ## Next Safe Work
 
-`ACADEMY-SPRINT-02`, limited to validated local schemas/fixtures and deterministic read-only catalog/learning-path services. Sprint 02 must not consume or extend mutation, wallet, contract, payment, credential, provider or production authority.
+`ACADEMY-REQ-06` or `ACADEMY-REQ-07`, limited to remaining preview cleanup, repository-wide negative static checks and broader validation consolidation without opening any production-sensitive gate.
