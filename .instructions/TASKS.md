@@ -4,73 +4,47 @@ Last updated: 2026-06-24
 
 ## Sprint 01
 
-- [x] Inspect `.instructions`, source, APIs, contracts, tests and validation evidence.
-- [x] Establish a current evidence baseline.
-- [x] Identify stale and conflicting maturity evidence.
-- [x] Define the canonical execution boundary.
-- [x] Classify compatibility scaffolds as non-authoritative.
-- [x] Define the fail-closed preview mutation contract.
-- [x] Define a safe Sprint 02 handoff.
+- [x] Inspect instructions, source, APIs, contracts, tests and evidence.
+- [x] Establish the baseline and canonical execution boundary.
+- [x] Separate compatibility scaffolds from authority evidence.
 
-## Sprint 02 Safe Queue
+## Sprint 02
 
-### ACADEMY-REQ-03
-
-- validated TypeScript schemas;
-- deterministic mock/local fixtures;
-- non-monetary reward preview model;
-- certificate preview model without credential authority;
-- schema and fixture validation tests.
-
-### ACADEMY-REQ-04
-
-- immutable read-only catalog listing and lookup;
-- deterministic filtering and ordering;
-- immutable learning-path and prerequisite resolution;
-- explicit not-found/invalid-reference behavior;
-- unit tests without provider, persistence or wallet dependencies.
+- [x] Add strict preview schemas and deterministic fixtures.
+- [x] Add immutable catalog and learning-path read models.
+- [x] Separate reward and certificate preview data from authority semantics.
 
 ## Sprint 03
 
-### ACADEMY-REQ-05
+- [x] Implement deterministic local progress, quiz and assessment flow.
+- [x] Keep progress, assessment, reward, recognition and certificate preview states separate.
+- [x] Enforce default-deny Academy POST behavior.
+- [x] Require explicit local preview configuration and non-production runtime.
+- [x] Prove boundary metadata cannot authorize mutation.
+- [x] Implement preview-safe dashboard, progress, rewards and certificate surfaces.
+- [x] Pass desktop, tablet and mobile E2E.
 
-- [x] implement deterministic local/mock learner progress flow;
-- [x] normalize quiz availability, scoring and retry preview behavior;
-- [x] keep progress, assessment, reward preview, recognition preview and certificate-preview eligibility as separate states;
-- [x] enforce fail-closed Academy POST behavior by default;
-- [x] require explicit local preview configuration and non-production runtime for local preview POST behavior;
-- [x] prove boundary metadata alone cannot authorize POST behavior;
-- [x] keep learner-facing serialized responses free of prohibited authority fields;
-- [x] rerun required typecheck, lint, Academy learner tests and desktop E2E;
-- [x] update `.instructions` with REQ-05 results and remaining blockers.
+## Sprint 04 / ACADEMY-REQ-07
 
-### ACADEMY-REQ-06
+- [x] Add `npm run check:academy-authority`.
+- [x] Scan Academy modules, route, fixture, persistence, repository, server composition and Academy tests.
+- [x] Cover all 30 required prohibited terms.
+- [x] Add exact reviewed compatibility/safe-negative allowlist entries.
+- [x] Fail on stale allowlist entries and malformed negative-test regions.
+- [x] Add scanner pass/fail regression tests.
+- [x] Remove learner-facing compatibility read models and unsafe legacy fixture language.
+- [x] Reconfirm POST fail-closed behavior and boundary non-authorization.
+- [x] Run typecheck, lint, Academy tests, build, E2E and contract scaffold validation.
+- [x] Review every required security gate as closed, gated or not authorized.
 
-- [x] implement learner dashboard rendering from preview-safe mock/local summary data;
-- [x] implement certificate preview presentation with explicit not-issued and preview-only semantics;
-- [x] keep recognition preview and preview points surfaces non-monetary and non-authoritative;
-- [x] harden learner-facing dashboard/certificate/reward/progress copy against unsafe authority semantics;
-- [x] keep learner-facing route payloads free of contract-readiness metadata for dashboard/certificate surfaces;
-- [x] rerun required typecheck, lint, Academy learner tests, and desktop/tablet/mobile E2E;
-- [x] update `.instructions` with REQ-06 results and remaining blockers.
+## Sprint 04 / ACADEMY-REQ-08
 
-## Promotion Blockers
-
-- implement repository-wide negative static authority checks;
-- preserve broader validation coverage as implementation continues;
-- run required desktop/tablet/mobile acceptance coverage before L4 review.
+- [x] Reconcile status, roadmap, validation, security, blockers and handoff.
+- [x] Keep L-Level and D-Level separate.
+- [x] Complete the Delivery Reality Check.
+- [x] Record `L4_CONSOLIDATED`, `D3+`, `NON_PRODUCTION` from current evidence.
+- [x] Keep every production-sensitive authority gate closed.
 
 ## Closed Gates / Not Active Tasks
 
-The following are not authorized implementation tasks under EPIC-01:
-
-- production persistence or database migrations;
-- production API/provider integration;
-- wallet transaction signing;
-- contract deployment or writes;
-- token rewards, claims, transfers or balances;
-- certificate issuance or verification;
-- treasury, billing, settlement or payouts;
-- cross-nucleus permissions or governance authority.
-
-See `ACADEMY_EXECUTION_BOUNDARY.md` before selecting any task.
+Production persistence, production APIs/providers, wallet transaction signing, contract deployment/writes, real rewards, real certification, credential verification, payment, treasury, billing, payouts, settlement, ACS provisioning and NFT/SBT minting are not authorized tasks under this EPIC.

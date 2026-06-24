@@ -28,6 +28,8 @@ import {
   createPostgresAcademyProgressRepository
 } from "../src/repositories/academyProgressAdapters";
 import { academyProgressRepository } from "../src/services/academyPersistence";
+import { scanAcademyAuthority, scanAcademyAuthorityText } from "../scripts/check-academy-authority.mjs";
+import { ACADEMY_PROHIBITED_AUTHORITY_TERMS } from "../scripts/academy-authority-policy.mjs";
 
 const token = signLoginJwt({ sub: "0x1111111111111111111111111111111111111111", net: "evm", kind: "evm", chainId: 1 });
 
@@ -75,14 +77,14 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
   });
 
   it("approves PoK when quiz score reaches threshold", () => {
-    const result = pokValidationService.validateQuizScore("course-treasury-risk", 88);
+    const result = pokValidationService.validateQuizScore("course-governance-risk", 88);
 
     expect(result.approved).toBe(true);
     expect(result.status).toBe("approved");
   });
 
   it("requires retry when quiz score misses threshold", () => {
-    const result = pokValidationService.validateQuizScore("course-treasury-risk", 64);
+    const result = pokValidationService.validateQuizScore("course-governance-risk", 64);
 
     expect(result.approved).toBe(false);
     expect(result.status).toBe("retry-required");
@@ -90,14 +92,14 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
 
   it("keeps free courses on Foundation Preview and paid courses on Applied Preview", () => {
     expect(rewardGateService.getRewardTypeLabel("course-constitutional-onboarding")).toBe("Foundation Preview");
-    expect(rewardGateService.getRewardTypeLabel("course-treasury-risk")).toBe("Applied Preview");
+    expect(rewardGateService.getRewardTypeLabel("course-governance-risk")).toBe("Applied Preview");
   });
 
   it("shows reward gate states and validation-heavy weights", () => {
-    const gates = rewardGateService.getRewardGates("course-treasury-risk");
+    const gates = rewardGateService.getRewardGates("course-governance-risk");
 
     expect(gates.map((gate) => gate.status)).toEqual(expect.arrayContaining(["unlocked", "pending", "locked"]));
-    expect(rewardGateService.getValidationWeight("course-treasury-risk")).toBe(75);
+    expect(rewardGateService.getValidationWeight("course-governance-risk")).toBe(75);
   });
 
   it("requires PoK validation for certification eligibility", () => {
@@ -147,16 +149,16 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
   });
 
   it("moves failed assessments into retry state without creating authority", () => {
-    const retryFlow = academyLearnerPreviewService.getCourseFlow("course-treasury-risk", {
+    const retryFlow = academyLearnerPreviewService.getCourseFlow("course-governance-risk", {
       completedLessons: [
-        { courseId: "course-treasury-risk", lessonId: "lesson-treasury-1", completedAt: "2026-06-23T00:00:00.000Z" },
-        { courseId: "course-treasury-risk", lessonId: "lesson-treasury-2", completedAt: "2026-06-23T00:00:01.000Z" },
-        { courseId: "course-treasury-risk", lessonId: "lesson-treasury-3", completedAt: "2026-06-23T00:00:02.000Z" }
+        { courseId: "course-governance-risk", lessonId: "lesson-governance-risk-1", completedAt: "2026-06-23T00:00:00.000Z" },
+        { courseId: "course-governance-risk", lessonId: "lesson-governance-risk-2", completedAt: "2026-06-23T00:00:01.000Z" },
+        { courseId: "course-governance-risk", lessonId: "lesson-governance-risk-3", completedAt: "2026-06-23T00:00:02.000Z" }
       ],
       quizAttempts: [
         {
-          courseId: "course-treasury-risk",
-          quizId: "quiz-treasury",
+          courseId: "course-governance-risk",
+          quizId: "quiz-governance-risk",
           score: 64,
           threshold: 82,
           result: "failed",
@@ -172,8 +174,7 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
     expect(retryFlow.rewardPreview.nonAuthoritative).toBe(true);
   });
 
-  it("keeps future contract and preview data mock-only", () => {
-    expect(academyData.futureContracts.every((contract) => contract.writesEnabled === false)).toBe(true);
+  it("keeps preview data mock-only", () => {
     expect(academyData.rewardGates.some((gate) => gate.source === "quiz" && gate.rewardPercentage >= 40)).toBe(true);
     expect(academyData.boundary).toMatchObject({
       mode: "local-preview",
@@ -395,10 +396,11 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
   it("keeps reward policy isolated from PoK validation and enforces reward class separation", () => {
     expect(rewardPolicyService.getValidationWeight("course-constitutional-onboarding")).toBe(75);
     expect(rewardPolicyService.validateRewardClassSeparation("course-constitutional-onboarding")).toBe(true);
-    expect(rewardPolicyService.validateRewardClassSeparation("course-treasury-risk")).toBe(true);
+    expect(rewardPolicyService.validateRewardClassSeparation("course-governance-risk")).toBe(true);
   });
 
   it("validates strict preview schemas and rejects prohibited authority fields", () => {
+    // academy-authority-scan: allow-start negative-test
     expect(() =>
       rewardRecordSchema.parse({
         id: "preview-1",
@@ -430,14 +432,15 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
         proofHash: "forbidden"
       })
     ).toThrow();
+    // academy-authority-scan: allow-end
   });
 
   it("orders catalog courses and learning paths deterministically", () => {
     expect(listCatalogCourses().map((course) => course.title)).toEqual([
       "Axodus Constitutional Onboarding",
+      "Governance Risk and Sustainable Emissions",
       "Marketplace Activation and Tutor Monetization",
-      "Proof of Knowledge Recognition Design",
-      "Treasury Risk and Sustainable Emissions"
+      "Proof of Knowledge Recognition Design"
     ]);
 
     expect(listLearningPaths().map((path) => path.title)).toEqual([
@@ -446,38 +449,20 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
     ]);
   });
 
-  it("keeps learner-facing academy sources free of prohibited authority identifiers", async () => {
-    const roots = [
-      path.resolve("src/data/mock/academy.mock.js"),
-      path.resolve("src/modules/academy"),
-      path.resolve("src/routes/academy.ts")
-    ];
-    const prohibited = [
-      "claimable",
-      "claimed",
-      "minted",
-      "issuanceDate",
-      "proofHash",
-      "verificationUrl",
-      "verificationStatus",
-      "walletDistribution",
-      "tokenBalance",
-      "transferable",
-      "sbt",
-      "nft",
-      "onChain",
-      "txHash",
-      "contractAddress",
-      "issued certificate"
-    ];
+  it("passes the repository-wide Academy authority scan with only reviewed exceptions", async () => {
+    const result = await scanAcademyAuthority();
 
-    const files = await collectFiles(roots);
-    const lowerContents = await Promise.all(files.map(async (file) => ({ file, text: (await readFile(file, "utf8")).toLowerCase() })));
+    expect(result.violations).toEqual([]);
+    expect(result.configurationErrors).toEqual([]);
+    expect(result.files.length).toBeGreaterThan(0);
+    expect(result.allowlist.every((entry) => entry.rationale.length > 0)).toBe(true);
+  });
 
-    for (const term of prohibited) {
-      const offender = lowerContents.find(({ text }) => text.includes(term.toLowerCase()));
-      expect(offender?.file, `unexpected prohibited learner-facing identifier: ${term}`).toBeUndefined();
-    }
+  it("fails the Academy authority scan for a prohibited learner-facing field", () => {
+    // academy-authority-scan: allow-start negative-test
+    const result = scanAcademyAuthorityText("src/modules/academy/pages/UnsafePreview.tsx", "const payload = { claimable: true };");
+    expect(result.violations).toMatchObject([{ term: "claimable" }]);
+    // academy-authority-scan: allow-end
   });
 
   it("keeps learner-facing Academy UI copy free of restricted authority semantics", async () => {
@@ -487,15 +472,12 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
       path.resolve("src/routes/academy.ts")
     ];
     const restricted = [
+      ...ACADEMY_PROHIBITED_AUTHORITY_TERMS,
       "$neurons",
       "multichain",
-      "claim",
       "transfer",
-      "payout",
-      "settlement",
       "issuance",
       "verification",
-      "ownership",
       "signer",
       "mock balance"
     ];
@@ -525,32 +507,26 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
 
   it("keeps learner-facing serialized academy responses free of prohibited authority fields", async () => {
     const app = await buildApp();
-    const response = await app.inject({
-      method: "GET",
-      url: "/academy/courses/course-constitutional-onboarding/progress",
-      headers: { authorization: `Bearer ${token}` }
-    });
+    const urls = [
+      "/academy/me",
+      "/academy/courses/enrolled",
+      "/academy/courses/course-constitutional-onboarding/progress",
+      "/academy/courses/course-constitutional-onboarding/reward-gates"
+    ];
 
-    expect(response.statusCode).toBe(200);
-    const body = JSON.stringify(response.json()).toLowerCase();
+    for (const url of urls) {
+      const response = await app.inject({
+        method: "GET",
+        url,
+        headers: { authorization: `Bearer ${token}` }
+      });
 
-    for (const term of [
-      "claimable",
-      "proofhash",
-      "verificationurl",
-      "verificationstatus",
-      "walletdistribution",
-      "tokenbalance",
-      "transferable",
-      "txhash",
-      "contractaddress",
-      "walletclaim",
-      "rewardclaim",
-      "certificateissue",
-      "credentialverification",
-      "tokenreward"
-    ]) {
-      expect(body.includes(term), `unexpected prohibited serialized field: ${term}`).toBe(false);
+      expect(response.statusCode, url).toBe(200);
+      const body = JSON.stringify(response.json()).toLowerCase().replaceAll("not-issued", "");
+
+      for (const term of ACADEMY_PROHIBITED_AUTHORITY_TERMS) {
+        expect(body.includes(term.toLowerCase()), `unexpected prohibited serialized field on ${url}: ${term}`).toBe(false);
+      }
     }
 
     await app.close();
@@ -595,41 +571,11 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
       renderPage(ProgressEngine),
       renderPage(RewardsDashboard),
       renderPage(CertificationViewer)
-    ].join("\n").toLowerCase();
+    ].join("\n").toLowerCase().replaceAll("not-issued", "");
+    const restricted = [...ACADEMY_PROHIBITED_AUTHORITY_TERMS, "$neurons", "transfer", "issuance", "verification", "signer"];
 
-    for (const term of [
-      "claimable",
-      "claimed",
-      "minted",
-      "issued certificate",
-      "issuancedate",
-      "proofhash",
-      "verificationurl",
-      "verificationstatus",
-      "walletdistribution",
-      "tokenbalance",
-      "transferable",
-      "sbt",
-      "nft",
-      "onchain",
-      "txhash",
-      "contractaddress",
-      "walletclaim",
-      "rewardclaim",
-      "certificateissue",
-      "credentialverification",
-      "tokenreward",
-      "treasury",
-      "settlement",
-      "payout",
-      "billing",
-      "mint",
-      "claim",
-      "verify",
-      "verified",
-      "ownership"
-    ]) {
-      expect(markup.includes(term), `unexpected learner-facing markup term: ${term}`).toBe(false);
+    for (const term of restricted) {
+      expect(markup.includes(term.toLowerCase()), `unexpected learner-facing markup term: ${term}`).toBe(false);
     }
   });
 

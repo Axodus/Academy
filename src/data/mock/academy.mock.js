@@ -32,49 +32,19 @@ export const academyMock = {
     acsEligibility: "eligible-for-review",
     marketplaceEligibility: "eligible-for-vouchers"
   },
-  futureContracts: [
-    {
-      id: "pok-minter",
-      name: "PoKMinter",
-      role: "Future compatibility surface for PoK-reviewed preview classifications.",
-      status: "mock-read-model",
-      writesEnabled: false
-    },
-    {
-      id: "locked-neurons-vault",
-      name: "LockedNeuronsVault",
-      role: "Future compatibility surface for internal preview accounting categories.",
-      status: "mock-read-model",
-      writesEnabled: false
-    },
-    {
-      id: "reward-policy",
-      name: "RewardPolicy",
-      role: "Future policy surface for preview point tiers, unlock rules, and anti-abuse limits.",
-      status: "mock-read-model",
-      writesEnabled: false
-    },
-    {
-      id: "treasury-emission-budget",
-      name: "TreasuryEmissionBudget",
-      role: "Future treasury compatibility reference kept outside learner-facing authority.",
-      status: "mock-read-model",
-      writesEnabled: false
-    }
-  ],
   tutors: [
     {
       id: "tutor-axodus-governance",
       name: "Axodus Governance Faculty",
       type: "Internal Axodus Educator",
-      reviewStatus: "verified",
-      governanceStanding: "verified",
+      reviewStatus: "reviewed-preview",
+      governanceStanding: "reviewed-preview",
       reputation: 96,
       coursesPublished: 4,
       recognitionPreviewsAuthored: 128,
       educationalTier: "Constitutional",
       constitutionalBound: true,
-      description: "Internal faculty responsible for constitutional literacy, DAO operations, and treasury-aware learning paths."
+      description: "Internal faculty responsible for constitutional literacy, DAO operations, and governance-risk learning paths."
     },
     {
       id: "tutor-defi-dao",
@@ -87,14 +57,14 @@ export const academyMock = {
       recognitionPreviewsAuthored: 42,
       educationalTier: "Professional",
       constitutionalBound: true,
-      description: "DAO tutor group preparing operators for treasury, risk, and protocol participation."
+      description: "DAO tutor group preparing operators for governance risk and protocol participation."
     },
     {
       id: "tutor-marketplace",
       name: "Marketplace Guild",
       type: "Partner",
-      reviewStatus: "verified",
-      governanceStanding: "verified",
+      reviewStatus: "reviewed-preview",
+      governanceStanding: "reviewed-preview",
       reputation: 89,
       coursesPublished: 3,
       recognitionPreviewsAuthored: 77,
@@ -132,29 +102,29 @@ export const academyMock = {
       previewPoints: 320,
       previewSource: "Free course preview",
       previewBenefits: ["vouchers", "marketplace access", "internal services", "voting practice"],
-      previewPolicy: "Local preview only. No balance, claim, transfer, payout, or settlement.",
+      previewPolicy: "Local preview points are non-monetary and non-authoritative.",
       prerequisites: [],
       accessDescriptor: "Open local preview",
-      enrollmentVisibility: "No payment or external action required",
+      enrollmentVisibility: "Enrollment remains local and preview-only",
       progress: 82,
       createdAt: "2026-04-01",
       updatedAt: "2026-05-12"
     },
     {
-      id: "course-treasury-risk",
-      title: "Treasury Risk and Sustainable Emissions",
-      slug: "treasury-risk-sustainable-emissions",
-      category: "Treasury",
+      id: "course-governance-risk",
+      title: "Governance Risk and Sustainable Emissions",
+      slug: "governance-risk-sustainable-emissions",
+      category: "Governance Risk",
       subcategory: "Risk",
       level: "Advanced",
       type: "Paid Course",
       accessType: "paid",
       tutorId: "tutor-defi-dao",
-      description: "Professional track covering emission budgets, reward abuse prevention, treasury reporting, and governance-controlled distribution.",
-      shortDescription: "Treasury-aware reward design for protocol operators.",
+      description: "Professional track covering emission budgets, reward abuse prevention, governance reporting, and controlled distribution models.",
+      shortDescription: "Governance-risk reward design for protocol operators.",
       thumbnail: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=900&q=80",
       banner: "https://images.unsplash.com/photo-1554224155-6726b3ff858f?auto=format&fit=crop&w=1600&q=80",
-      tags: ["treasury", "risk", "rewards"],
+      tags: ["governance-risk", "controls", "rewards"],
       language: "English",
       duration: "6h 45m",
       durationMinutes: 405,
@@ -204,10 +174,10 @@ export const academyMock = {
       previewPoints: 410,
       previewSource: "Free course preview",
       previewBenefits: ["marketplace orientation", "license preview", "internal benefits"],
-      previewPolicy: "Local preview only. No balance, claim, transfer, payout, or settlement.",
+      previewPolicy: "Local preview points are non-monetary and non-authoritative.",
       prerequisites: ["course-constitutional-onboarding"],
       accessDescriptor: "Open local preview",
-      enrollmentVisibility: "No payment or external action required",
+      enrollmentVisibility: "Enrollment remains local and preview-only",
       progress: 100,
       createdAt: "2026-04-18",
       updatedAt: "2026-05-10"
@@ -222,7 +192,7 @@ export const academyMock = {
       type: "Paid Course",
       accessType: "paid",
       tutorId: "tutor-axodus-governance",
-      description: "Design PoK checkpoints and anti-fraud recognition-preview flows without issuing real credentials.",
+      description: "Design PoK checkpoints and anti-fraud recognition-preview flows using preview-only semantics.",
       shortDescription: "PoK validation architecture for Academy recognition stewards.",
       thumbnail: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=900&q=80",
       banner: "https://images.unsplash.com/photo-1516321318423-f06f85e504b3?auto=format&fit=crop&w=1600&q=80",
@@ -241,7 +211,7 @@ export const academyMock = {
       previewSource: "Paid course preview",
       previewBenefits: ["advanced review pathway", "assessment stewardship practice", "ACS study visibility"],
       previewPolicy: "Preview points remain non-monetary and cannot create entitlement in any mode.",
-      prerequisites: ["course-constitutional-onboarding", "course-treasury-risk"],
+      prerequisites: ["course-constitutional-onboarding", "course-governance-risk"],
       accessDescriptor: "Local paid-path simulation",
       enrollmentVisibility: "Catalog-only purchase preview",
       progress: 18,
@@ -252,11 +222,11 @@ export const academyMock = {
   lessons: [
     { id: "lesson-constitution-1", courseId: "course-constitutional-onboarding", title: "Academy as Constitutional Infrastructure", type: "Reading", order: 1, duration: "28m", completionRequired: true, quizRequired: false, media: "article", resources: ["Academy Constitution"], status: "available" },
     { id: "lesson-constitution-2", courseId: "course-constitutional-onboarding", title: "Governance Literacy and Voting Utility", type: "Governance Review", order: 2, duration: "35m", completionRequired: true, quizRequired: true, media: "workshop", resources: ["Governance primer"], status: "available" },
-    { id: "lesson-constitution-3", courseId: "course-constitutional-onboarding", title: "Locked $NEURONS Utility Boundaries", type: "Reading", order: 3, duration: "24m", completionRequired: true, quizRequired: true, media: "article", resources: ["Reward utility map"], status: "available" },
-    { id: "lesson-treasury-1", courseId: "course-treasury-risk", title: "Emission Budgets and Treasury Boundaries", type: "Workshop", order: 1, duration: "44m", completionRequired: true, quizRequired: true, media: "video", resources: ["Treasury model"], status: "available" },
-    { id: "lesson-treasury-2", courseId: "course-treasury-risk", title: "Reward Abuse Prevention Controls", type: "Practical Exercise", order: 2, duration: "52m", completionRequired: true, quizRequired: true, media: "exercise", resources: ["Abuse checklist"], status: "available" },
-    { id: "lesson-treasury-3", courseId: "course-treasury-risk", title: "Unlocked $NEURONS Governance Release", type: "Governance Review", order: 3, duration: "47m", completionRequired: true, quizRequired: true, media: "workshop", resources: ["RewardPolicy read model"], status: "available" },
-    { id: "lesson-marketplace-1", courseId: "course-marketplace-activation", title: "Locked $NEURONS Utility in Marketplace Flows", type: "Practical Exercise", order: 1, duration: "39m", completionRequired: true, quizRequired: true, media: "exercise", resources: ["Voucher map"], status: "completed" },
+    { id: "lesson-constitution-3", courseId: "course-constitutional-onboarding", title: "Preview Point Utility Boundaries", type: "Reading", order: 3, duration: "24m", completionRequired: true, quizRequired: true, media: "article", resources: ["Reward utility map"], status: "available" },
+    { id: "lesson-governance-risk-1", courseId: "course-governance-risk", title: "Emission Budgets and Governance Boundaries", type: "Workshop", order: 1, duration: "44m", completionRequired: true, quizRequired: true, media: "video", resources: ["Governance risk model"], status: "available" },
+    { id: "lesson-governance-risk-2", courseId: "course-governance-risk", title: "Reward Abuse Prevention Controls", type: "Practical Exercise", order: 2, duration: "52m", completionRequired: true, quizRequired: true, media: "exercise", resources: ["Abuse checklist"], status: "available" },
+    { id: "lesson-governance-risk-3", courseId: "course-governance-risk", title: "Preview Point Governance Boundaries", type: "Governance Review", order: 3, duration: "47m", completionRequired: true, quizRequired: true, media: "workshop", resources: ["Reward policy read model"], status: "available" },
+    { id: "lesson-marketplace-1", courseId: "course-marketplace-activation", title: "Preview Point Utility in Marketplace Flows", type: "Practical Exercise", order: 1, duration: "39m", completionRequired: true, quizRequired: true, media: "exercise", resources: ["Voucher map"], status: "completed" },
     { id: "lesson-pok-1", courseId: "course-pok-certification", title: "PoK Evidence and Review Boundaries", type: "Quiz", order: 1, duration: "31m", completionRequired: true, quizRequired: true, media: "quiz", resources: ["PoK checklist"], status: "locked" }
   ],
   certificates: [
@@ -269,7 +239,7 @@ export const academyMock = {
       previewStatus: "mock-preview",
       governanceReviewed: true,
       recognitionLevel: "Foundational",
-      previewNote: "Preview only. No issuance, verification, ownership, or chain anchoring."
+      previewNote: "Preview-only recognition presentation. Non-authoritative."
     },
     {
       id: "cert-marketplace-activation",
@@ -280,7 +250,7 @@ export const academyMock = {
       previewStatus: "mock-preview",
       governanceReviewed: true,
       recognitionLevel: "Ecosystem",
-      previewNote: "Preview only. No issuance, verification, ownership, or chain anchoring."
+      previewNote: "Preview-only recognition presentation. Non-authoritative."
     }
   ],
   rewards: [
@@ -293,18 +263,18 @@ export const academyMock = {
       previewPoints: 320,
       previewMilestones: ["local utility preview", "PoK completion", "governance policy active"],
       governanceControlled: true,
-      previewPolicy: "No balance, claim, transfer, payout, or settlement.",
+      previewPolicy: "Non-monetary and non-authoritative preview points only.",
       previewBenefits: ["vouchers", "marketplace access", "internal services", "voting practice"],
       reviewedOn: "2026-05-13"
     },
     {
       id: "reward-002",
       studentId: "student_demo_001",
-      courseId: "course-treasury-risk",
+      courseId: "course-governance-risk",
       previewPointTier: "Applied Preview",
       previewSource: "Paid course preview",
       previewPoints: 950,
-      previewMilestones: ["75% progress", "PoK exam", "treasury review complete"],
+      previewMilestones: ["75% progress", "PoK exam", "governance-risk review complete"],
       governanceControlled: true,
       previewPolicy: "Preview points remain non-monetary and cannot create entitlement in any mode.",
       previewBenefits: ["advanced pathway visibility", "assessment readiness", "professional eligibility preview"],
@@ -319,7 +289,7 @@ export const academyMock = {
       previewPoints: 410,
       previewMilestones: ["course completion", "marketplace orientation quiz"],
       governanceControlled: true,
-      previewPolicy: "No balance, claim, transfer, payout, or settlement.",
+      previewPolicy: "Non-monetary and non-authoritative preview points only.",
       previewBenefits: ["marketplace orientation", "license preview", "internal benefits"],
       reviewedOn: "2026-05-15"
     }
@@ -329,7 +299,7 @@ export const academyMock = {
     { courseId: "course-marketplace-activation", enrollmentType: "free-started", enrolledAt: "2026-05-04", accessState: "active", nextAction: "Review recognition preview" }
   ],
   purchasedCourses: [
-    { courseId: "course-treasury-risk", enrollmentType: "paid-purchased", purchasedAt: "2026-05-09", accessState: "active", nextAction: "Complete reward abuse prevention exercise" },
+    { courseId: "course-governance-risk", enrollmentType: "paid-purchased", purchasedAt: "2026-05-09", accessState: "active", nextAction: "Complete reward abuse prevention exercise" },
     { courseId: "course-pok-certification", enrollmentType: "paid-purchased", purchasedAt: "2026-05-15", accessState: "locked-by-governance-review", nextAction: "Wait for Academy Governance Review" }
   ],
   freeStartedCourses: ["course-constitutional-onboarding", "course-marketplace-activation"],
@@ -353,7 +323,7 @@ export const academyMock = {
       pendingRewardGates: ["gate-constitution-quiz", "gate-constitution-certification"]
     },
     {
-      courseId: "course-treasury-risk",
+      courseId: "course-governance-risk",
       contentProgress: 33,
       lessonCompletion: 33,
       quizScore: null,
@@ -365,10 +335,10 @@ export const academyMock = {
       pendingLessons: 2,
       quizState: "locked",
       finalEvaluationStatus: "locked",
-      nextRecommendedAction: "Complete remaining treasury lessons to unlock PoK evaluation.",
+      nextRecommendedAction: "Complete remaining governance-risk lessons to unlock PoK evaluation.",
       foundationPointsEarned: 0,
       appliedPointsEarned: 76,
-      pendingRewardGates: ["gate-treasury-module", "gate-treasury-quiz", "gate-treasury-certification"]
+      pendingRewardGates: ["gate-governance-risk-module", "gate-governance-risk-quiz", "gate-governance-risk-certification"]
     },
     {
       courseId: "course-marketplace-activation",
@@ -411,45 +381,45 @@ export const academyMock = {
     { lessonId: "lesson-constitution-1", courseId: "course-constitutional-onboarding", status: "completed", consumed: true, validated: true, progress: 100, rewardEarned: 16 },
     { lessonId: "lesson-constitution-2", courseId: "course-constitutional-onboarding", status: "completed", consumed: true, validated: false, progress: 100, rewardEarned: 26 },
     { lessonId: "lesson-constitution-3", courseId: "course-constitutional-onboarding", status: "available", consumed: false, validated: false, progress: 0, rewardEarned: 0 },
-    { lessonId: "lesson-treasury-1", courseId: "course-treasury-risk", status: "completed", consumed: true, validated: false, progress: 100, rewardEarned: 76 },
-    { lessonId: "lesson-treasury-2", courseId: "course-treasury-risk", status: "available", consumed: false, validated: false, progress: 0, rewardEarned: 0 },
-    { lessonId: "lesson-treasury-3", courseId: "course-treasury-risk", status: "locked", consumed: false, validated: false, progress: 0, rewardEarned: 0 },
+    { lessonId: "lesson-governance-risk-1", courseId: "course-governance-risk", status: "completed", consumed: true, validated: false, progress: 100, rewardEarned: 76 },
+    { lessonId: "lesson-governance-risk-2", courseId: "course-governance-risk", status: "available", consumed: false, validated: false, progress: 0, rewardEarned: 0 },
+    { lessonId: "lesson-governance-risk-3", courseId: "course-governance-risk", status: "locked", consumed: false, validated: false, progress: 0, rewardEarned: 0 },
     { lessonId: "lesson-marketplace-1", courseId: "course-marketplace-activation", status: "validated", consumed: true, validated: true, progress: 100, rewardEarned: 41 },
     { lessonId: "lesson-pok-1", courseId: "course-pok-certification", status: "locked", consumed: false, validated: false, progress: 0, rewardEarned: 0 }
   ],
   moduleProgress: [
     { id: "module-constitution-core", courseId: "course-constitutional-onboarding", title: "Constitutional Core", lessonIds: ["lesson-constitution-1", "lesson-constitution-2", "lesson-constitution-3"], status: "in-progress", progress: 67 },
-    { id: "module-treasury-risk", courseId: "course-treasury-risk", title: "Treasury Risk Controls", lessonIds: ["lesson-treasury-1", "lesson-treasury-2", "lesson-treasury-3"], status: "in-progress", progress: 33 },
+    { id: "module-governance-risk", courseId: "course-governance-risk", title: "Governance Risk Controls", lessonIds: ["lesson-governance-risk-1", "lesson-governance-risk-2", "lesson-governance-risk-3"], status: "in-progress", progress: 33 },
     { id: "module-marketplace-utility", courseId: "course-marketplace-activation", title: "Marketplace Utility", lessonIds: ["lesson-marketplace-1"], status: "validated", progress: 100 },
     { id: "module-pok-design", courseId: "course-pok-certification", title: "PoK Design", lessonIds: ["lesson-pok-1"], status: "locked", progress: 0 }
   ],
   lessonResources: [
     { lessonId: "lesson-constitution-1", title: "Academy Constitution", type: "reading", availability: "mock-download" },
-    { lessonId: "lesson-constitution-3", title: "Locked $NEURONS Utility Map", type: "worksheet", availability: "mock-download" },
-    { lessonId: "lesson-treasury-2", title: "Abuse Prevention Checklist", type: "worksheet", availability: "mock-download" },
+    { lessonId: "lesson-constitution-3", title: "Preview Point Utility Map", type: "worksheet", availability: "mock-download" },
+    { lessonId: "lesson-governance-risk-2", title: "Abuse Prevention Checklist", type: "worksheet", availability: "mock-download" },
     { lessonId: "lesson-marketplace-1", title: "Voucher Flow Diagram", type: "reference", availability: "mock-download" }
   ],
   quizzes: [
     { id: "quiz-constitution", courseId: "course-constitutional-onboarding", title: "Constitutional PoK Evaluation", passingThreshold: 80, state: "locked", retryPolicy: "retry-available", mainRewardWeight: 50 },
-    { id: "quiz-treasury", courseId: "course-treasury-risk", title: "Treasury Reward Policy Evaluation", passingThreshold: 82, state: "locked", retryPolicy: "retry-available", mainRewardWeight: 55 },
+    { id: "quiz-governance-risk", courseId: "course-governance-risk", title: "Governance Risk Policy Evaluation", passingThreshold: 82, state: "locked", retryPolicy: "retry-available", mainRewardWeight: 55 },
     { id: "quiz-marketplace", courseId: "course-marketplace-activation", title: "Marketplace Utility Evaluation", passingThreshold: 75, state: "passed", retryPolicy: "completed", mainRewardWeight: 45 },
     { id: "quiz-pok-certification", courseId: "course-pok-certification", title: "PoK Recognition Steward Evaluation", passingThreshold: 85, state: "locked", retryPolicy: "retry-blocked", mainRewardWeight: 60 }
   ],
   quizQuestions: [
     { id: "question-constitution-1", quizId: "quiz-constitution", prompt: "Which preview tier belongs to free courses?", correctAnswer: "Foundation Preview" },
     { id: "question-constitution-2", quizId: "quiz-constitution", prompt: "What unlocks the main Academy preview?", correctAnswer: "Proof-of-Knowledge validation" },
-    { id: "question-treasury-1", quizId: "quiz-treasury", prompt: "Who controls emission budget compatibility?", correctAnswer: "Treasury and governance policy" },
+    { id: "question-governance-risk-1", quizId: "quiz-governance-risk", prompt: "Who controls emission budget compatibility?", correctAnswer: "Governance policy" },
     { id: "question-marketplace-1", quizId: "quiz-marketplace", prompt: "Can foundation preview points be withdrawn?", correctAnswer: "No" }
   ],
   quizAttempts: [
     { id: "attempt-marketplace-1", quizId: "quiz-marketplace", courseId: "course-marketplace-activation", score: 88, threshold: 75, result: "passed", pokStatus: "approved", attemptedAt: "2026-05-15" },
-    { id: "attempt-treasury-preview-fail", quizId: "quiz-treasury", courseId: "course-treasury-risk", score: 64, threshold: 82, result: "failed", pokStatus: "retry-required", attemptedAt: "mock-preview" },
-    { id: "attempt-treasury-preview-pass", quizId: "quiz-treasury", courseId: "course-treasury-risk", score: 88, threshold: 82, result: "passed", pokStatus: "approved", attemptedAt: "mock-preview" }
+    { id: "attempt-governance-risk-preview-fail", quizId: "quiz-governance-risk", courseId: "course-governance-risk", score: 64, threshold: 82, result: "failed", pokStatus: "retry-required", attemptedAt: "mock-preview" },
+    { id: "attempt-governance-risk-preview-pass", quizId: "quiz-governance-risk", courseId: "course-governance-risk", score: 88, threshold: 82, result: "passed", pokStatus: "approved", attemptedAt: "mock-preview" }
   ],
   pokValidationStatus: [
-    { courseId: "course-constitutional-onboarding", status: "pending", reviewer: "PoKMinter mock", notes: "Awaiting quiz threshold after required lessons." },
-    { courseId: "course-treasury-risk", status: "pending", reviewer: "ACS reward audit", notes: "Validation depends on passing treasury evaluation." },
-    { courseId: "course-marketplace-activation", status: "approved", reviewer: "PoKMinter mock", notes: "Marketplace utility knowledge validated." },
+    { courseId: "course-constitutional-onboarding", status: "pending", reviewer: "PoK preview review", notes: "Awaiting quiz threshold after required lessons." },
+    { courseId: "course-governance-risk", status: "pending", reviewer: "ACS reward audit", notes: "Validation depends on passing governance-risk evaluation." },
+    { courseId: "course-marketplace-activation", status: "approved", reviewer: "PoK preview review", notes: "Marketplace utility knowledge validated." },
     { courseId: "course-pok-certification", status: "pending", reviewer: "ACS recognition queue", notes: "Course access is governance-review gated." }
   ],
   rewardGates: [
@@ -457,10 +427,10 @@ export const academyMock = {
     { id: "gate-constitution-module", courseId: "course-constitutional-onboarding", source: "module", rewardPercentage: 15, previewPoints: 48, rewardClass: "foundation", unlockCondition: "complete Constitutional Core module", status: "pending" },
     { id: "gate-constitution-quiz", courseId: "course-constitutional-onboarding", source: "quiz", rewardPercentage: 50, previewPoints: 160, rewardClass: "foundation", unlockCondition: "pass Constitutional PoK Evaluation at 80%", status: "locked" },
     { id: "gate-constitution-certification", courseId: "course-constitutional-onboarding", source: "certification", rewardPercentage: 25, previewPoints: 80, rewardClass: "foundation", unlockCondition: "become recognition-preview eligible after PoK approval", status: "locked" },
-    { id: "gate-treasury-consumption", courseId: "course-treasury-risk", source: "lesson", rewardPercentage: 8, previewPoints: 76, rewardClass: "applied", unlockCondition: "consume first treasury lesson", status: "unlocked" },
-    { id: "gate-treasury-module", courseId: "course-treasury-risk", source: "module", rewardPercentage: 17, previewPoints: 162, rewardClass: "applied", unlockCondition: "complete Treasury Risk Controls module", status: "pending" },
-    { id: "gate-treasury-quiz", courseId: "course-treasury-risk", source: "quiz", rewardPercentage: 55, previewPoints: 523, rewardClass: "applied", unlockCondition: "pass Treasury Reward Policy Evaluation at 82%", status: "locked" },
-    { id: "gate-treasury-certification", courseId: "course-treasury-risk", source: "certification", rewardPercentage: 20, previewPoints: 190, rewardClass: "applied", unlockCondition: "final recognition preview review approved", status: "locked" },
+    { id: "gate-governance-risk-consumption", courseId: "course-governance-risk", source: "lesson", rewardPercentage: 8, previewPoints: 76, rewardClass: "applied", unlockCondition: "consume first governance-risk lesson", status: "unlocked" },
+    { id: "gate-governance-risk-module", courseId: "course-governance-risk", source: "module", rewardPercentage: 17, previewPoints: 162, rewardClass: "applied", unlockCondition: "complete Governance Risk Controls module", status: "pending" },
+    { id: "gate-governance-risk-quiz", courseId: "course-governance-risk", source: "quiz", rewardPercentage: 55, previewPoints: 523, rewardClass: "applied", unlockCondition: "pass Governance Risk Policy Evaluation at 82%", status: "locked" },
+    { id: "gate-governance-risk-certification", courseId: "course-governance-risk", source: "certification", rewardPercentage: 20, previewPoints: 190, rewardClass: "applied", unlockCondition: "final recognition preview review approved", status: "locked" },
     { id: "gate-marketplace-consumption", courseId: "course-marketplace-activation", source: "lesson", rewardPercentage: 10, previewPoints: 41, rewardClass: "foundation", unlockCondition: "consume marketplace activation lesson", status: "unlocked" },
     { id: "gate-marketplace-module", courseId: "course-marketplace-activation", source: "module", rewardPercentage: 15, previewPoints: 62, rewardClass: "foundation", unlockCondition: "complete marketplace module", status: "unlocked" },
     { id: "gate-marketplace-quiz", courseId: "course-marketplace-activation", source: "quiz", rewardPercentage: 45, previewPoints: 184, rewardClass: "foundation", unlockCondition: "pass Marketplace Utility Evaluation at 75%", status: "unlocked" },
@@ -471,17 +441,17 @@ export const academyMock = {
   ],
   rewardUnlockEvents: [
     { id: "event-marketplace-quiz", courseId: "course-marketplace-activation", gateId: "gate-marketplace-quiz", previewPoints: 184, previewPointTier: "Foundation Preview", reason: "PoK passed", occurredAt: "2026-05-15" },
-    { id: "event-treasury-consumption", courseId: "course-treasury-risk", gateId: "gate-treasury-consumption", previewPoints: 76, previewPointTier: "Applied Preview", reason: "Lesson consumption", occurredAt: "2026-05-10" }
+    { id: "event-governance-risk-consumption", courseId: "course-governance-risk", gateId: "gate-governance-risk-consumption", previewPoints: 76, previewPointTier: "Applied Preview", reason: "Lesson consumption", occurredAt: "2026-05-10" }
   ],
   certificationRequirements: [
     { courseId: "course-constitutional-onboarding", requiredContentProgress: 100, requiredPokStatus: "approved", requiredQuizScore: 80, status: "not-eligible" },
-    { courseId: "course-treasury-risk", requiredContentProgress: 100, requiredPokStatus: "approved", requiredQuizScore: 82, status: "not-eligible" },
+    { courseId: "course-governance-risk", requiredContentProgress: 100, requiredPokStatus: "approved", requiredQuizScore: 82, status: "not-eligible" },
     { courseId: "course-marketplace-activation", requiredContentProgress: 100, requiredPokStatus: "approved", requiredQuizScore: 75, status: "eligible" },
     { courseId: "course-pok-certification", requiredContentProgress: 100, requiredPokStatus: "approved", requiredQuizScore: 85, status: "blocked" }
   ],
   edgeCaseScenarios: {
     failedQuiz: {
-      courseId: "course-treasury-risk",
+      courseId: "course-governance-risk",
       quizState: "failed",
       score: 64,
       threshold: 82,
@@ -489,7 +459,7 @@ export const academyMock = {
       userMessage: "Score below threshold. Validation-weighted preview points remain locked until retry passes."
     },
     retryAvailable: {
-      courseId: "course-treasury-risk",
+      courseId: "course-governance-risk",
       retryPolicy: "retry-available",
       nextAction: "Review failed topics and retry the PoK evaluation."
     },
@@ -510,7 +480,7 @@ export const academyMock = {
       previewPointTier: "Foundation Preview"
     },
     pendingUnlockedRewards: {
-      courseId: "course-treasury-risk",
+      courseId: "course-governance-risk",
       previewPointTier: "Applied Preview",
       pendingAmount: 875,
       dependency: "PoK approval and local preview review confirmation"
@@ -518,7 +488,7 @@ export const academyMock = {
     lockedOnlyFreeCourse: {
       courseId: "course-constitutional-onboarding",
       previewPointTier: "Foundation Preview",
-      previewPolicy: "No balance, claim, transfer, payout, or settlement."
+      previewPolicy: "Non-monetary and non-authoritative preview points only."
     },
     governanceRestrictedCourse: {
       courseId: "course-pok-certification",
@@ -540,7 +510,7 @@ export const academyMock = {
   },
   progressEngine: {
     nextUnlocks: [
-      { id: "unlock-1", label: "Treasury Risk checkpoint", reward: "240 applied preview points", requirement: "Reach 75% progress and pass PoK review" },
+      { id: "unlock-1", label: "Governance Risk checkpoint", reward: "240 applied preview points", requirement: "Reach 75% progress and pass PoK review" },
       { id: "unlock-2", label: "ACS reviewer eligibility", reward: "ACS review queue preview", requirement: "Trust score 80 and one advanced recognition preview" },
       { id: "unlock-3", label: "Marketplace license voucher", reward: "180 foundation preview points", requirement: "Complete Marketplace Activation path" }
     ],
@@ -553,14 +523,14 @@ export const academyMock = {
   },
   governanceReviews: [
     { id: "review-constitution", area: "Constitutional review", status: "approved", reviewer: "Axodus Governance Faculty", risk: "low", notes: "Educational standards align with constitutional onboarding." },
-    { id: "review-treasury", area: "Treasury review", status: "under-review", reviewer: "Treasury Council", risk: "medium", notes: "Applied preview pathways remain outside treasury execution and monetary entitlement." },
+    { id: "review-governance-risk", area: "Governance risk review", status: "under-review", reviewer: "Governance Review Council", risk: "medium", notes: "Applied preview pathways remain non-monetary and non-authoritative." },
     { id: "review-reward", area: "Reward review", status: "approved", reviewer: "RewardPolicy mock", risk: "low", notes: "Free courses expose foundation preview points only." },
     { id: "review-certification", area: "Recognition review", status: "under-review", reviewer: "ACS Recognition Queue", risk: "medium", notes: "Advanced recognition previews require anti-fraud scoring." }
   ],
   acsWorkflows: [
     { id: "acs-tutor-review", name: "Tutor Review", status: "active-mock", escalation: "manual governance review" },
     { id: "acs-course-validation", name: "Course Validation", status: "active-mock", escalation: "constitutional standards queue" },
-    { id: "acs-reward-audit", name: "Reward Audit", status: "active-mock", escalation: "treasury emission budget review" },
+    { id: "acs-reward-audit", name: "Reward Audit", status: "active-mock", escalation: "governance emission budget review" },
     { id: "acs-certification-escalation", name: "Recognition Escalation", status: "queued-mock", escalation: "PoK integrity panel" },
     { id: "acs-curriculum-compliance", name: "Curriculum Compliance", status: "active-mock", escalation: "Academy Governance Review" },
     { id: "acs-pok-review", name: "Proof of Knowledge Review", status: "active-mock", escalation: "ACS reviewer assignment" }
@@ -569,8 +539,8 @@ export const academyMock = {
     {
       id: "path-governance-operator",
       title: "Governance Operator Path",
-      description: "A capability path from constitutional literacy to treasury-aware governance participation.",
-      courseIds: ["course-constitutional-onboarding", "course-treasury-risk", "course-pok-certification"],
+      description: "A capability path from constitutional literacy to governance-risk participation.",
+      courseIds: ["course-constitutional-onboarding", "course-governance-risk", "course-pok-certification"],
       standing: "approved",
       progress: 49
     },

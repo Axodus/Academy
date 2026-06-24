@@ -34,24 +34,20 @@ function getSafeDisplayTitle(courseId: string) {
   const course = academyData.courses.find((item) => item.id === courseId);
   if (!course) return "Unknown course";
 
-  if (courseId === "course-treasury-risk") {
-    return "Governance Risk and Sustainable Emissions";
-  }
-
   return course.title.replace(/\$NEURONS/g, "Preview Points");
 }
 
 function getCertificateState(courseId: string, eligible: boolean, hasPresentationPreview: boolean): LearnerCertificatePreviewCard["state"] {
   if (eligible && hasPresentationPreview) return "presentation-preview";
   if (eligible) return "eligible-preview";
-  if (hasPresentationPreview) return "not-issued";
+  if (hasPresentationPreview) return "presentation-only";
   return "not-eligible-preview";
 }
 
 function getCertificateLabel(state: LearnerCertificatePreviewCard["state"]) {
   if (state === "presentation-preview") return "Certificate preview";
   if (state === "eligible-preview") return "Preview eligibility";
-  if (state === "not-issued") return "Not issued";
+  if (state === "presentation-only") return "Presentation preview";
   return "Preview eligibility pending";
 }
 
@@ -109,9 +105,9 @@ export const academyLearnerExperienceService = {
           state === "presentation-preview"
             ? "Mock/local certificate preview presentation only."
             : state === "eligible-preview"
-              ? "Preview eligibility met. Certificate remains not issued."
-              : state === "not-issued"
-                ? "Recognition preview exists, but no certificate is issued."
+              ? "Preview eligibility met. Presentation authority remains closed."
+              : state === "presentation-only"
+                ? "Recognition preview exists as a presentation-only local artifact."
                 : "Continue local learning progress to unlock certificate preview eligibility.",
         reviewedOn: preview?.reviewedOn ?? "mock-local",
         expiresOn: preview?.expiresOn ?? "mock-local",

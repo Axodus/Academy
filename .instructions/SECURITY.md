@@ -1,81 +1,61 @@
 # Academy Security
 
+Last updated: 2026-06-24
+
 ## Security Objective
 
-Protect educational integrity while preventing mock/local features and compatibility scaffolds from being interpreted or reused as production, financial, credential, wallet, contract or governance authority.
+Keep Academy mock/local, preview-only and fail-closed while preventing learner UI, API data and compatibility scaffolds from implying production, financial, credential, wallet, provider or contract authority.
 
-The mandatory controls are defined in `ACADEMY_EXECUTION_BOUNDARY.md`.
+The controlling contract is `ACADEMY_EXECUTION_BOUNDARY.md`.
 
-## Critical Controls
+## REQ-07 Enforcement
 
-### Default deny
+- `npm run check:academy-authority` scans 49 Academy-relevant source/test files for all 30 required prohibited terms.
+- The allowlist is exact by path, term and pattern, includes a rationale, and fails when stale.
+- Negative tests require explicit bounded markers; nested or unclosed markers fail.
+- Learner fixture compatibility read models were removed rather than broadly allowlisted.
+- Registered Academy POST routes remain default-deny.
+- Explicit local preview behavior still requires `ACADEMY_LOCAL_PREVIEW_MUTATION=true` and a non-production runtime.
+- `AcademyRuntimeBoundary`/boundary metadata and authentication cannot authorize mutation.
+- Academy persistence remains fixed to local JSON; the Postgres adapter is a throwing placeholder.
+- Provider/write route modules remain absent from `src/serverApp.ts` registration.
 
-- Mutations fail closed unless an explicit non-production preview gate is implemented and enabled.
-- Missing, invalid or ambiguous configuration denies mutation.
-- No fallback may select a production database or provider.
-- `AcademyRuntimeBoundary` metadata alone never authorizes POST behavior.
+## Reviewed Allowlist
 
-### Domain isolation
+| Path/context | Allowed match | Reason |
+|---|---|---|
+| `src/modules/academy/services/contractReadiness.ts` | exact PoK minter scaffold names | isolated read-only contract readiness; writes fixed disabled |
+| `src/serverApp.ts` | `req.jwtVerify()` | route authentication only; no learner or execution authority |
+| runtime/type metadata | exact `certificateAuthority: "not-issued"` | explicit denial metadata required by the preview contract |
+| Academy tests | corresponding safe-negative/scaffold assertions | verifies the denied/scaffold behavior |
+| marked test regions | prohibited literals | negative-test blocklists and failure fixtures only |
 
-- Progress, assessment, certificate preview and reward preview remain separate.
-- Authentication does not grant learner entitlement or execution authority.
-- Contract/provider modules cannot be reached from mock learner services.
+No learner-facing page, component, route payload, fixture or normal service behavior is broadly allowlisted.
 
-### Credential safety
+## Security Gate Review
 
-Learner-facing surfaces may show preview eligibility and preview presentation only. They must not assert issuance, verification, proof, ownership, chain anchoring or transferability.
+| Gate | Status | Evidence |
+|---|---|---|
+| `PRODUCTION_GATE` | CLOSED | Runtime metadata is non-production; no production activation path |
+| `EXECUTION_GATE` | GATED | POST default denial plus explicit local preview/non-production checks |
+| `TREASURY_GATE` | CLOSED | No financial action path in Academy runtime |
+| `REWARDS_GATE` | CLOSED | Non-monetary preview points only |
+| `CERTIFICATION_ISSUANCE_GATE` | CLOSED | Eligibility/presentation preview only |
+| `ON_CHAIN_ISSUANCE_GATE` | CLOSED | No learner chain path or provider execution |
+| `WALLET_SIGNING_GATE` | CLOSED | Authentication compatibility only; no transaction signing |
+| `PAYMENT_GATE` | CLOSED | No Academy payment flow |
+| `BILLING_GATE` | CLOSED | No Academy billing flow |
+| `PAYOUT_GATE` | CLOSED | No Academy payout flow |
+| `SETTLEMENT_GATE` | CLOSED | No Academy settlement flow |
+| `PROVIDER_EXECUTION_GATE` | CLOSED | Provider route modules are not registered |
+| `PRODUCTION_DATABASE_GATE` | CLOSED | Local JSON binding; Postgres adapter throws |
+| `REAL_CREDENTIALS_GATE` | CLOSED | Recognition/certificate preview only |
+| `ACS_PROVISIONING_GATE` | NOT_AUTHORIZED | UI workflow labels only; no provisioning implementation |
+| `CONTRACT_WRITE_GATE` | CLOSED | Readiness reports writes disabled; no runtime write registration |
+| `NFT_SBT_MINT_GATE` | CLOSED | No learner model, UI or runtime path |
 
-### Reward safety
+No deviation was found. Contract source, ABIs, tests, deployment scripts, auth routes and readiness endpoints remain non-authoritative scaffolds.
 
-Learner-facing surfaces may show non-monetary preview points only. They must not assert token amounts, balances, claimability, wallet distribution, transfer, settlement, payout or treasury backing.
+## Final Security Statement
 
-### Compatibility scaffolds
-
-Contracts, ABIs, deployment scripts, wallet-authenticated routes, readiness endpoints and persistence placeholders must be isolated, documented as non-authoritative and tested only for boundary behavior.
-
-## Current REQ-05 / REQ-06 Enforcement Status
-
-- Registered Academy POST routes are fail-closed by default.
-- Local preview mutation is enabled only when the runtime is non-production and `ACADEMY_LOCAL_PREVIEW_MUTATION=true`.
-- Learner-facing metadata remains labeled `mock-local`, `preview-only`, `non-authoritative`, `production: false`, `certificateAuthority: not-issued` and `rewardAuthority: non-monetary-preview`.
-- No provider, wallet signing, contract write, payment, treasury, settlement or production persistence path is opened by REQ-05.
-- Learner dashboard, rewards, progress and certificate preview surfaces render from preview-safe summary data and do not expose contract-readiness metadata through learner-facing `/academy/me` dashboard data.
-- Repository-wide negative static checks remain deferred; current protection is limited to Academy learner-flow tests, learner-facing render tests and the route/UI changes delivered in REQ-05 and REQ-06.
-
-## Mandatory Negative Checks
-
-ACADEMY-REQ-07 must fail on prohibited identifiers or authority labels in learner-facing models, fixtures, services, API responses and UI, including:
-
-```txt
-claimable
-claimed
-minted
-issued
-issuanceDate
-proofHash
-verificationUrl
-verificationStatus
-walletDistribution
-tokenBalance
-transferable
-sbt
-nft
-onChain
-txHash
-contractAddress
-```
-
-Exceptions are limited to explicit blocklists, negative tests, security documentation and reviewed compatibility-scaffold allowlists.
-
-## Review Requirements
-
-Security, maturity, promotion and production-risk review require `gpt-5.5 + Extra high`.
-
-A review must verify:
-
-- runtime gates fail closed;
-- no production side effect is reachable;
-- no authority is inferred from UI or scaffold state;
-- validation evidence is complete and current;
-- L-Level and D-Level remain separate;
-- all production-sensitive gates remain closed.
+Academy remains `NON_PRODUCTION`, `MOCK_OR_CONFIG_FIRST` and `READ_ONLY_OR_PREVIEW_ONLY` except for explicitly gated local preview behavior. It has no production, wallet/signing, reward execution, certification issuance, treasury, payment, billing, payout, settlement, provider execution, contract-write or credential-verification authority.

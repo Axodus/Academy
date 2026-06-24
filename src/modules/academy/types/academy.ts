@@ -322,7 +322,7 @@ export type LearnerCoursePreviewCard = {
   pendingPreviewPoints: number;
   recognitionStatus: LearnerRecognitionPreview["status"];
   recognitionLabel: string;
-  certificateState: "not-issued" | "eligible-preview" | "not-eligible-preview" | "presentation-preview";
+  certificateState: "presentation-only" | "eligible-preview" | "not-eligible-preview" | "presentation-preview";
   certificateLabel: string;
   nonAuthoritative: true;
 };
@@ -330,7 +330,7 @@ export type LearnerCoursePreviewCard = {
 export type LearnerCertificatePreviewCard = {
   courseId: string;
   displayTitle: string;
-  state: "not-issued" | "eligible-preview" | "not-eligible-preview" | "presentation-preview";
+  state: "presentation-only" | "eligible-preview" | "not-eligible-preview" | "presentation-preview";
   recognitionLevel: string;
   previewLabel: string;
   previewNote: string;

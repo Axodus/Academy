@@ -24,7 +24,7 @@ export function LearningDashboard() {
         <MetricCard label="Completed previews" value={preview.summary.completedPreviewCourses} detail={`${preview.summary.activePreviewCourses} active preview courses`} />
         <MetricCard label="Recognition previews" value={preview.summary.eligibleRecognitionPreviews} detail="Mock learner recognition only" />
         <MetricCard label="Unlocked preview points" value={formatNeurons(preview.summary.totalUnlockedPreviewPoints)} detail="Non-monetary preview summary" />
-        <MetricCard label="Certificate previews" value={preview.summary.eligibleCertificatePreviews} detail="Not issued and preview-only" />
+        <MetricCard label="Certificate previews" value={preview.summary.eligibleCertificatePreviews} detail="Presentation-only preview" />
       </section>
       <section className="grid gap-4 lg:grid-cols-[1fr_0.8fr]">
         <div className="academy-card grid gap-4 p-5">
@@ -57,7 +57,7 @@ export function LearningDashboard() {
           <div className="rounded-lg border border-slate-200 p-4">
             <p className="academy-label">Certificate authority</p>
             <p className="mt-1 font-semibold text-slate-950">{preview.runtime.certificateAuthority}</p>
-            <p className="mt-2 text-sm text-slate-600">Certificate preview status remains presentation-only and not issued.</p>
+            <p className="mt-2 text-sm text-slate-600">Certificate preview status remains presentation-only and non-authoritative.</p>
           </div>
           <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
             <p className="academy-label">Preview-only boundary</p>

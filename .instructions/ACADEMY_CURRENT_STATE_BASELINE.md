@@ -5,6 +5,8 @@ Repository commit: `42730d27bbd56c10233479250ef19f595cd65b29`
 Branch: `dev`
 Tracked worktree at inspection start: clean
 
+This file preserves the chronological REQ-01 baseline and subsequent deltas. The operative classification is the final Sprint 04 delta at the end of this file; earlier L3 and blocker statements are historical observations at their recorded dates.
+
 ## Recommended Codex Configuration
 
 Recommended model: `gpt-5.5`
@@ -158,3 +160,28 @@ L4 promotion supported: NO
 D-Level evaluated: NO
 Production execution: DISABLED
 ```
+
+## REQ-07 / REQ-08 Final Delta - 2026-06-24
+
+- Added `npm run check:academy-authority` with 30 prohibited terms, exact reviewed exceptions, stale-allowlist rejection and bounded negative-test markers.
+- Expanded enforcement across 49 Academy-relevant files, including modules, routes, fixtures, persistence, repository interfaces, server composition and Academy tests.
+- Removed learner-facing compatibility read models and normalized remaining legacy fixture/UI authority language.
+- Reconfirmed default-deny POST behavior, explicit non-production local preview gating and boundary-metadata non-authorization.
+- Completed the required validation matrix: static check, typecheck, lint, 35 Academy tests, aggregate build, 24 cross-device E2E tests, contract compile and 6 contract scaffold tests all PASS.
+- Reviewed every required production-sensitive gate as closed, gated or not authorized.
+- Reconciled status, roadmap, validation, security, blockers, maturity and handoff.
+
+Final classification:
+
+```txt
+ACADEMY-REQ-07: PASS
+ACADEMY-REQ-08: PASS
+ACADEMY-SPRINT-04: PASS
+ACADEMY-EPIC-01: COMPLETE_NON_PRODUCTION
+L-Level: L4_CONSOLIDATED
+D-Level: D3+
+Production: NON_PRODUCTION
+Production authority: NONE
+```
+
+This final maturity conclusion grants no production, reward execution, certification issuance, wallet/signing, payment, treasury, settlement, provider, database or contract-write authority.

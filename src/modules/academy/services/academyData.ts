@@ -44,7 +44,6 @@ export const academyData = parseAcademyPreviewFixture(academyMock) as {
     acsEligibility: string;
     marketplaceEligibility: string;
   };
-  futureContracts: Array<{ id: string; name: string; role: string; status: string; writesEnabled: boolean }>;
   tutors: Tutor[];
   courses: Course[];
   lessons: Lesson[];

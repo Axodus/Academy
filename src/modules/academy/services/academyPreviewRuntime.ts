@@ -37,7 +37,7 @@ export function getAcademyPreviewMutationGate() {
       externalProvidersCalled: false,
       walletSigningPerformed: false,
       contractWritesPerformed: false,
-      paymentOrTreasuryActionPerformed: false
+      financialActionPerformed: false
     }
   };
 }

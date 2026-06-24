@@ -133,13 +133,6 @@ export const academyPreviewSchema = strictRecord({
     acsEligibility: z.string(),
     marketplaceEligibility: z.string()
   }),
-  futureContracts: z.array(strictRecord({
-    id: z.string(),
-    name: z.string(),
-    role: z.string(),
-    status: z.string(),
-    writesEnabled: z.literal(false)
-  })),
   tutors: z.array(tutorSchema),
   courses: z.array(courseSchema),
   lessons: z.array(strictRecord({

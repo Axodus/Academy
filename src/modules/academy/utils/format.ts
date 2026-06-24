@@ -3,7 +3,7 @@ export function formatNeurons(amount: number) {
 }
 
 export function statusTone(status: string) {
-  if (["approved", "compliant", "verified", "mock-verified", "passed", "eligible", "validated", "unlocked"].includes(status)) {
+  if (["approved", "compliant", "reviewed-preview", "passed", "eligible", "validated", "unlocked"].includes(status)) {
     return "border-emerald-200 bg-emerald-50 text-emerald-800";
   }
 

@@ -8,68 +8,40 @@ All phases are governed by `ACADEMY_EXECUTION_BOUNDARY.md`.
 
 Status: COMPLETE
 
-Deliverables:
-
-- evidence-backed baseline;
-- stale evidence classification;
-- canonical execution boundary;
-- normalized operational status, blockers, validation and handoff;
-- safe Sprint 02 scope.
-
-Open runtime and validation blockers remain promotion blockers for later implementation; they do not invalidate the completed Sprint 01 baseline/boundary deliverables.
+Delivered the evidence baseline, canonical execution boundary, stale-evidence classification and safe handoff.
 
 ## ACADEMY-SPRINT-02 - Educational Domain Foundation
 
 Status: COMPLETE
 
-Deliverables:
-
-- validated education schemas;
-- deterministic mock/local fixtures;
-- immutable course catalog services;
-- immutable learning-path services;
-- non-monetary reward preview and certificate preview types;
-- bounded tests.
-
-No mutation, wallet, contract, provider, payment, credential or production authority is in scope.
+Delivered strict preview schemas, deterministic validated fixtures, immutable catalog/path read models and non-authoritative reward/certificate preview models.
 
 ## ACADEMY-SPRINT-03 - Learner Experience Mock/Local
 
-Status: COMPLETE, `ACADEMY-REQ-05` PASS and `ACADEMY-REQ-06` PASS
+Status: COMPLETE; `ACADEMY-REQ-05` PASS and `ACADEMY-REQ-06` PASS
 
-Delivered in `ACADEMY-REQ-05`:
-
-- pure mock learner transitions;
-- fail-closed local preview mutation enforcement;
-- progress, quiz and assessment preview flow;
-- reward, recognition and certificate-preview separation;
-- explicit preview boundary metadata.
-
-Delivered in `ACADEMY-REQ-06`:
-
-- learner dashboard preview rendering from preview-safe summary models;
-- certificate preview presentation with `not-issued`, `eligible-preview`, `not-eligible-preview` and `presentation-preview` states;
-- persistent preview-only and non-authoritative learner-facing labels;
-- learner-facing route metadata extended with `certificateAuthority` and `rewardAuthority`;
-- desktop, tablet and mobile E2E rerun to PASS.
-
-Remaining Sprint 03 work:
-
-- repository-wide negative static authority checks;
-- final maturity consolidation remains deferred to Sprint 04.
+Delivered deterministic progress/assessment flow, reward/recognition/certificate-preview separation, fail-closed POST gating, explicit local preview configuration, learner dashboards and cross-device E2E coverage.
 
 ## ACADEMY-SPRINT-04 - Validation and Consolidation
 
-Status: BLOCKED ON IMPLEMENTATION
+Status: COMPLETE; `ACADEMY-REQ-07` PASS and `ACADEMY-REQ-08` PASS
 
-Planned deliverables:
+Delivered:
 
-- negative static authority checks;
-- complete command-specific validation;
-- security gate review;
-- blocker reconciliation;
-- evidence-backed L4 decision and handoff.
+- repository-wide Academy authority scan and reproducible package command;
+- explicit path/term/pattern allowlist with stale-entry failure;
+- learner fixture and UI cleanup that removes compatibility scaffold leakage;
+- current typecheck, lint, unit/API, aggregate build, E2E and contract scaffold evidence;
+- security review of all required production-sensitive gates;
+- blocker, maturity and handoff reconciliation;
+- final `L4_CONSOLIDATED`, `D3+`, `NON_PRODUCTION` conclusion.
+
+## ACADEMY-EPIC-01 Conclusion
+
+Status: COMPLETE_NON_PRODUCTION
+
+`L4_CONSOLIDATED` means the mock/local Academy experience is integrated, validated and security-bounded. It does not authorize production deployment, real rewards, real certification, wallet/signing, payment, treasury, settlement, providers, production persistence or contract writes.
 
 ## Future Authority Work
 
-Production databases, providers, contracts, credentials, rewards, treasury, billing, settlement, payouts and cross-nucleus integration are not phases of EPIC-01. Each requires a separate approved request and cannot be inferred from L4 maturity.
+Any production database, provider, contract, credential, reward, payment, treasury, billing, payout, settlement or cross-nucleus work requires a separate approved EPIC and fresh security evidence. None is an automatic next phase of `ACADEMY-EPIC-01`.

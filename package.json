@@ -24,6 +24,7 @@
     "deploy:harmony": "hardhat run scripts/deploy.ts --network harmony",
     "deploy:solana": "tsx scripts/deploy-solana.ts",
     "deploy:greenfield": "tsx scripts/deploy-greenfield.ts",
+    "check:academy-authority": "node scripts/check-academy-authority.mjs",
     "lint": "eslint .",
     "typecheck": "tsc --noEmit -p tsconfig.json",
     "test": "vitest",

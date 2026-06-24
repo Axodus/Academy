@@ -62,7 +62,7 @@ A future local preview mutation is permitted only when all conditions are true:
 5. The response declares `mock/preview`, `local-only`, `non-authoritative` and `non-executing` semantics.
 6. Tests prove default denial and fail-closed behavior for invalid or missing configuration.
 
-Current implementation status: `ENFORCED_FOR_REGISTERED_ACADEMY_POST_ROUTES`. The Academy POST routes now fail closed by default and require explicit local preview gating plus non-production runtime checks. This does not count as production authority and does not remove the remaining L4 blockers.
+Current implementation status: `ENFORCED_FOR_REGISTERED_ACADEMY_POST_ROUTES`. The Academy POST routes fail closed by default and require explicit local preview gating plus non-production runtime checks. Sprint 04 validation proves this boundary for non-production L4 maturity; it still grants no production authority.
 
 Local preview mutation must never:
 
@@ -104,7 +104,7 @@ Learner-facing dashboard and certificate preview surfaces must additionally:
 - avoid contract-readiness metadata;
 - use persistent `mock-local`, `preview-only`, `non-authoritative`, `not-issued` and `non-monetary-preview` labels where appropriate.
 
-Negative static checks must cover the prohibited identifiers defined by ACADEMY-REQ-07. Exceptions are limited to blocklists, negative tests, security documentation and reviewed compatibility-scaffold allowlists.
+Negative static checks are enforced by `npm run check:academy-authority`. The check covers the prohibited identifiers defined by ACADEMY-REQ-07 across Academy modules, routes, fixtures, persistence, repository interfaces, server composition and tests. Exceptions are exact reviewed patterns limited to negative tests, safe denial metadata, authentication-only composition and isolated compatibility scaffolds; stale exceptions fail.
 
 ## Evidence and Promotion Rules
 
@@ -114,6 +114,8 @@ Negative static checks must cover the prohibited identifiers defined by ACADEMY-
 - L-Level never grants D-Level.
 - Production remains blocked regardless of L-Level.
 - Security, maturity and promotion review require `gpt-5.5 + Extra high`.
+
+Current evidence-backed maturity is `L4_CONSOLIDATED`, `D3+`, `NON_PRODUCTION`. This classification does not weaken any row in the authority matrix or open any gate.
 
 ## Change Control
 

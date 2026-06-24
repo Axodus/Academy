@@ -4,77 +4,77 @@ Last updated: 2026-06-24
 
 ## Current Request
 
-`ACADEMY-SPRINT-03` - Learner Experience Mock/Local and Fail-Closed Preview Flow
+`ACADEMY-SPRINT-04` - Validation, Negative Static Checks and Consolidation
 
-- `ACADEMY-REQ-05`: PASS on 2026-06-23.
-- `ACADEMY-REQ-06`: PASS on 2026-06-24.
-- Sprint 02 foundation remains the required base in `src/modules/academy/services/academyPreviewSchema.ts`, `src/data/mock/academy.mock.js`, `src/modules/academy/services/academyData.ts` and `src/routes/academy.ts`.
+- `ACADEMY-REQ-07`: PASS on 2026-06-24.
+- `ACADEMY-REQ-08`: PASS on 2026-06-24.
+- `ACADEMY-SPRINT-04`: PASS on 2026-06-24.
+- `ACADEMY-EPIC-01`: COMPLETE_NON_PRODUCTION.
 
 ## Current Classification
 
 ```txt
-L-Level: L3_CANDIDATE_VALIDATION_INCOMPLETE
-L4 promotion: NOT_SUPPORTED
-D-Level: NOT_EVALUATED
-Production readiness: NO
-Production execution: DISABLED
+L-Level: L4_CONSOLIDATED
+D-Level: D3+
+Production: NON_PRODUCTION
+Production authority: NONE
 Current request result: PASS
 ```
 
-L-Level describes maturity evidence only. It grants no D-Level, deployment permission, financial authority, credential authority or production authority.
+L-Level and D-Level describe evidence maturity only. They grant no deployment permission, production authority, financial authority, credential authority, wallet/signing authority, contract-write authority, provider authority or cross-nucleus authority.
 
 ## Canonical Operating Mode
 
 ```txt
 NON_PRODUCTION
 MOCK_OR_CONFIG_FIRST
-READ_ONLY_OR_PREVIEW_ONLY_WHEN_APPLICABLE
+READ_ONLY_OR_PREVIEW_ONLY except explicitly gated local preview behavior
 EXECUTION_GATED
-TREASURY_GATED
-CERTIFICATION_ISSUANCE_GATED
-REWARDS_GATED
+ALL_PRODUCTION_SENSITIVE_GATES_CLOSED
 FAIL_CLOSED_BY_DEFAULT
 ```
 
-The canonical rules are in `ACADEMY_EXECUTION_BOUNDARY.md`.
+The controlling rules remain in `ACADEMY_EXECUTION_BOUNDARY.md`.
 
 ## Current Evidence
 
+- Static authority check: PASS; 49 files, 30 prohibited terms, 6 reviewed allowlist entries.
 - Typecheck: PASS.
 - Lint: PASS.
-- Academy learner tests: PASS, `tests/academyLearning.test.ts`, 34 tests.
-- Desktop E2E: PASS, 8 passed.
-- Tablet E2E: PASS, 8 passed.
-- Mobile E2E: PASS, 8 passed.
-- Preview mutation gate: IMPLEMENTED for registered Academy POST routes.
-- Mutation enforcement: FAIL_CLOSED by default; local preview mutation requires explicit local preview configuration and non-production runtime.
-- Boundary metadata alone authorizes no POST behavior.
-- Learner dashboard and certificate preview: IMPLEMENTED from preview-safe summary models with explicit `certificateAuthority: "not-issued"` and `rewardAuthority: "non-monetary-preview"` metadata.
-- Negative static authority checks: PARTIAL only; Academy learner tests cover route serialization, dashboard/certificate rendering, prohibited learner-facing fields and restricted learner-facing UI semantics, but repository-wide checks are still deferred.
+- Academy learner tests: PASS, 35/35.
+- Aggregate build: PASS.
+- Desktop/tablet/mobile E2E: PASS, 24/24 total.
+- Contract compile: PASS; nothing to compile.
+- Contract scaffold tests: PASS, 6/6; scaffold behavior only.
+- Academy POST routes: fail closed by default.
+- Local preview POST behavior: requires explicit configuration, non-production runtime and local-only persistence.
+- Boundary metadata alone: cannot authorize POST behavior.
+- Learner outputs: mock/local, preview-only, non-authoritative and statically checked.
 
 ## Authority Status
 
 | Area | Status |
 |---|---|
-| Local fixtures and read models | ALLOWED, mock/local only |
-| Read-only catalog/path work | ALLOWED |
-| Local progress mutation | ALLOWED only behind the explicit local preview gate and non-production runtime checks |
+| Local fixtures/read models | ALLOWED, mock/local only |
+| Read-only catalog/path/dashboard | ALLOWED |
+| Local progress mutation | GATED, explicit non-production preview only |
 | Wallet authentication | COMPATIBILITY SCAFFOLD only |
 | Wallet transaction signing | CLOSED |
-| Certificate/badge preview | PREVIEW ONLY |
-| Certification issuance/verification | CLOSED |
+| Certificate/recognition presentation | PREVIEW ONLY |
+| Certification issuance/credential verification | CLOSED |
 | Non-monetary reward preview | PREVIEW ONLY |
-| Token reward, claim or transfer | CLOSED |
-| Contract tests/static inspection | ALLOWED as scaffold validation |
+| Reward execution/financial entitlement | CLOSED |
+| Contract compile/test | SCAFFOLD VALIDATION only |
 | Contract deployment/write | CLOSED |
 | Production database/API/provider | CLOSED |
-| Treasury, billing, settlement, payout | CLOSED |
-| Cross-nucleus/governance authority | CLOSED |
+| Payment/treasury/billing/payout/settlement | CLOSED |
+| ACS provisioning | NOT AUTHORIZED |
+| NFT/SBT minting | CLOSED |
 
-## Promotion Blockers
+## Remaining Blockers
 
-See `BLOCKER_REGISTER.md`. The primary blockers are the missing repository-wide negative static checks and broader maturity consolidation work.
+No critical blocker remains for the non-production `L4_CONSOLIDATED` conclusion. Production, reward execution, real certification, wallet/signing, payment, treasury, settlement, provider, database and contract-write capabilities remain intentionally blocked by policy and are outside `ACADEMY-EPIC-01`.
 
 ## Next Safe Work
 
-`ACADEMY-REQ-07` or Sprint 04 validation/consolidation work, limited to repository-wide negative static checks and broader validation consolidation without opening any production-sensitive gate.
+Close `ACADEMY-EPIC-01` and pause, or open a separately approved EPIC with an explicit boundary. No future request may infer production authority from this maturity classification.
