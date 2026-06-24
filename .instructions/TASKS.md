@@ -1,6 +1,6 @@
 # Academy Tasks
 
-Last updated: 2026-06-23
+Last updated: 2026-06-24
 
 ## Sprint 01
 
@@ -44,10 +44,19 @@ Last updated: 2026-06-23
 - [x] rerun required typecheck, lint, Academy learner tests and desktop E2E;
 - [x] update `.instructions` with REQ-05 results and remaining blockers.
 
+### ACADEMY-REQ-06
+
+- [x] implement learner dashboard rendering from preview-safe mock/local summary data;
+- [x] implement certificate preview presentation with explicit not-issued and preview-only semantics;
+- [x] keep recognition preview and preview points surfaces non-monetary and non-authoritative;
+- [x] harden learner-facing dashboard/certificate/reward/progress copy against unsafe authority semantics;
+- [x] keep learner-facing route payloads free of contract-readiness metadata for dashboard/certificate surfaces;
+- [x] rerun required typecheck, lint, Academy learner tests, and desktop/tablet/mobile E2E;
+- [x] update `.instructions` with REQ-06 results and remaining blockers.
+
 ## Promotion Blockers
 
 - implement repository-wide negative static authority checks;
-- complete broader learner dashboard/certificate-preview cleanup if a later request requires it;
 - preserve broader validation coverage as implementation continues;
 - run required desktop/tablet/mobile acceptance coverage before L4 review.
 

@@ -1,12 +1,13 @@
 # Academy Status
 
-Last updated: 2026-06-23
+Last updated: 2026-06-24
 
 ## Current Request
 
 `ACADEMY-SPRINT-03` - Learner Experience Mock/Local and Fail-Closed Preview Flow
 
 - `ACADEMY-REQ-05`: PASS on 2026-06-23.
+- `ACADEMY-REQ-06`: PASS on 2026-06-24.
 - Sprint 02 foundation remains the required base in `src/modules/academy/services/academyPreviewSchema.ts`, `src/data/mock/academy.mock.js`, `src/modules/academy/services/academyData.ts` and `src/routes/academy.ts`.
 
 ## Current Classification
@@ -41,13 +42,15 @@ The canonical rules are in `ACADEMY_EXECUTION_BOUNDARY.md`.
 
 - Typecheck: PASS.
 - Lint: PASS.
-- Academy learner tests: PASS, `tests/academyLearning.test.ts`, 31 tests.
+- Academy learner tests: PASS, `tests/academyLearning.test.ts`, 34 tests.
 - Desktop E2E: PASS, 8 passed.
-- Tablet/mobile E2E: NOT RUN for REQ-05.
+- Tablet E2E: PASS, 8 passed.
+- Mobile E2E: PASS, 8 passed.
 - Preview mutation gate: IMPLEMENTED for registered Academy POST routes.
 - Mutation enforcement: FAIL_CLOSED by default; local preview mutation requires explicit local preview configuration and non-production runtime.
 - Boundary metadata alone authorizes no POST behavior.
-- Negative static authority checks: PARTIAL only; Academy learner tests cover route serialization, prohibited learner-facing fields and restricted learner-facing UI semantics, but repository-wide checks are still deferred.
+- Learner dashboard and certificate preview: IMPLEMENTED from preview-safe summary models with explicit `certificateAuthority: "not-issued"` and `rewardAuthority: "non-monetary-preview"` metadata.
+- Negative static authority checks: PARTIAL only; Academy learner tests cover route serialization, dashboard/certificate rendering, prohibited learner-facing fields and restricted learner-facing UI semantics, but repository-wide checks are still deferred.
 
 ## Authority Status
 
@@ -70,8 +73,8 @@ The canonical rules are in `ACADEMY_EXECUTION_BOUNDARY.md`.
 
 ## Promotion Blockers
 
-See `BLOCKER_REGISTER.md`. The primary blockers are the missing repository-wide negative static checks, incomplete broader validation coverage and deferred dashboard/certificate-preview cleanup outside REQ-05.
+See `BLOCKER_REGISTER.md`. The primary blockers are the missing repository-wide negative static checks and broader maturity consolidation work.
 
 ## Next Safe Work
 
-`ACADEMY-REQ-06` or `ACADEMY-REQ-07`, limited to remaining preview cleanup, repository-wide negative static checks and broader validation consolidation without opening any production-sensitive gate.
+`ACADEMY-REQ-07` or Sprint 04 validation/consolidation work, limited to repository-wide negative static checks and broader validation consolidation without opening any production-sensitive gate.

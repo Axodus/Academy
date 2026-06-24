@@ -1,45 +1,41 @@
 # Academy Handoff
 
-Date: 2026-06-23
+Date: 2026-06-24
 
 ## Current Handoff State
 
 ```txt
-Sprint 03 / ACADEMY-REQ-05: PASS
+Sprint 03 / ACADEMY-REQ-06: PASS
 Current maturity: L3_CANDIDATE_VALIDATION_INCOMPLETE
-Next safe request: ACADEMY-REQ-06 or ACADEMY-REQ-07
+Next safe request: ACADEMY-REQ-07 or Sprint 04 validation/consolidation
 Production authority: NONE
 ```
 
-REQ-05 establishes a safe mock/local learner preview flow on top of the Sprint 02 foundation. It does not claim production authority, reward execution authority, credential authority, wallet/signing authority, contract authority or maturity promotion beyond the current L3 candidate state.
+REQ-06 establishes a safe learner-facing dashboard, rewards, progress and certificate preview experience on top of the Sprint 02 foundation and the REQ-05 learner flow. It does not claim production authority, reward execution authority, credential authority, wallet/signing authority, contract authority or maturity promotion beyond the current L3 candidate state.
 
-## REQ-05 Delivered
+## REQ-06 Delivered
 
-- deterministic local/mock progress, quiz and assessment preview flow;
-- separate reward preview, recognition preview and certificate-preview eligibility states;
-- fail-closed Academy POST behavior by default;
-- explicit local preview mutation gating tied to non-production runtime;
-- tests proving boundary metadata alone does not authorize POST behavior;
-- learner-facing route metadata labeled `mock-local`, `preview-only` and `non-authoritative`;
-- desktop E2E corrected and rerun to PASS.
+- learner dashboard rendering from preview-safe summary models;
+- certificate preview presentation with explicit `not-issued` and preview-eligible semantics;
+- reward, progress and recognition preview surfaces aligned to non-authoritative labels;
+- learner-facing `/academy/me` payload no longer exposes contract-readiness data for dashboard/certificate surfaces;
+- learner-facing route metadata labeled `mock-local`, `preview-only`, `not-issued` and `non-monetary-preview`;
+- desktop, tablet and mobile E2E rerun to PASS.
 
 ## Delivery Reality Check
 
 Actually implemented:
 
-- progress mock service;
-- quiz scoring and retry preview logic;
-- assessment mock state derivation;
-- reward preview, recognition preview and certificate-preview eligibility derivation;
-- Academy POST fail-closed behavior and local preview gating checks;
-- learner-facing UI copy hardening for preview-only semantics;
-- Academy tests, desktop E2E update and `.instructions` refresh.
+- learner preview summary service for dashboard, progress, rewards and certificate pages;
+- certificate preview state presentation and metadata;
+- learner-facing route payload hardening for `/academy/me`;
+- learner-facing UI copy hardening for dashboard/certificate/reward/progress surfaces;
+- Academy tests and cross-device E2E validation;
+- `.instructions` refresh for REQ-06.
 
 Only documented or deferred:
 
 - repository-wide negative static authority checks;
-- broader dashboard/certificate-preview cleanup outside minimal compatibility updates;
-- tablet/mobile E2E coverage;
 - later maturity consolidation work.
 
 Still blocked:
@@ -107,7 +103,7 @@ Existing wallet-authenticated APIs, contracts, ABIs, deployment scripts, readine
 - Follow `ACADEMY_EXECUTION_BOUNDARY.md`.
 - Include the required Codex configuration in every REQ.
 - Escalate to `gpt-5.5 + High` if any authority-sensitive field or dependency appears.
-- Keep mutations fail-closed; REQ-05 now implements the runtime gate for the registered Academy POST routes.
+- Keep mutations fail-closed; REQ-05 implements the runtime gate for the registered Academy POST routes and REQ-06 must not broaden it.
 - Update status, blockers and validation with observed evidence only.
 
 ## Acceptance Rule

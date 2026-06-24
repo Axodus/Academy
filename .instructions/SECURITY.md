@@ -33,13 +33,14 @@ Learner-facing surfaces may show non-monetary preview points only. They must not
 
 Contracts, ABIs, deployment scripts, wallet-authenticated routes, readiness endpoints and persistence placeholders must be isolated, documented as non-authoritative and tested only for boundary behavior.
 
-## Current REQ-05 Enforcement Status
+## Current REQ-05 / REQ-06 Enforcement Status
 
 - Registered Academy POST routes are fail-closed by default.
 - Local preview mutation is enabled only when the runtime is non-production and `ACADEMY_LOCAL_PREVIEW_MUTATION=true`.
-- Responses remain labeled `mock-local`, `preview-only`, `non-authoritative` and `production: false`.
+- Learner-facing metadata remains labeled `mock-local`, `preview-only`, `non-authoritative`, `production: false`, `certificateAuthority: not-issued` and `rewardAuthority: non-monetary-preview`.
 - No provider, wallet signing, contract write, payment, treasury, settlement or production persistence path is opened by REQ-05.
-- Repository-wide negative static checks remain deferred; current protection is limited to Academy learner-flow tests plus the route/UI changes delivered in REQ-05.
+- Learner dashboard, rewards, progress and certificate preview surfaces render from preview-safe summary data and do not expose contract-readiness metadata through learner-facing `/academy/me` dashboard data.
+- Repository-wide negative static checks remain deferred; current protection is limited to Academy learner-flow tests, learner-facing render tests and the route/UI changes delivered in REQ-05 and REQ-06.
 
 ## Mandatory Negative Checks
 

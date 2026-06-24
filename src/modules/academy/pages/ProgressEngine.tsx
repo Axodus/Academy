@@ -1,13 +1,11 @@
 import { MetricCard } from "../components/MetricCard";
 import { ProgressBar } from "../components/ProgressBar";
 import { StatusBadge } from "../components/StatusBadge";
-import { academyData } from "../services/academyData";
-import { studentAcademyService } from "../services/studentAcademyService";
+import { academyLearnerExperienceService } from "../services/academyLearnerExperienceService";
 import { formatNeurons } from "../utils/format";
 
 export function ProgressEngine() {
-  const { student, progressEngine } = academyData;
-  const studentCourses = studentAcademyService.getStudentCourses();
+  const preview = academyLearnerExperienceService.getDashboardPreview();
 
   return (
     <>
@@ -15,74 +13,64 @@ export function ProgressEngine() {
         <div className="flex flex-wrap items-start justify-between gap-4">
           <div>
             <p className="academy-label">Progress Engine</p>
-            <h2 className="mt-1 text-3xl font-semibold text-slate-950">Capability, trust, unlocks, and ecosystem eligibility</h2>
+            <h2 className="mt-1 text-3xl font-semibold text-slate-950">Local learning progress, assessment previews, and preview unlock summaries</h2>
             <p className="mt-2 max-w-3xl text-slate-600">
-              Central mock surface for Academy progression before any production reward, credential, or provider authority is enabled.
+              Central mock/local surface for Academy progression with non-authoritative preview labels.
             </p>
           </div>
-          <StatusBadge label={student.constitutionalStanding} />
+          <div className="flex flex-wrap gap-2">
+            <StatusBadge label={preview.runtime.authority} />
+            <StatusBadge label={preview.runtime.outputAuthority} />
+            <StatusBadge label="non-authoritative" />
+          </div>
         </div>
-        <ProgressBar value={student.pokReadiness} label="PoK readiness" />
+        <ProgressBar value={Math.round((preview.summary.completedPreviewCourses / Math.max(preview.courses.length, 1)) * 100)} label="Preview course completion" />
       </section>
 
       <section className="grid gap-4 md:grid-cols-4">
-        <MetricCard label="User level" value={student.level} detail={`Level index ${student.levelIndex}`} />
-        <MetricCard label="Trust score" value={student.trustScore} detail="Mock anti-abuse and participation signal" />
-        <MetricCard label="Foundation points" value={formatNeurons(student.foundationPoints)} detail="Local preview utility" />
-        <MetricCard label="Applied points" value={formatNeurons(student.appliedPoints)} detail="Local preview model" />
-      </section>
-
-      <section className="grid gap-4 md:grid-cols-4">
-        <MetricCard label="Completed courses" value={student.completedCourses} />
-        <MetricCard label="Recognition previews" value={student.recognitionPreviews} />
-        <MetricCard label="ACS eligibility" value={student.acsEligibility} />
-        <MetricCard label="Marketplace eligibility" value={student.marketplaceEligibility} />
-      </section>
-
-      <section className="grid gap-4 lg:grid-cols-[1fr_0.8fr]">
-        <div className="academy-card grid gap-4 p-5">
-          <h3 className="text-xl font-semibold text-slate-950">Next unlocks</h3>
-          {progressEngine.nextUnlocks.map((unlock) => (
-            <article key={unlock.id} className="rounded-lg border border-slate-200 p-4">
-              <p className="font-semibold text-slate-950">{unlock.label}</p>
-              <p className="mt-1 text-sm font-semibold text-academy-blue">{unlock.reward}</p>
-              <p className="mt-2 text-sm text-slate-600">{unlock.requirement}</p>
-            </article>
-          ))}
-        </div>
-        <div className="academy-card grid gap-4 p-5">
-          <h3 className="text-xl font-semibold text-slate-950">Progression analytics</h3>
-          {progressEngine.analytics.map((item) => <ProgressBar key={item.label} label={item.label} value={item.value} />)}
-        </div>
+        <MetricCard label="Completed previews" value={preview.summary.completedPreviewCourses} detail={`${preview.summary.activePreviewCourses} active preview courses`} />
+        <MetricCard label="Recognition previews" value={preview.summary.eligibleRecognitionPreviews} detail="Badge preview and recognition preview only" />
+        <MetricCard label="Unlocked preview points" value={formatNeurons(preview.summary.totalUnlockedPreviewPoints)} detail="Non-monetary preview utility" />
+        <MetricCard label="Pending preview points" value={formatNeurons(preview.summary.totalPendingPreviewPoints)} detail="Still gated by local preview progress" />
       </section>
 
       <section className="academy-card grid gap-4 p-5">
         <div>
           <p className="academy-label">Student course progression</p>
-          <h3 className="text-xl font-semibold text-slate-950">Content, PoK validation, and reward unlock are tracked separately</h3>
+          <h3 className="text-xl font-semibold text-slate-950">Content, PoK validation, preview points, and certificate preview remain separate</h3>
         </div>
         <div className="grid gap-4">
-          {studentCourses.map((item) => {
-            if (!item) return null;
-            const { course, progress, validationWeight, previewPointLabel } = item;
-            return (
-              <article key={course.id} className="rounded-lg border border-slate-200 p-4">
+          {preview.courses.map((course) => (
+            <article key={course.courseId} className="rounded-lg border border-slate-200 p-4">
                 <div className="mb-4 flex flex-wrap items-center justify-between gap-2">
                   <div>
-                    <p className="font-semibold text-slate-950">{course.title}</p>
-                    <p className="mt-1 text-sm text-slate-600">{previewPointLabel} / {validationWeight}% validation-weighted preview</p>
+                    <p className="font-semibold text-slate-950">{course.displayTitle}</p>
+                    <p className="mt-1 text-sm text-slate-600">{course.previewPointTier} / {course.certificateLabel}</p>
                   </div>
-                  <StatusBadge label={progress?.pokStatus ?? "pending"} />
+                  <StatusBadge label={course.assessmentState} />
                 </div>
                 <div className="grid gap-4 md:grid-cols-4">
-                  <ProgressBar value={progress?.contentProgress ?? 0} label="Content progress" />
-                  <ProgressBar value={progress?.lessonCompletion ?? 0} label="Lesson completion" />
-                  <ProgressBar value={progress?.validationProgress ?? 0} label="Validation progress" />
-                  <ProgressBar value={progress?.rewardUnlockProgress ?? 0} label="Preview unlock" />
+                  <ProgressBar value={course.contentProgress} label="Local learning progress" />
+                  <ProgressBar value={Math.round((course.completedLessons / Math.max(course.completedLessons + course.pendingLessons, 1)) * 100)} label="Lesson completion preview" />
+                  <ProgressBar value={course.assessmentScore ?? 0} label="Assessment score preview" />
+                  <ProgressBar value={course.unlockedPreviewPoints === 0 ? 0 : Math.round((course.unlockedPreviewPoints / Math.max(course.unlockedPreviewPoints + course.pendingPreviewPoints, 1)) * 100)} label="Preview points" />
+                </div>
+                <div className="mt-4 grid gap-3 md:grid-cols-3 text-sm text-slate-700">
+                  <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                    <p className="academy-label">Recognition preview</p>
+                    <p className="mt-1 font-semibold text-slate-900">{course.recognitionLabel}</p>
+                  </div>
+                  <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                    <p className="academy-label">Certificate preview</p>
+                    <p className="mt-1 font-semibold text-slate-900">{course.certificateLabel}</p>
+                  </div>
+                  <div className="rounded-lg border border-slate-200 bg-slate-50 p-3">
+                    <p className="academy-label">Preview authority</p>
+                    <p className="mt-1 font-semibold text-slate-900">{preview.runtime.rewardAuthority}</p>
+                  </div>
                 </div>
               </article>
-            );
-          })}
+          ))}
         </div>
       </section>
     </>

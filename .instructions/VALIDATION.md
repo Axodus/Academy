@@ -1,6 +1,6 @@
 # Academy Validation
 
-Last updated: 2026-06-23
+Last updated: 2026-06-24
 
 Authority contract: `ACADEMY_EXECUTION_BOUNDARY.md`.
 
@@ -57,6 +57,25 @@ PASS
 ```
 
 This PASS applies to the REQ-05 mock/local learner flow only. It does not promote the repository to L4, does not authorize production execution and does not remove the remaining EPIC-01 blockers.
+
+## ACADEMY-REQ-06 Evidence
+
+Command date: 2026-06-24
+
+| Command | Result | Detail |
+|---|---|---|
+| `npm run typecheck` | PASS | Exit 0 |
+| `npm run lint` | PASS | Exit 0 |
+| `./node_modules/.bin/vitest --run tests/academyLearning.test.ts` | PASS | Exit 0; 34/34 tests |
+| `npm run test:e2e -- --project=desktop --project=tablet --project=mobile` | PASS | Exit 0; 24/24 tests |
+
+REQ-06 validation result:
+
+```txt
+PASS
+```
+
+This PASS applies to the REQ-06 learner dashboard and certificate preview hardening only. It does not promote the repository to L4, does not authorize production execution and does not remove the remaining EPIC-01 blockers.
 
 ## Required Before L4 Consolidation
 

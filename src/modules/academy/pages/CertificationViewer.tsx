@@ -1,32 +1,39 @@
 import { Link } from "react-router-dom";
 import { StatusBadge } from "../components/StatusBadge";
-import { academyData, getCourseTitle } from "../services/academyData";
+import { academyLearnerExperienceService } from "../services/academyLearnerExperienceService";
 
 export function CertificationViewer() {
+  const preview = academyLearnerExperienceService.getDashboardPreview();
+
   return (
     <>
       <section>
-        <p className="academy-label">Recognition Viewer</p>
-        <h2 className="mt-1 text-3xl font-semibold text-slate-950">Recognition previews with PoK and governance review visibility</h2>
-        <p className="mt-2 max-w-3xl text-slate-600">Recognition previews remain review-only, local, and non-authoritative in this MVP.</p>
+        <p className="academy-label">Certificate Preview</p>
+        <h2 className="mt-1 text-3xl font-semibold text-slate-950">Recognition previews and certificate preview presentation</h2>
+        <p className="mt-2 max-w-3xl text-slate-600">Certificate preview surfaces remain local, preview-only, and non-authoritative.</p>
+        <div className="mt-3 flex flex-wrap gap-2">
+          <StatusBadge label={preview.runtime.authority} />
+          <StatusBadge label={preview.runtime.outputAuthority} />
+          <StatusBadge label={preview.runtime.certificateAuthority} />
+        </div>
       </section>
       <section className="grid gap-4 lg:grid-cols-2">
-        {academyData.certificates.map((certificate) => (
-          <article key={certificate.id} className="academy-card grid gap-4 p-5">
+        {preview.certificates.map((certificate) => (
+          <article key={certificate.courseId} className="academy-card grid gap-4 p-5">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
                 <p className="academy-label">{certificate.recognitionLevel}</p>
-                <h3 className="mt-1 text-xl font-semibold text-slate-950">{getCourseTitle(certificate.courseId)}</h3>
+                <h3 className="mt-1 text-xl font-semibold text-slate-950">{certificate.displayTitle}</h3>
               </div>
-              <StatusBadge label={certificate.previewStatus} />
+              <StatusBadge label={certificate.state} />
             </div>
             <dl className="grid gap-3 text-sm md:grid-cols-2">
               <Info label="Reviewed on" value={certificate.reviewedOn} />
               <Info label="Preview expires" value={certificate.expiresOn} />
               <Info label="Governance reviewed" value={certificate.governanceReviewed ? "yes" : "no"} />
-              <Info label="Preview note" value={certificate.previewNote} />
+              <Info label={certificate.previewLabel} value={certificate.previewNote} />
             </dl>
-            <Link className="text-sm font-semibold text-academy-blue" to={`/courses/${academyData.courses.find((course) => course.id === certificate.courseId)?.slug}`}>Open source course</Link>
+            <Link className="text-sm font-semibold text-academy-blue" to="/academy/dashboard">Return to learner dashboard</Link>
           </article>
         ))}
       </section>

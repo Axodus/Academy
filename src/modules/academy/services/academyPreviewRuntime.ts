@@ -16,7 +16,9 @@ export function getAcademyPreviewRuntime(): RuntimePreviewMetadata {
     nonAuthoritative: true,
     production: false,
     execution: "gated",
-    previewMutation: isNonProductionRuntime() && isPreviewMutationFlagEnabled() ? "enabled-local-only" : "disabled"
+    previewMutation: isNonProductionRuntime() && isPreviewMutationFlagEnabled() ? "enabled-local-only" : "disabled",
+    certificateAuthority: "not-issued",
+    rewardAuthority: "non-monetary-preview"
   };
 }
 

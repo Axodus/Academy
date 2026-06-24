@@ -1,6 +1,6 @@
 # Academy Blocker Register
 
-Last updated: 2026-06-23
+Last updated: 2026-06-24
 
 ## Promotion Blockers
 
@@ -18,7 +18,7 @@ Resolution: implemented in `ACADEMY-REQ-05` and covered by Academy tests proving
 Severity: HIGH
 Status: PARTIAL
 
-REQ-05 removed prohibited authority semantics from the current learner flow, route serialization and minimal compatibility UI touched by the sprint. Repository-wide enforcement is still incomplete until the deferred negative static checks exist.
+REQ-05 removed prohibited authority semantics from the learner flow and route serialization. REQ-06 hardens the learner dashboard, rewards, progress and certificate preview surfaces plus learner-facing `/academy/me` payloads. Repository-wide enforcement is still incomplete until the deferred negative static checks exist.
 
 Resolution: continue with repository-wide negative checks and any remaining UI cleanup required by later scope.
 

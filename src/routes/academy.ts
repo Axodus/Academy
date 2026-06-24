@@ -1,6 +1,7 @@
 import { FastifyInstance } from "fastify";
 import { z } from "zod";
 import { academyData, getCourseLessons } from "../modules/academy/services/academyData";
+import { academyLearnerExperienceService } from "../modules/academy/services/academyLearnerExperienceService";
 import { academyLearnerPreviewService } from "../modules/academy/services/academyLearnerPreviewService";
 import { getAcademyPreviewMutationGate, getAcademyPreviewRuntime } from "../modules/academy/services/academyPreviewRuntime";
 import { academyContractReadiness } from "../modules/academy/services/contractReadiness";
@@ -8,7 +9,6 @@ import { courseProgressService } from "../modules/academy/services/courseProgres
 import { pokValidationService } from "../modules/academy/services/pokValidationService";
 import { quizService } from "../modules/academy/services/quizService";
 import { rewardGateService } from "../modules/academy/services/rewardGateService";
-import { stateIntegrityService } from "../modules/academy/services/stateIntegrityService";
 import { studentAcademyService } from "../modules/academy/services/studentAcademyService";
 import { academyProgressRepository } from "../services/academyPersistence";
 
@@ -63,15 +63,7 @@ export default async function academyRoutes(f: FastifyInstance) {
       student: academyData.student,
       persisted,
       learnerFlows,
-      integrity: {
-        constitutionalOnboarding: stateIntegrityService.validateCourseState("course-constitutional-onboarding", persisted),
-        treasuryRisk: stateIntegrityService.validateCourseState("course-treasury-risk", persisted)
-      },
-      readiness: {
-        mode: "integration-readiness",
-        contractWritesEnabled: false,
-        rewardExecutionEnabled: false
-      }
+      dashboardPreview: academyLearnerExperienceService.getDashboardPreview()
     });
   });
 

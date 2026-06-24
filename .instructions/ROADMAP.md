@@ -1,6 +1,6 @@
 # Academy Roadmap
 
-Last updated: 2026-06-23
+Last updated: 2026-06-24
 
 All phases are governed by `ACADEMY_EXECUTION_BOUNDARY.md`.
 
@@ -35,7 +35,7 @@ No mutation, wallet, contract, provider, payment, credential or production autho
 
 ## ACADEMY-SPRINT-03 - Learner Experience Mock/Local
 
-Status: IN PROGRESS, `ACADEMY-REQ-05` PASS
+Status: COMPLETE, `ACADEMY-REQ-05` PASS and `ACADEMY-REQ-06` PASS
 
 Delivered in `ACADEMY-REQ-05`:
 
@@ -45,11 +45,18 @@ Delivered in `ACADEMY-REQ-05`:
 - reward, recognition and certificate-preview separation;
 - explicit preview boundary metadata.
 
+Delivered in `ACADEMY-REQ-06`:
+
+- learner dashboard preview rendering from preview-safe summary models;
+- certificate preview presentation with `not-issued`, `eligible-preview`, `not-eligible-preview` and `presentation-preview` states;
+- persistent preview-only and non-authoritative learner-facing labels;
+- learner-facing route metadata extended with `certificateAuthority` and `rewardAuthority`;
+- desktop, tablet and mobile E2E rerun to PASS.
+
 Remaining Sprint 03 work:
 
 - repository-wide negative static authority checks;
-- any further learner dashboard/certificate-preview cleanup beyond the minimal compatibility changes;
-- additional E2E/device validation if later required by scope.
+- final maturity consolidation remains deferred to Sprint 04.
 
 ## ACADEMY-SPRINT-04 - Validation and Consolidation
 

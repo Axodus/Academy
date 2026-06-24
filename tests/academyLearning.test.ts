@@ -1,12 +1,20 @@
 import { readdir, readFile, rm } from "node:fs/promises";
 import path from "node:path";
+import { createElement } from "react";
+import { renderToStaticMarkup } from "react-dom/server";
+import { StaticRouter } from "react-router-dom/server";
 import { afterEach, beforeEach, describe, expect, it } from "vitest";
 import { buildApp } from "../src/serverApp";
 import { signLoginJwt } from "../src/libs/jwt";
 import { academyData, listCatalogCourses, listLearningPaths } from "../src/modules/academy/services/academyData";
+import { academyLearnerExperienceService } from "../src/modules/academy/services/academyLearnerExperienceService";
 import { academyLearnerPreviewService } from "../src/modules/academy/services/academyLearnerPreviewService";
 import { certificatePreviewSchema, rewardRecordSchema } from "../src/modules/academy/services/academyPreviewSchema";
 import { getAcademyPreviewMutationGate, getAcademyPreviewRuntime } from "../src/modules/academy/services/academyPreviewRuntime";
+import { CertificationViewer } from "../src/modules/academy/pages/CertificationViewer";
+import { LearningDashboard } from "../src/modules/academy/pages/LearningDashboard";
+import { ProgressEngine } from "../src/modules/academy/pages/ProgressEngine";
+import { RewardsDashboard } from "../src/modules/academy/pages/RewardsDashboard";
 import { courseProgressService } from "../src/modules/academy/services/courseProgressService";
 import { pokValidationService } from "../src/modules/academy/services/pokValidationService";
 import { quizService } from "../src/modules/academy/services/quizService";
@@ -448,7 +456,6 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
       "claimable",
       "claimed",
       "minted",
-      "issued",
       "issuanceDate",
       "proofHash",
       "verificationUrl",
@@ -460,7 +467,8 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
       "nft",
       "onChain",
       "txHash",
-      "contractAddress"
+      "contractAddress",
+      "issued certificate"
     ];
 
     const files = await collectFiles(roots);
@@ -508,7 +516,9 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
       nonAuthoritative: true,
       production: false,
       execution: "gated",
-      previewMutation: "disabled"
+      previewMutation: "disabled",
+      certificateAuthority: "not-issued",
+      rewardAuthority: "non-monetary-preview"
     });
     expect(getAcademyPreviewMutationGate().allowed).toBe(false);
   });
@@ -545,6 +555,111 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
 
     await app.close();
   });
+
+  it("renders learner dashboard, progress, rewards, and certificate pages from preview-safe mock data", () => {
+    const preview = academyLearnerExperienceService.getDashboardPreview();
+
+    expect(preview.runtime).toMatchObject({
+      authority: "mock-local",
+      outputAuthority: "preview-only",
+      nonAuthoritative: true,
+      production: false,
+      execution: "gated",
+      certificateAuthority: "not-issued",
+      rewardAuthority: "non-monetary-preview"
+    });
+
+    const pages = [
+      renderPage(LearningDashboard),
+      renderPage(ProgressEngine),
+      renderPage(RewardsDashboard),
+      renderPage(CertificationViewer)
+    ].join("\n");
+
+    for (const expected of [
+      "mock-local",
+      "preview-only",
+      "non-authoritative",
+      "not-issued",
+      "recognition preview",
+      "preview points",
+      "local learning progress"
+    ]) {
+      expect(pages.toLowerCase()).toContain(expected);
+    }
+  });
+
+  it("keeps learner-facing dashboard and certificate markup free of prohibited authority semantics", () => {
+    const markup = [
+      renderPage(LearningDashboard),
+      renderPage(ProgressEngine),
+      renderPage(RewardsDashboard),
+      renderPage(CertificationViewer)
+    ].join("\n").toLowerCase();
+
+    for (const term of [
+      "claimable",
+      "claimed",
+      "minted",
+      "issued certificate",
+      "issuancedate",
+      "proofhash",
+      "verificationurl",
+      "verificationstatus",
+      "walletdistribution",
+      "tokenbalance",
+      "transferable",
+      "sbt",
+      "nft",
+      "onchain",
+      "txhash",
+      "contractaddress",
+      "walletclaim",
+      "rewardclaim",
+      "certificateissue",
+      "credentialverification",
+      "tokenreward",
+      "treasury",
+      "settlement",
+      "payout",
+      "billing",
+      "mint",
+      "claim",
+      "verify",
+      "verified",
+      "ownership"
+    ]) {
+      expect(markup.includes(term), `unexpected learner-facing markup term: ${term}`).toBe(false);
+    }
+  });
+
+  it("keeps learner-facing /academy/me payloads preview-only and free of contract-readiness data", async () => {
+    const app = await buildApp();
+    const response = await app.inject({
+      method: "GET",
+      url: "/academy/me",
+      headers: { authorization: `Bearer ${token}` }
+    });
+
+    expect(response.statusCode).toBe(200);
+    const body = response.json();
+
+    expect(body.runtime).toMatchObject({
+      authority: "mock-local",
+      outputAuthority: "preview-only",
+      nonAuthoritative: true,
+      production: false,
+      execution: "gated",
+      certificateAuthority: "not-issued",
+      rewardAuthority: "non-monetary-preview"
+    });
+    expect(body.readiness).toBeUndefined();
+    expect(body.integrity).toBeUndefined();
+    expect(body.dashboardPreview.runtime.certificateAuthority).toBe("not-issued");
+    expect(body.dashboardPreview.runtime.rewardAuthority).toBe("non-monetary-preview");
+
+    await app.close();
+  });
 });
 
 async function collectFiles(entries: string[]): Promise<string[]> {
@@ -568,4 +683,8 @@ async function collectFiles(entries: string[]): Promise<string[]> {
   }
 
   return results;
+}
+
+function renderPage(Component: () => JSX.Element) {
+  return renderToStaticMarkup(createElement(StaticRouter, { location: "/" }, createElement(Component)));
 }

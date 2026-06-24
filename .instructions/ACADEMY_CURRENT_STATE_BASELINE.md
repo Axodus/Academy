@@ -139,3 +139,22 @@ L4 promotion supported: NO
 D-Level evaluated: NO
 Production execution: DISABLED
 ```
+
+## REQ-06 Delta - 2026-06-24
+
+- Added a learner preview summary service for dashboard, progress, rewards and certificate pages.
+- Added learner-facing `certificateAuthority` and `rewardAuthority` preview metadata.
+- Hardened learner-facing `/academy/me` to remove contract-readiness data from dashboard/certificate-facing payloads.
+- Updated learner-facing dashboard, progress, rewards and certificate preview pages to render preview-safe summary data and labels.
+- Expanded Academy learner tests to cover rendered preview surfaces and learner-facing `/academy/me` payload safety.
+- Reran desktop, tablet and mobile E2E to PASS.
+
+Current delta classification:
+
+```txt
+ACADEMY-REQ-06: PASS
+L-Level: L3_CANDIDATE_VALIDATION_INCOMPLETE
+L4 promotion supported: NO
+D-Level evaluated: NO
+Production execution: DISABLED
+```

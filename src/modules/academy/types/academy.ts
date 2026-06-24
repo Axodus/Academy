@@ -33,6 +33,8 @@ export type RuntimePreviewMetadata = {
   production: false;
   execution: "gated";
   previewMutation: PreviewMutationState;
+  certificateAuthority: "not-issued";
+  rewardAuthority: "non-monetary-preview";
 };
 
 export type Tutor = {
@@ -302,4 +304,56 @@ export type LearnerCoursePreviewFlow = {
   rewardPreview: LearnerRewardPreview;
   recognitionPreview: LearnerRecognitionPreview;
   certificatePreviewEligibility: CertificatePreviewEligibility;
+};
+
+export type LearnerCoursePreviewCard = {
+  courseId: string;
+  routePath: string;
+  displayTitle: string;
+  previewPointTier: PreviewPointTier;
+  progressState: PreviewProgressState;
+  contentProgress: number;
+  completedLessons: number;
+  pendingLessons: number;
+  assessmentState: PreviewAssessmentState;
+  assessmentScore: number | null;
+  assessmentThreshold: number;
+  unlockedPreviewPoints: number;
+  pendingPreviewPoints: number;
+  recognitionStatus: LearnerRecognitionPreview["status"];
+  recognitionLabel: string;
+  certificateState: "not-issued" | "eligible-preview" | "not-eligible-preview" | "presentation-preview";
+  certificateLabel: string;
+  nonAuthoritative: true;
+};
+
+export type LearnerCertificatePreviewCard = {
+  courseId: string;
+  displayTitle: string;
+  state: "not-issued" | "eligible-preview" | "not-eligible-preview" | "presentation-preview";
+  recognitionLevel: string;
+  previewLabel: string;
+  previewNote: string;
+  reviewedOn: string;
+  expiresOn: string;
+  governanceReviewed: boolean;
+  nonAuthoritative: true;
+};
+
+export type LearnerDashboardPreview = {
+  runtime: RuntimePreviewMetadata;
+  summary: {
+    completedPreviewCourses: number;
+    activePreviewCourses: number;
+    eligibleRecognitionPreviews: number;
+    eligibleCertificatePreviews: number;
+    totalUnlockedPreviewPoints: number;
+    totalPendingPreviewPoints: number;
+  };
+  courses: LearnerCoursePreviewCard[];
+  certificates: LearnerCertificatePreviewCard[];
+  rewardPanels: {
+    foundation: RewardRecord[];
+    applied: RewardRecord[];
+  };
 };

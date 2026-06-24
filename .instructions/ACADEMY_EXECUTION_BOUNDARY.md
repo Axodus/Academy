@@ -36,9 +36,9 @@ This file is the canonical Academy authority contract. Other `.instructions` fil
 |---|---|---|
 | Course catalog and learning paths | MOCK/LOCAL | Read-only fixture/config resolution |
 | Learner progress and quiz state | LOCAL PREVIEW | Pure mock transitions; local mutation only behind the explicit preview gate, non-production runtime checks and local/mock persistence |
-| Certificate | PREVIEW ONLY | Eligibility and visual preview; no issuance, verification or ownership claim |
-| Badge | PREVIEW ONLY | Display metadata; no credential authority |
-| Reward | NON-MONETARY PREVIEW ONLY | Preview points/labels; no token, balance, claim, transfer or economic entitlement |
+| Certificate | PREVIEW ONLY | Eligibility and visual preview with `not-issued` authority metadata; no issuance, verification or ownership claim |
+| Badge | PREVIEW ONLY | Display metadata and recognition preview labels only; no credential authority |
+| Reward | NON-MONETARY PREVIEW ONLY | Preview points/labels with `non-monetary-preview` metadata; no token, balance, claim, transfer or economic entitlement |
 | Wallet authentication | COMPATIBILITY SCAFFOLD | Identity/session compatibility only |
 | Wallet signing | CLOSED | No transaction, claim, credential or provider signing |
 | Persistence | LOCAL/MOCK | In-memory or local ignored files only |
@@ -97,6 +97,12 @@ Sprint 02 must replace authority-adjacent learner models with explicit preview m
 - wallet distribution, token balance or transferability;
 - NFT, SBT, on-chain, transaction or contract ownership;
 - payment, settlement, payout or monetary value.
+
+Learner-facing dashboard and certificate preview surfaces must additionally:
+
+- remain read-only or preview-only;
+- avoid contract-readiness metadata;
+- use persistent `mock-local`, `preview-only`, `non-authoritative`, `not-issued` and `non-monetary-preview` labels where appropriate.
 
 Negative static checks must cover the prohibited identifiers defined by ACADEMY-REQ-07. Exceptions are limited to blocklists, negative tests, security documentation and reviewed compatibility-scaffold allowlists.
 
