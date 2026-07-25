@@ -1,9 +1,25 @@
-const ctaButtons = document.querySelectorAll('[data-cta]');
+(function () {
+  "use strict";
 
-function trackClick(event) {
-  const label = event.currentTarget.getAttribute('data-cta');
-  if (!label) return;
-  console.log('CTA click:', label);
-}
+  const ctaButtons = document.querySelectorAll("[data-cta]");
 
-ctaButtons.forEach((button) => button.addEventListener('click', trackClick));
+  function trackCta(event) {
+    const element = event.currentTarget;
+    const detail = {
+      name: element.getAttribute("data-cta"),
+      href: element.getAttribute("href") || ""
+    };
+
+    window.dispatchEvent(new CustomEvent("academy:cta", { detail }));
+
+    if (Array.isArray(window.dataLayer)) {
+      window.dataLayer.push({
+        event: "academy_cta_click",
+        cta_name: detail.name,
+        cta_href: detail.href
+      });
+    }
+  }
+
+  ctaButtons.forEach((button) => button.addEventListener("click", trackCta));
+})();
