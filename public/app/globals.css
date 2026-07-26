@@ -724,7 +724,6 @@ a {
   background:
     radial-gradient(circle, rgba(115, 225, 218, 0.12), transparent 68%),
     url("/assets/logo-neurons.png") center / 54% auto no-repeat,
-    #09171a;
 }
 
 .token-mark span {
