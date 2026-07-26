@@ -312,7 +312,7 @@ export default function Home() {
         <section className="section token-section">
           <div className="container token-layout">
             <div className="token-neurons" aria-hidden="true">
-              <span>N</span>
+              <span></span>
             </div>
             <div className="token-copy">
               <span className="section-label">04 · THE UTILITY LAYER</span>
