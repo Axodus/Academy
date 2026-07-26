@@ -311,7 +311,7 @@ export default function Home() {
 
         <section className="section token-section">
           <div className="container token-layout">
-            <div className="token-mark" aria-hidden="true">
+            <div className="token-neurons" aria-hidden="true">
               <span>N</span>
             </div>
             <div className="token-copy">

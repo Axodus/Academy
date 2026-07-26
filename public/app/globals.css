@@ -714,6 +714,19 @@ a {
     #09171a;
 }
 
+.token-neurons {
+  width: min(260px, 100%);
+  aspect-ratio: 1;
+  display: grid;
+  place-items: center;
+  border: 1px solid rgba(115, 225, 218, 0.3);
+  border-radius: 50%;
+  background:
+    radial-gradient(circle, rgba(115, 225, 218, 0.12), transparent 68%),
+    url("/assets/logo-neurons.png") center / 54% auto no-repeat,
+    #09171a;
+}
+
 .token-mark span {
   display: none;
 }
