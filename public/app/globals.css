@@ -716,7 +716,6 @@ a {
 
 .token-neurons {
   width: min(260px, 100%);
-  aspect-ratio: 1;
   display: grid;
   place-items: center;
   border: 1px solid rgba(115, 225, 218, 0.3);
