@@ -162,22 +162,22 @@ export default function Home() {
                 <small>VALIDATION LAYER</small>
               </div>
               <div className="concept-node node-learning">
-                <span>01</span>
+                
                 <strong>Learning</strong>
                 <small>Structured action</small>
               </div>
               <div className="concept-node node-evidence">
-                <span>02</span>
+                
                 <strong>Evidence</strong>
                 <small>Verified progress</small>
               </div>
               <div className="concept-node node-reputation">
-                <span>03</span>
+                
                 <strong>Reputation</strong>
                 <small>Portable history</small>
               </div>
               <div className="concept-node node-participation">
-                <span>04</span>
+                
                 <strong>Participation</strong>
                 <small>Utility & governance</small>
               </div>
@@ -215,22 +215,22 @@ export default function Home() {
           </div>
           <div className="container problem-grid">
             <article>
-              <span>01</span>
+              
               <h3>Weak signals</h3>
               <p>Completion alone says little about comprehension or ability.</p>
             </article>
             <article>
-              <span>02</span>
+              
               <h3>Closed records</h3>
               <p>Educational progress usually stays locked inside one database.</p>
             </article>
             <article>
-              <span>03</span>
+              
               <h3>Fragmented trust</h3>
               <p>Credentials are difficult to verify and rarely interoperable.</p>
             </article>
             <article>
-              <span>04</span>
+              
               <h3>Disconnected value</h3>
               <p>Learning, contribution and participation remain separate.</p>
             </article>
@@ -249,7 +249,7 @@ export default function Home() {
           <div className="container foundation-grid">
             {foundations.map((item) => (
               <article key={item.number}>
-                <span className="card-number">{item.number}</span>
+                
                 <div className="card-glyph" aria-hidden="true">
                   {item.number === "01"
                     ? "↗"
@@ -286,16 +286,16 @@ export default function Home() {
               </div>
               <ul>
                 <li>
-                  <span>01</span>Quality of responses
+                  Quality of responses
                 </li>
                 <li>
-                  <span>02</span>Consistency over time
+                  Consistency over time
                 </li>
                 <li>
-                  <span>03</span>Difficulty and completion
+                  Difficulty and completion
                 </li>
                 <li>
-                  <span>04</span>Budget and anti-abuse controls
+                  Budget and anti-abuse controls
                 </li>
               </ul>
             </div>
@@ -326,19 +326,19 @@ export default function Home() {
             </div>
             <div className="utility-list">
               <div>
-                <span>01</span>
+                <span>{'>'}</span>
                 <strong>Learning incentives</strong>
               </div>
               <div>
-                <span>02</span>
+                <span>{'>'}</span>
                 <strong>Access & payments</strong>
               </div>
               <div>
-                <span>03</span>
+                <span>{'>'}</span>
                 <strong>Creator alignment</strong>
               </div>
               <div>
-                <span>04</span>
+                <span>{'>'}</span>
                 <strong>Governance</strong>
               </div>
             </div>
@@ -448,7 +448,7 @@ export default function Home() {
               <article className={item.state === "active" ? "active" : ""} key={item.phase}>
                 <div>
                   <span>{item.phase}</span>
-                  <small>{String(index + 1).padStart(2, "0")}</small>
+                  
                 </div>
                 <h3>{item.title}</h3>
                 <p>{item.text}</p>

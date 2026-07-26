@@ -230,7 +230,7 @@ a {
 .eyebrow,
 .section-label {
   color: #4caea9;
-  font: 650 10px/1.2 var(--font-geist-mono), monospace;
+  font: 650 17px/1.2 var(--font-geist-mono), monospace;
   letter-spacing: 0.16em;
   text-transform: uppercase;
 }
@@ -308,13 +308,13 @@ a {
 }
 
 .orbit-one {
-  width: 330px;
-  height: 330px;
+  width: 390px;
+  height: 390px;
 }
 
 .orbit-two {
-  width: 480px;
-  height: 480px;
+  width: 550px;
+  height: 580px;
   border-color: rgba(126, 160, 202, 0.11);
 }
 
@@ -323,8 +323,8 @@ a {
   z-index: 2;
   top: 50%;
   left: 50%;
-  width: 190px;
-  height: 190px;
+  width: 230px;
+  height: 230px;
   display: grid;
   place-content: center;
   gap: 5px;
@@ -339,7 +339,7 @@ a {
 }
 
 .core-mark {
-  width: 56px;
+  width: 80px;
   height: auto;
   margin: 0 auto 8px;
   filter: drop-shadow(0 0 16px rgba(92, 198, 208, 0.25));
@@ -568,14 +568,15 @@ a {
 }
 
 .card-glyph {
-  width: 50px;
-  height: 50px;
-  display: grid;
-  place-items: center;
-  margin-top: 70px;
-  border: 1px solid rgba(115, 225, 218, 0.28);
-  color: var(--cyan);
-  font-size: 20px;
+    width: 55px;
+    height: fit-content;
+    color: var(--cyan);
+    border: 1px solid #73e1da47;
+    place-items: center;
+    margin-top: 70px;
+    font-size: 50px;
+    display: grid;
+    margin: auto;
 }
 
 .foundation-grid h3 {
@@ -715,14 +716,13 @@ a {
 }
 
 .token-neurons {
-  width: min(260px, 100%);
-  display: grid;
-  place-items: center;
-  border: 1px solid rgba(115, 225, 218, 0.3);
-  border-radius: 50%;
-  background:
-    radial-gradient(circle, rgba(115, 225, 218, 0.12), transparent 68%),
-    url("/assets/logo-neurons.png") center / 54% auto no-repeat,
+    background: radial-gradient(circle, #73e1da1f, #0000 68%), url("/assets/logo-neurons.png") center / 70% no-repeat, none;
+    border: 1px solid #73e1da4d;
+    border-radius: 50%;
+    place-items: center;
+    width: 260px;
+    display: grid;
+    height: 260px;
 }
 
 .token-mark span {
