@@ -1,105 +1,28 @@
-import { Link } from "react-router-dom";
-import { MetricCard } from "../components/MetricCard";
+import { ArrowRight, BookOpen, LockKeyhole } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { EmptyState } from "../components/EmptyState";
+import { PageHeader } from "../components/PageHeader";
 import { ProgressBar } from "../components/ProgressBar";
+import { ProtocolCourseVisual } from "../components/ProtocolCourseVisual";
 import { StatusBadge } from "../components/StatusBadge";
+import { getLearningState, type LearningState } from "../services/academyUi";
 import { studentAcademyService } from "../services/studentAcademyService";
-import { formatNeurons } from "../utils/format";
+
+const groups: Array<{ state: LearningState; title: string; description: string }> = [
+  { state: "continue", title: "Continue", description: "Active formation protocols with a clear next action." },
+  { state: "not-started", title: "Not started", description: "Available learning records that have not begun." },
+  { state: "completed-preview", title: "Completed preview", description: "Learning and PoK requirements completed in the local preview." },
+  { state: "review-required", title: "Review required", description: "Access depends on an Academy governance review." },
+  { state: "locked", title: "Locked", description: "Prerequisites or protocol gates have not been met." }
+];
 
 export function StudentCourses() {
-  const studentCourses = studentAcademyService.getStudentCourses();
-  const freeCourses = studentCourses.filter((item) => item?.course.accessType === "free");
-  const paidCourses = studentCourses.filter((item) => item?.course.accessType === "paid");
-
-  return (
-    <>
-      <section className="academy-card grid gap-3 p-6">
-        <p className="academy-label">My Courses</p>
-        <div className="grid gap-4 lg:grid-cols-[1fr_320px]">
-          <div>
-            <h2 className="text-3xl font-semibold text-slate-950">Student-side learning, PoK, and preview gates</h2>
-            <p className="mt-2 max-w-3xl text-slate-600">
-              Enrolled and purchased courses are tracked by content progress, validation progress, PoK status, recognition-preview eligibility, and preview unlock gates.
-            </p>
-          </div>
-          <div className="rounded-lg border border-slate-200 bg-slate-50 p-4">
-            <p className="academy-label">Core product rule</p>
-            <p className="mt-2 text-sm font-semibold text-slate-800">Main preview progress requires Proof-of-Knowledge. Watching content only advances low-weight lesson gates.</p>
-          </div>
-        </div>
-      </section>
-
-      <section className="grid gap-4 md:grid-cols-4">
-        <MetricCard label="Enrolled free courses" value={freeCourses.length} detail="Free -> Foundation Preview" />
-        <MetricCard label="Purchased paid courses" value={paidCourses.length} detail="Paid -> Applied Preview" />
-        <MetricCard label="Foundation earned" value={formatNeurons(sumEarned(studentCourses, "foundation"))} detail="Local preview only" />
-        <MetricCard label="Applied earned" value={formatNeurons(sumEarned(studentCourses, "applied"))} detail="Local preview only" />
-      </section>
-
-      <section className="grid gap-4">
-        {studentCourses.map((item) => {
-          if (!item) return null;
-          const { course, progress, quiz, enrollment, validationWeight, previewPointLabel } = item;
-          return (
-            <article key={course.id} className="academy-card grid gap-5 p-5">
-              <div className="flex flex-wrap items-start justify-between gap-3">
-                <div>
-                  <div className="flex flex-wrap gap-2">
-                    <StatusBadge label={enrollment.accessState} />
-                    <span className="academy-pill">{course.accessType === "free" ? "Free Course" : "Paid Course"}</span>
-                    <span className={course.accessType === "free" ? "academy-pill-locked" : "academy-pill-unlocked"}>{previewPointLabel}</span>
-                  </div>
-                  <Link to={`/academy/my-courses/${course.id}`} className="mt-3 block text-xl font-semibold text-slate-950 hover:text-academy-blue">
-                    {course.title}
-                  </Link>
-                  <p className="mt-2 text-sm text-slate-600">{course.shortDescription}</p>
-                </div>
-                <Link className="academy-action" to={`/academy/learn/${course.id}`}>
-                  Continue learning
-                </Link>
-              </div>
-
-              <div className="grid gap-4 xl:grid-cols-[1fr_1fr_1fr_220px]">
-                <div className="academy-surface p-3"><ProgressBar value={progress?.contentProgress ?? 0} label="Content progress" /></div>
-                <div className="academy-surface p-3"><ProgressBar value={progress?.validationProgress ?? 0} label="Validation progress" /></div>
-                <div className="academy-surface p-3"><ProgressBar value={progress?.rewardUnlockProgress ?? 0} label="Preview unlock progress" /></div>
-                <div className="academy-surface p-3">
-                  <p className="academy-label">PoK / quiz</p>
-                  <div className="mt-2 flex flex-wrap gap-2">
-                    <StatusBadge label={progress?.pokStatus ?? "pending"} />
-                    <StatusBadge label={progress?.quizState ?? quiz?.state ?? "locked"} />
-                  </div>
-                </div>
-              </div>
-
-              <dl className="grid gap-3 text-sm md:grid-cols-4">
-                <div className="academy-surface p-3">
-                  <dt className="academy-label">Lessons</dt>
-                  <dd className="mt-1 text-slate-800">{progress?.completedLessons ?? 0} completed / {progress?.pendingLessons ?? 0} pending</dd>
-                </div>
-                <div className="academy-surface p-3">
-                  <dt className="academy-label">Certification</dt>
-                  <dd className="mt-1 text-slate-800">{progress?.certificationEligibility ?? "not-eligible"}</dd>
-                </div>
-                <div className="academy-surface p-3">
-                  <dt className="academy-label">Validation weight</dt>
-                  <dd className="mt-1 text-slate-800">{validationWeight}% tied to quiz/recognition</dd>
-                </div>
-                <div className="academy-surface p-3">
-                  <dt className="academy-label">Next action</dt>
-                  <dd className="mt-1 text-slate-800">{progress?.nextRecommendedAction ?? enrollment.nextAction}</dd>
-                </div>
-              </dl>
-            </article>
-          );
-        })}
-      </section>
-    </>
-  );
-}
-
-function sumEarned(items: ReturnType<typeof studentAcademyService.getStudentCourses>, type: "foundation" | "applied") {
-  return items.reduce((sum, item) => {
-    if (!item?.progress) return sum;
-    return sum + (type === "foundation" ? item.progress.foundationPointsEarned : item.progress.appliedPointsEarned);
-  }, 0);
+  const records = studentAcademyService.getStudentCourses().filter((item) => Boolean(item));
+  const { pathname } = useLocation();
+  const base = pathname.startsWith("/academy") ? "/academy" : "";
+  return <><PageHeader eyebrow="Personal formation" title="My Learning" description="Continue active courses and understand exactly what is complete, gated, or waiting for review." />
+    <div className="grid gap-7">{groups.map((group) => {
+      const items = records.filter((item) => item && getLearningState(item.course.id) === group.state);
+      return <section key={group.state} aria-labelledby={`group-${group.state}`}><div className="mb-3 flex items-end justify-between gap-4"><div><h2 id={`group-${group.state}`} className="text-lg font-semibold text-white">{group.title}</h2><p className="mt-1 text-sm text-slate-500">{group.description}</p></div><span className="academy-value text-sm text-slate-500">{items.length}</span></div>{items.length ? <div className="grid gap-4">{items.map((item) => item ? <article key={item.course.id} className="academy-card overflow-hidden"><div className="grid md:grid-cols-[180px_1fr_auto]"><ProtocolCourseVisual category={item.course.category} tier={item.course.previewPointTier} className="min-h-36" /><div className="min-w-0 p-5"><div className="flex flex-wrap gap-2"><StatusBadge label={group.state} /><span className={item.course.previewPointTier === "Applied Preview" ? "academy-pill-unlocked" : "academy-pill-locked"}>{item.course.previewPointTier}</span></div><Link to={`${base}/my-courses/${item.course.id}`} className="mt-3 block text-lg font-semibold text-white hover:text-blue-300">{item.course.title}</Link><p className="mt-2 text-sm text-slate-400">{item.progress?.nextRecommendedAction ?? item.enrollment.nextAction}</p><div className="mt-4"><ProgressBar value={item.progress?.contentProgress ?? 0} label="Learning progress" tone={item.course.previewPointTier === "Applied Preview" ? "violet" : "blue"} /></div></div><div className="flex min-w-44 items-center border-t border-academy-line p-5 md:border-l md:border-t-0">{group.state === "review-required" || group.state === "locked" ? <Link className="academy-secondary-action w-full" to={`${base}/my-courses/${item.course.id}`}><LockKeyhole size={16} />Review status</Link> : <Link className="academy-action w-full" to={group.state === "completed-preview" ? `${base}/my-courses/${item.course.id}` : `${base}/learn/${item.course.id}`}><BookOpen size={16} />{group.state === "completed-preview" ? "Review" : "Continue"}<ArrowRight size={15} /></Link>}</div></div></article> : null)}</div> : <EmptyState title={`No ${group.title.toLowerCase()} courses`} description="No current fixture records belong to this state." />}</section>;
+    })}</div></>;
 }

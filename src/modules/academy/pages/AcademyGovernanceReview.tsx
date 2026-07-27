@@ -1,16 +1,11 @@
 import { StatusBadge } from "../components/StatusBadge";
 import { academyData } from "../services/academyData";
+import { PageHeader } from "../components/PageHeader";
 
 export function AcademyGovernanceReview() {
   return (
     <>
-      <section>
-        <p className="academy-label">Academy Governance Review</p>
-        <h2 className="mt-1 text-3xl font-semibold text-slate-950">Constitutional, preview, and recognition review surface</h2>
-        <p className="mt-2 max-w-3xl text-slate-600">
-          This page represents review visibility, not direct user control over governance.
-        </p>
-      </section>
+      <PageHeader eyebrow="Institutional boundary" title="Governance Review" description="Read-only visibility into constitutional, reward, curriculum, and recognition review queues." />
       <section className="grid gap-4 lg:grid-cols-2">
         {academyData.governanceReviews.map((review) => (
           <article key={review.id} className="academy-card grid gap-3 p-5">

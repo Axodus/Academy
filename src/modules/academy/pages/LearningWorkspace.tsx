@@ -1,6 +1,6 @@
 import { useMemo, useState } from "react";
 import { BookOpenCheck, ClipboardCheck, Lock, PlayCircle, RotateCcw, ShieldCheck } from "lucide-react";
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import { ProgressBar } from "../components/ProgressBar";
 import { RewardGateList } from "../components/RewardGateList";
 import { StatusBadge } from "../components/StatusBadge";
@@ -13,14 +13,18 @@ import { formatNeurons } from "../utils/format";
 
 export function LearningCourseStart() {
   const { courseId } = useParams();
+  const { pathname } = useLocation();
+  const base = pathname.startsWith("/academy") ? "/academy" : "";
   const workspace = courseId ? learningWorkspaceService.getWorkspace(courseId) : undefined;
 
-  if (!workspace?.lesson) return <Navigate to="/academy/my-courses" replace />;
-  return <Navigate to={`/academy/learn/${workspace.course.id}/lessons/${workspace.lesson.id}`} replace />;
+  if (!workspace?.lesson) return <Navigate to={`${base}/my-courses`} replace />;
+  return <Navigate to={`${base}/learn/${workspace.course.id}/lessons/${workspace.lesson.id}`} replace />;
 }
 
 export function LearningWorkspace() {
   const { courseId, lessonId } = useParams();
+  const { pathname } = useLocation();
+  const base = pathname.startsWith("/academy") ? "/academy" : "";
   const initialWorkspace = courseId ? learningWorkspaceService.getWorkspace(courseId, lessonId) : undefined;
   const [completedLessonIds, setCompletedLessonIds] = useState<string[]>(
     courseId
@@ -38,7 +42,7 @@ export function LearningWorkspace() {
     return learningWorkspaceService.getWorkspace(courseId, lessonId, completedLessonIds);
   }, [completedLessonIds, courseId, lessonId]);
 
-  if (!workspace?.lesson) return <Navigate to="/academy/my-courses" replace />;
+  if (!workspace?.lesson) return <Navigate to={`${base}/my-courses`} replace />;
 
   const { course, lessons, lesson, resources, rewardGates, quiz, nextLesson, previousLesson, moduleProgress, previewPointLabel } = workspace;
   const currentProgress = workspace.lessonProgress;
@@ -56,13 +60,13 @@ export function LearningWorkspace() {
   const validationWeight = rewardGateService.getValidationWeight(course.id);
   const certificationRequirement = courseProgressService.getCertificationRequirement(course.id);
   const quizExplanation = requiredCompleted
-    ? "All required lessons are consumed. The quiz is available for mock PoK validation."
+    ? "All required lessons are consumed. The quiz is available for PoK validation preview."
     : "Quiz is locked until every required lesson in this module is consumed.";
   const pokStatus = validationResult?.status ?? workspace.progress?.pokStatus ?? "pending";
   const nextAction = validationResult?.approved
     ? "Review recognition eligibility and unlocked validation-weighted preview gates."
     : requiredCompleted
-      ? "Run a passing mock attempt to approve PoK and release validation gates."
+      ? "Run a passing assessment preview to approve PoK and release validation gates."
       : "Complete the remaining required lessons to unlock the quiz.";
 
   function markLessonComplete() {
@@ -125,7 +129,7 @@ export function LearningWorkspace() {
                     return (
                       <Link
                         key={item.id}
-                        to={`/academy/learn/${course.id}/lessons/${item.id}`}
+                        to={`${base}/learn/${course.id}/lessons/${item.id}`}
                         className={`rounded-md border px-3 py-2 text-sm font-semibold ${active ? "border-academy-blue bg-blue-50 text-academy-blue" : "border-slate-200 text-slate-700 hover:border-slate-300"}`}
                       >
                         <span className="flex items-start gap-2">
@@ -146,7 +150,7 @@ export function LearningWorkspace() {
               <div className="mx-auto grid h-16 w-16 place-items-center rounded-full border border-white/20 bg-white/10">
                 <PlayCircle size={34} />
               </div>
-              <p className="academy-label mt-6 text-slate-300">Mock lesson player</p>
+              <p className="academy-label mt-6 text-slate-300">Lesson protocol</p>
               <h3 className="mt-2 text-3xl font-semibold">{lesson.title}</h3>
               <p className="mt-3 text-sm text-slate-300">{lesson.type} / {lesson.duration} / {lesson.media}</p>
               <div className="mt-6 grid gap-3 rounded-lg border border-white/10 bg-white/5 p-4 text-left text-sm text-slate-200 sm:grid-cols-3">
@@ -183,8 +187,8 @@ export function LearningWorkspace() {
               <button className="academy-action" disabled={isCompleted} onClick={markLessonComplete}>
                 {isCompleted ? "Lesson complete" : "Mark lesson complete"}
               </button>
-              {previousLesson ? <Link className="academy-secondary-action" to={`/academy/learn/${course.id}/lessons/${previousLesson.id}`}>Previous lesson</Link> : null}
-              {nextLesson ? <Link className="academy-secondary-action" to={`/academy/learn/${course.id}/lessons/${nextLesson.id}`}>Next lesson</Link> : null}
+              {previousLesson ? <Link className="academy-secondary-action" to={`${base}/learn/${course.id}/lessons/${previousLesson.id}`}>Previous lesson</Link> : null}
+              {nextLesson ? <Link className="academy-secondary-action" to={`${base}/learn/${course.id}/lessons/${nextLesson.id}`}>Next lesson</Link> : null}
             </div>
           </div>
         </article>
@@ -219,10 +223,10 @@ export function LearningWorkspace() {
             </div>
             <div className="mt-4 grid gap-2">
               <button className="academy-action bg-emerald-700 hover:bg-emerald-800" disabled={!requiredCompleted} onClick={() => runQuiz("pass")}>
-                Run passing mock attempt
+                Run passing assessment preview
               </button>
               <button className="academy-secondary-action border-red-200 text-red-800 disabled:border-slate-200 disabled:text-slate-400" disabled={!requiredCompleted} onClick={() => runQuiz("fail")}>
-                Run failing mock attempt
+                Run failing assessment preview
               </button>
             </div>
             {validationResult ? (
@@ -258,7 +262,7 @@ export function LearningWorkspace() {
       </section>
 
       <section className="academy-card grid gap-4 p-5">
-        <p className="academy-label">Preview gates after current mock state</p>
+        <p className="academy-label">Preview gates after current assessment state</p>
         <RewardGateList gates={visibleGates} />
       </section>
     </>

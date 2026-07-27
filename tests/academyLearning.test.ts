@@ -553,13 +553,12 @@ describe("Academy learning consumption and PoK reward mechanics", () => {
     ].join("\n");
 
     for (const expected of [
-      "mock-local",
-      "preview-only",
-      "non-authoritative",
-      "not-issued",
-      "recognition preview",
-      "preview points",
-      "local learning progress"
+      "knowledge progression",
+      "foundation preview",
+      "applied preview",
+      "recognition",
+      "assessment",
+      "learning"
     ]) {
       expect(pages.toLowerCase()).toContain(expected);
     }

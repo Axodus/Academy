@@ -1,4 +1,4 @@
-import { Link, Navigate, useParams } from "react-router-dom";
+import { Link, Navigate, useLocation, useParams } from "react-router-dom";
 import { ProgressBar } from "../components/ProgressBar";
 import { RewardGateList } from "../components/RewardGateList";
 import { StatusBadge } from "../components/StatusBadge";
@@ -7,9 +7,11 @@ import { formatNeurons } from "../utils/format";
 
 export function StudentCourseDetail() {
   const { courseId } = useParams();
+  const { pathname } = useLocation();
+  const base = pathname.startsWith("/academy") ? "/academy" : "";
   const detail = courseId ? studentAcademyService.getStudentCourse(courseId) : undefined;
 
-  if (!detail) return <Navigate to="/my-courses" replace />;
+  if (!detail) return <Navigate to={`${base}/my-courses`} replace />;
 
   const { course, progress, lessons, lessonProgress, moduleProgress, quiz, quizState, pokStatus, rewardGates, certificationRequirement, previewPointLabel, validationWeight } = detail;
 
@@ -42,7 +44,7 @@ export function StudentCourseDetail() {
               <p className="academy-label">Modules and Lessons</p>
               <h3 className="text-xl font-semibold text-slate-950">Required content before quiz unlock</h3>
             </div>
-            <Link className="academy-action" to={`/academy/learn/${course.id}`}>
+            <Link className="academy-action" to={`${base}/learn/${course.id}`}>
               Open workspace
             </Link>
           </div>
@@ -62,7 +64,7 @@ export function StudentCourseDetail() {
                   .map((lesson) => {
                     const state = lessonProgress.find((item) => item.lessonId === lesson.id);
                     return (
-                      <Link key={lesson.id} to={`/academy/learn/${course.id}/lessons/${lesson.id}`} className="rounded-md border border-slate-200 p-3 hover:border-academy-blue">
+                      <Link key={lesson.id} to={`${base}/learn/${course.id}/lessons/${lesson.id}`} className="rounded-md border border-slate-200 p-3 hover:border-academy-blue">
                         <div className="flex flex-wrap items-center justify-between gap-2">
                           <p className="font-semibold text-slate-900">{lesson.order}. {lesson.title}</p>
                           <StatusBadge label={state?.status ?? lesson.status} />

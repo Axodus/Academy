@@ -2,6 +2,7 @@ import { Navigate, useParams } from "react-router-dom";
 import { CourseCard } from "../components/CourseCard";
 import { MetricCard } from "../components/MetricCard";
 import { StatusBadge } from "../components/StatusBadge";
+import { PageHeader } from "../components/PageHeader";
 import { academyData, getTutor } from "../services/academyData";
 
 export function TutorProfile() {
@@ -14,18 +15,7 @@ export function TutorProfile() {
 
   return (
     <>
-      <section className="academy-card grid gap-5 p-6">
-        <div className="flex flex-wrap gap-2">
-          <StatusBadge label={tutor.reviewStatus} />
-          <StatusBadge label={tutor.governanceStanding} />
-          <span className="academy-pill">{tutor.type}</span>
-        </div>
-        <div>
-          <p className="academy-label">Tutor Profile</p>
-          <h2 className="mt-1 text-3xl font-semibold text-slate-950">{tutor.name}</h2>
-          <p className="mt-2 max-w-3xl text-slate-600">{tutor.description}</p>
-        </div>
-      </section>
+      <PageHeader eyebrow="Academy faculty" title={tutor.name} description={tutor.description} meta={<><StatusBadge label={tutor.reviewStatus} /><StatusBadge label={tutor.governanceStanding} /><span className="academy-pill">{tutor.type}</span></>} />
       <section className="grid gap-4 md:grid-cols-4">
         <MetricCard label="Reputation" value={tutor.reputation} />
         <MetricCard label="Courses published" value={tutor.coursesPublished} />

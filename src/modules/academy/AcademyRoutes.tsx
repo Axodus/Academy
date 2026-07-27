@@ -7,9 +7,10 @@ import { CourseDetails } from "./pages/CourseDetails";
 import { CourseExplorer } from "./pages/CourseExplorer";
 import { LearningDashboard } from "./pages/LearningDashboard";
 import { LearningCourseStart, LearningWorkspace } from "./pages/LearningWorkspace";
-import { LearningPathViewer } from "./pages/LearningPathViewer";
+import { LearningPathsOverview, LearningPathViewer } from "./pages/LearningPathViewer";
 import { NotFound } from "./pages/NotFound";
 import { ProgressEngine } from "./pages/ProgressEngine";
+import { ProofOfKnowledge } from "./pages/ProofOfKnowledge";
 import { RewardsDashboard } from "./pages/RewardsDashboard";
 import { StudentCourseDetail } from "./pages/StudentCourseDetail";
 import { StudentCourses } from "./pages/StudentCourses";
@@ -41,11 +42,13 @@ function academyRouteChildren() {
       <Route path="learn/:courseId/lessons/:lessonId" element={<LearningWorkspace />} />
       <Route path="dashboard" element={<LearningDashboard />} />
       <Route path="progress" element={<ProgressEngine />} />
+      <Route path="proof-of-knowledge" element={<ProofOfKnowledge />} />
       <Route path="tutors/:id" element={<TutorProfile />} />
       <Route path="certifications" element={<CertificationViewer />} />
       <Route path="rewards" element={<RewardsDashboard />} />
       <Route path="academy-governance-review" element={<AcademyGovernanceReview />} />
       <Route path="governance-review" element={<AcademyGovernanceReview />} />
+      <Route path="paths" element={<LearningPathsOverview />} />
       <Route path="paths/:id" element={<LearningPathViewer />} />
       <Route path="*" element={<NotFound />} />
     </>

@@ -5,6 +5,7 @@ import { rewardGateService } from "../services/rewardGateService";
 import { MetricCard } from "../components/MetricCard";
 import { StatusBadge } from "../components/StatusBadge";
 import { formatNeurons } from "../utils/format";
+import { PageHeader } from "../components/PageHeader";
 
 export function RewardsDashboard() {
   const preview = academyLearnerExperienceService.getDashboardPreview();
@@ -13,31 +14,20 @@ export function RewardsDashboard() {
 
   return (
     <>
-      <section>
-        <p className="academy-label">Rewards Dashboard</p>
-        <h2 className="mt-1 text-3xl font-semibold text-slate-950">Preview tiers and isolated mock accounting</h2>
-        <p className="mt-2 max-w-3xl text-slate-600">
-          The MVP separates free-course foundation previews from paid-course applied previews. All values are local, deterministic, and non-authoritative.
-        </p>
-        <div className="mt-3 flex flex-wrap gap-2">
-          <StatusBadge label={preview.runtime.authority} />
-          <StatusBadge label={preview.runtime.outputAuthority} />
-          <StatusBadge label={preview.runtime.rewardAuthority} />
-        </div>
-      </section>
+      <PageHeader eyebrow="Knowledge accounting" title="Rewards" description="Foundation and Applied Points show local progression across learning and validation gates within this development preview." />
       <section className="grid gap-4 md:grid-cols-3">
-        <MetricCard label="Unlocked preview points" value={formatNeurons(preview.summary.totalUnlockedPreviewPoints)} detail="Non-monetary and non-authoritative" />
+        <MetricCard label="Unlocked preview points" value={formatNeurons(preview.summary.totalUnlockedPreviewPoints)} detail="Available in this development preview" />
         <MetricCard label="Pending preview points" value={formatNeurons(preview.summary.totalPendingPreviewPoints)} detail="Locked behind preview progress and assessment state" />
         <MetricCard label="Recognition previews" value={preview.summary.eligibleRecognitionPreviews} detail="Badge preview only" />
       </section>
       <RewardClassPanel
         title="Foundation Preview"
-        description="Free Course -> Foundation Preview. Local preview points only with deterministic, non-authoritative preview semantics."
+        description="Free Course → Foundation Preview. Progression visibility for foundational formation gates."
         rewards={foundationRewards}
       />
       <RewardClassPanel
         title="Applied Preview"
-        description="Paid Course -> Applied Preview. Higher preview visibility after progress, recognition review, and governance-controlled mock checks."
+        description="Paid Course → Applied Preview. Advanced progression after assessment and recognition review."
         rewards={appliedRewards}
       />
       <section className="academy-card grid gap-4 p-5">

@@ -90,39 +90,39 @@ export default function LoginButton() {
   }
 
   return (
-    <div style={{ display: "grid", gap: 12 }}>
-      <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-        <label>
+    <div className="grid gap-3 text-sm text-slate-300">
+      <div className="flex gap-4">
+        <label className="flex min-h-10 cursor-pointer items-center gap-2">
           <input type="radio" name="net" value="evm" checked={net === "evm"} onChange={() => setNet("evm")} /> EVM
         </label>
-        <label>
+        <label className="flex min-h-10 cursor-pointer items-center gap-2">
           <input type="radio" name="net" value="solana" checked={net === "solana"} onChange={() => setNet("solana")} /> Solana
         </label>
       </div>
 
       {net === "evm" && (
-        <div style={{ display: "flex", gap: 8, alignItems: "center" }}>
-          <span>Chain:</span>
-          <select value={evmChainId} onChange={(e) => setEvmChainId(Number(e.target.value))}>
+        <label className="grid gap-1.5">
+          <span className="text-xs text-slate-400">Network</span>
+          <select className="min-h-11 rounded-md border border-academy-line bg-[#071321] px-3 text-slate-200" value={evmChainId} onChange={(e) => setEvmChainId(Number(e.target.value))}>
             {evmChainOptions.map((c) => (
               <option key={c.id} value={c.id}>{c.label}</option>
             ))}
           </select>
-        </div>
+        </label>
       )}
 
-      <button onClick={handleLogin} disabled={loading}>
+      <button className="academy-action w-full" onClick={handleLogin} disabled={loading}>
         {loading ? "Signing..." : net === "evm" ? "Connect & Login (EVM)" : "Connect & Login (Solana)"}
       </button>
 
-      <div style={{ fontSize: 12, opacity: 0.8 }}>
+      <div className="min-w-0 break-all text-xs text-slate-400">
         {address && <div>EVM addr: <code>{address}</code></div>}
         {pubkey && <div>Solana pk: <code>{pubkey}</code></div>}
         {jwt && <div>JWT: <code>{jwt.slice(0, 24)}...</code></div>}
         {log && (
           <div>
             <div>Result:</div>
-            <pre style={{ background: "rgba(255,255,255,0.05)", padding: 8, borderRadius: 8 }}>{log}</pre>
+            <pre className="mt-1 max-h-28 overflow-auto rounded-md bg-white/5 p-2 whitespace-pre-wrap">{log}</pre>
           </div>
         )}
       </div>

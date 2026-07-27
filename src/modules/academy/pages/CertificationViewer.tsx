@@ -1,51 +1,12 @@
-import { Link } from "react-router-dom";
+import { Award, CalendarDays, ShieldCheck } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
+import { PageHeader } from "../components/PageHeader";
+import { ProgressionFlow } from "../components/ProgressionFlow";
 import { StatusBadge } from "../components/StatusBadge";
 import { academyLearnerExperienceService } from "../services/academyLearnerExperienceService";
 
 export function CertificationViewer() {
-  const preview = academyLearnerExperienceService.getDashboardPreview();
-
-  return (
-    <>
-      <section>
-        <p className="academy-label">Certificate Preview</p>
-        <h2 className="mt-1 text-3xl font-semibold text-slate-950">Recognition previews and certificate preview presentation</h2>
-        <p className="mt-2 max-w-3xl text-slate-600">Certificate preview surfaces remain local, preview-only, and non-authoritative.</p>
-        <div className="mt-3 flex flex-wrap gap-2">
-          <StatusBadge label={preview.runtime.authority} />
-          <StatusBadge label={preview.runtime.outputAuthority} />
-          <StatusBadge label={preview.runtime.certificateAuthority} />
-        </div>
-      </section>
-      <section className="grid gap-4 lg:grid-cols-2">
-        {preview.certificates.map((certificate) => (
-          <article key={certificate.courseId} className="academy-card grid gap-4 p-5">
-            <div className="flex flex-wrap items-center justify-between gap-2">
-              <div>
-                <p className="academy-label">{certificate.recognitionLevel}</p>
-                <h3 className="mt-1 text-xl font-semibold text-slate-950">{certificate.displayTitle}</h3>
-              </div>
-              <StatusBadge label={certificate.state} />
-            </div>
-            <dl className="grid gap-3 text-sm md:grid-cols-2">
-              <Info label="Reviewed on" value={certificate.reviewedOn} />
-              <Info label="Preview expires" value={certificate.expiresOn} />
-              <Info label="Governance reviewed" value={certificate.governanceReviewed ? "yes" : "no"} />
-              <Info label={certificate.previewLabel} value={certificate.previewNote} />
-            </dl>
-            <Link className="text-sm font-semibold text-academy-blue" to="/academy/dashboard">Return to learner dashboard</Link>
-          </article>
-        ))}
-      </section>
-    </>
-  );
+  const preview = academyLearnerExperienceService.getDashboardPreview(); const { pathname } = useLocation(); const base = pathname.startsWith("/academy") ? "/academy" : "";
+  return <><PageHeader eyebrow="Recognition protocol" title="Recognition" description="Recognition previews summarize completed knowledge requirements without issuing production credentials." /><section className="academy-card p-5"><ProgressionFlow activeStage={3} /></section><section className="grid gap-4 lg:grid-cols-2">{preview.certificates.map((certificate) => <article key={certificate.courseId} className="academy-card overflow-hidden"><div className="academy-grid-pattern h-24 border-b border-academy-line p-5"><Award className="text-violet-300" size={30} /></div><div className="p-5"><div className="flex flex-wrap items-start justify-between gap-3"><div><p className="academy-label">{certificate.recognitionLevel}</p><h2 className="mt-1 text-lg font-semibold text-white">{certificate.displayTitle}</h2></div><StatusBadge label={certificate.state} /></div><p className="mt-4 text-sm leading-6 text-slate-400">{certificate.previewNote}</p><dl className="mt-5 grid gap-3 border-t border-academy-line pt-4 sm:grid-cols-2"><Info icon={CalendarDays} label="Reviewed" value={certificate.reviewedOn} /><Info icon={CalendarDays} label="Preview expiry" value={certificate.expiresOn} /><Info icon={ShieldCheck} label="Governance review" value={certificate.governanceReviewed ? "Recorded" : "Pending"} /><Info icon={Award} label="Presentation" value={certificate.previewLabel} /></dl><Link className="mt-5 inline-flex text-sm font-semibold text-blue-300" to={`${base}/dashboard`}>Return to dashboard</Link></div></article>)}</section></>;
 }
-
-function Info({ label, value }: { label: string; value: string }) {
-  return (
-    <div>
-      <dt className="academy-label">{label}</dt>
-      <dd className="mt-1 text-slate-800">{value}</dd>
-    </div>
-  );
-}
+function Info({ icon: Icon, label, value }: { icon: typeof Award; label: string; value: string }) { return <div className="flex items-start gap-2"><Icon size={15} className="mt-0.5 text-slate-500" /><div><dt className="academy-label">{label}</dt><dd className="mt-1 text-sm text-slate-300">{value}</dd></div></div>; }

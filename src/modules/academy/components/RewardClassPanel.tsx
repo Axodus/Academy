@@ -19,14 +19,14 @@ export function RewardClassPanel({ title, description, rewards }: RewardClassPan
           <h2 className="mt-1 text-xl font-semibold text-slate-950">{title}</h2>
           <p className="mt-2 max-w-2xl text-sm text-slate-600">{description}</p>
         </div>
-        <div className="rounded-lg bg-slate-100 px-4 py-3 text-right">
+        <div className="academy-surface px-4 py-3 text-right">
           <p className="academy-label">Preview total</p>
           <p className="text-lg font-semibold text-slate-950">{formatNeurons(total)}</p>
         </div>
       </div>
       <div className="grid gap-3">
         {rewards.map((reward) => (
-          <article key={reward.id} className="rounded-lg border border-slate-200 p-4">
+          <article key={reward.id} className="academy-surface p-4">
             <div className="flex flex-wrap items-center justify-between gap-2">
               <div>
                 <p className="font-semibold text-slate-950">{formatNeurons(reward.previewPoints)}</p>
