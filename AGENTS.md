@@ -29,3 +29,21 @@ Add focused Vitest coverage beside the relevant behavior using `describe` and `i
 Use concise, imperative commit subjects such as `Add course progress validation`. Keep pull requests scoped, explain user-visible or API changes, list validation commands and outcomes, link the relevant issue when one exists, and attach screenshots for UI changes.
 
 Before Academy changes, read `.instructions/ACADEMY_EXECUTION_BOUNDARY.md`, `STATUS.md`, `BLOCKER_REGISTER.md`, and `HANDOFF.md`. Academy behavior remains non-production and preview-oriented: do not introduce wallet signing, payment, reward execution, credential issuance, provider execution, or contract-write paths without an explicit authority-sensitive request. Reconcile the related `.instructions/` records when architecture or authority changes.
+
+## AXODUS_WORKSPACE_COORDINATION
+
+This workspace is part of the federated Axodus portfolio. Read the root
+[`AGENTS.md`](../AGENTS.md) and the
+[Agent Coordination Protocol](../.instructions/AGENT_COORDINATION_PROTOCOL.md) before starting work.
+
+Keep this file's local rules authoritative for this repository. For every
+completed or materially blocked task, provide the required **Global Coordination
+Handoff**: workspace, scope, local status, validation, local records changed,
+dependencies, blockers or risks, priority impact, requested portfolio action,
+and preserved boundaries.
+
+Update this repository's existing local status, roadmap, task, validation,
+blocker, or report records when the authorized task requires it. Do not edit
+root portfolio records directly; the root Axodus orchestrator consolidates
+validated handoffs into global status, priorities, blockers, dependencies, and
+reports.
