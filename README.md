@@ -1,82 +1,52 @@
-# Axodus Academy
+# Axodus Academy Institutional Website
 
-Axodus Academy is the sovereign cognitive infrastructure of the Axodus ecosystem.
+Static institutional website for Axodus Academy, built with Next.js and ready
+for deployment on Vercel.
 
-The Academy is responsible for:
-- ecosystem onboarding
-- Proof of Knowledge (PoK)
-- operational qualification
-- educational progression
-- meritocratic distribution of $NEURONS
-- contributor formation
-- governance preparation
-- ecosystem trust progression
+## Local development
 
-The Academy is not merely a course platform.
+Requirements:
 
-It is the constitutional onboarding layer of the Axodus Federation.
+- Node.js 22.13 or newer
+- npm
 
----
+Install and run:
 
-# Core Concepts
+```bash
+npm install
+npm run dev
+```
 
-## Learn-to-Win
+Open `http://localhost:3000`.
 
-Participants learn, evolve and contribute in exchange for ecosystem participation.
+## Production build
 
-The system rewards:
-- learning
-- operational maturity
-- contribution
-- certifications
-- verified participation
+```bash
+npm run build
+```
 
----
+The project uses Next.js static export. Generated files are written to `out/`.
 
-## Proof of Knowledge (PoK)
+## Deploy with Vercel
 
-Proof of Knowledge validates:
-- educational progression
-- operational capability
-- ecosystem understanding
-- trustworthiness
-- contribution quality
+1. Add this folder to a GitHub repository.
+2. Import the repository at `vercel.com/new`.
+3. Keep the detected framework as **Next.js**.
+4. Leave the root directory as the repository root, or select this folder if it
+   is stored inside a monorepo.
+5. Deploy. No environment variables are required.
 
-PoK acts as:
-- anti-sybil infrastructure
-- qualification engine
-- merit validation layer
+## Main links
 
----
+- Public development environment: `https://dev.academy.country`
+- Institutional canonical URL configured in metadata: `https://academy.country`
 
-## $NEURONS Distribution
+## Project structure
 
-The Academy is the constitutional gateway for organic token distribution.
+- `app/page.tsx` — landing page content and CTA tracking.
+- `app/globals.css` — complete responsive visual system.
+- `app/layout.tsx` — SEO and social metadata.
+- `public/assets/` — official Axodus visual identity assets.
 
-The Governance DAO:
-- controls supply
-- defines emission budgets
-- approves treasury allocations
-
-The PoKMinter:
-- validates merit
-- distributes rewards
-- applies sustainability controls
-
----
-
-# Core Layers
-
-1. Constitutional Alignment
-2. Operational Security
-3. Economic Qualification
-4. Professional Tracks
-5. Sovereign Participation
-
----
-
-# Long-Term Vision
-
-The Academy exists to transform knowledge into sovereign participation.
-
-Its purpose is to create capable contributors for the Axodus Federation.
+CTA clicks dispatch an `academy:cta` browser event and use `window.dataLayer`
+when an analytics integration provides it.

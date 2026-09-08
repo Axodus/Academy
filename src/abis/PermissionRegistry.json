@@ -1,4 +1,0 @@
-[
-  { "inputs":[{"name":"who","type":"address"},{"name":"resource","type":"bytes32"},{"name":"op","type":"bytes4"}],
-    "name":"hasAccess","outputs":[{"name":"","type":"bool"}],"stateMutability":"view","type":"function" }
-]
