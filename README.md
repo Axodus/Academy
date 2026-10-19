@@ -50,3 +50,4 @@ The project uses Next.js static export. Generated files are written to `out/`.
 
 CTA clicks dispatch an `academy:cta` browser event and use `window.dataLayer`
 when an analytics integration provides it.
+ 
